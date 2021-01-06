@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreatePetProTimetablesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('pet_pro_timetables', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger("pet_pro_id")->nullable();
+            $table->string('day')->nullable();
+            $table->time('open')->nullable();
+            $table->time('close')->nullable();
+            $table->timestamps();
+
+            $table->foreign('pet_pro_id')->references('id')->on('pet_pros');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('pet_pro_timetable');
+    }
+}

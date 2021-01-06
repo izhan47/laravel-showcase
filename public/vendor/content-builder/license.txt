@@ -1,0 +1,68 @@
+InnovaStudio CONTENT Builder (ContentBuilder.js) ver. 2.4.8
+____________________________________________________________________
+
+
+STANDARD DEVELOPER LICENSE AGREEMENT 
+
+1. InnovaStudio CONTENT Builder (Product) is licensed, not sold. All copyrights to InnovaStudio CONTENT Builder are exclusively owned by the author - InnovaStudio.
+
+2. Use of InnovaStudio CONTENT Builder (Product) in integration or application development requires one license per developer.
+
+3. You have the right to use the Product in unlimited websites (personal or commercial).
+
+4. If you use the Product for your client projects, You will be responsible for providing support to your clients, and InnovaStudio will not communicate directly with your clients under any circumstances.
+
+5. Usage/distribution in projects/applications for free or for sale (eg. CMS product, etc) is not allowed.
+
+6. LIMITED WARRANTY 
+Although InnovaStudio has tested this Product and reviewed the documentation, InnovaStudio.com makes no warranty or representation, either expressed or implied, with respect to this Product, its quality, performance, merchantability, or fitness for a particular purpose. As a result, InnovaStudio CONTENT Builder is licensed AS-IS, and you are assuming the entire risk as to its quality and performance. 
+InnovaStudio shall not be liable for any claim or right to recover damages, including, but not limited to, loss of profit, data, or use of the software or special, incidental, or consequential damages, or other similar claims, even if InnovaStudio has been specifically advised of the possibility of such damages. 
+
+____________________________________________________________
+
+
+PRO DEVELOPER LICENSE AGREEMENT 
+
+1. InnovaStudio CONTENT Builder (Product) is licensed, not sold. All copyrights to InnovaStudio CONTENT Builder are exclusively owned by the author - InnovaStudio.
+
+2. Use of InnovaStudio CONTENT Builder (Product) in integration or application development requires one license per developer.
+
+3. You have the right to use the Product in unlimited websites (personal or commercial).
+
+4. If you use the Product for your client projects, You will be responsible for providing support to your clients, and InnovaStudio will not communicate directly with your clients under any circumstances.
+
+5. You are not allowed to re-distribute the Product as another plugin and/or sell the product as is. You must include the Product in your custom application.
+
+6. You have the right to include/distribute the Product in 1 (one) project/application for sale (eg. CMS product, etc), without any royalty whatsoever, provided that : 
+    - You do not permit (either by explicit or implicit means) further distribution of the Product by your end users. 
+	- You do not distribute Product in a free (downloadable) projects/applications.
+
+7. LIMITED WARRANTY 
+Although InnovaStudio has tested this Product and reviewed the documentation, InnovaStudio.com makes no warranty or representation, either expressed or implied, with respect to this Product, its quality, performance, merchantability, or fitness for a particular purpose. As a result, InnovaStudio CONTENT Builder is licensed AS-IS, and you are assuming the entire risk as to its quality and performance. 
+InnovaStudio shall not be liable for any claim or right to recover damages, including, but not limited to, loss of profit, data, or use of the software or special, incidental, or consequential damages, or other similar claims, even if InnovaStudio has been specifically advised of the possibility of such damages. 
+
+____________________________________________________________
+
+
+SUPER DEVELOPER LICENSE AGREEMENT 
+
+1. InnovaStudio CONTENT Builder (Product) is licensed, not sold. All copyrights to InnovaStudio CONTENT Builder are exclusively owned by the author - InnovaStudio.
+
+2. Use of InnovaStudio CONTENT Builder (Product) in integration or application development requires one license per developer.
+
+3. You have the right to use the Product in unlimited websites (personal or commercial).
+
+4. If you use the Product for your client projects, You will be responsible for providing support to your clients, and InnovaStudio will not communicate directly with your clients under any circumstances.
+
+5. You are not allowed to re-distribute the Product as another plugin and/or sell the product as is. You must include the Product in your custom application.
+
+6. You have the right to include/distribute the Product in 3 (three) projects/applications for sale (eg. CMS product, etc), without any royalty whatsoever, provided that : 
+    - You do not permit (either by explicit or implicit means) further distribution of the Product by your end users. 
+	- You do not distribute Product in a free (downloadable) projects/applications.
+
+7. LIMITED WARRANTY 
+Although InnovaStudio has tested this Product and reviewed the documentation, InnovaStudio.com makes no warranty or representation, either expressed or implied, with respect to this Product, its quality, performance, merchantability, or fitness for a particular purpose. As a result, InnovaStudio CONTENT Builder is licensed AS-IS, and you are assuming the entire risk as to its quality and performance. 
+InnovaStudio shall not be liable for any claim or right to recover damages, including, but not limited to, loss of profit, data, or use of the software or special, incidental, or consequential damages, or other similar claims, even if InnovaStudio has been specifically advised of the possibility of such damages. 
+
+____________________________________________________________________
+http://www.InnovaStudio.com

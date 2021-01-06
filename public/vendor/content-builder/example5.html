@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Simple Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <link href="assets/simple/content.css" rel="stylesheet" type="text/css" />
+    <link href="contentbuilder/contentbuilder.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<br />
+<br />
+<br />
+
+<div id="contentarea" class="container">
+
+    <!-- This is just a sample content -->
+    <div>
+        <h1>Fresh roasted coffee, exclusive teas & light meals</h1>
+        <p>We serve freshly brewed tea and coffee, soft drinks and a section of light meals and tasty treats and snacks. We are open for breakfast, lunch and afternoon tea from 8 am to 5 pm and unlike any other cafe in the town, we are open 7 days per week.</p>
+    </div>
+</div>
+
+<script src="contentbuilder/jquery.min.js" type="text/javascript"></script>
+<script src="contentbuilder/jquery-ui.min.js" type="text/javascript"></script>
+<script src="contentbuilder/contentbuilder.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+
+        $("#contentarea").contentbuilder({
+            snippetFile: 'assets/simple/snippets.html'
+            });
+
+    });
+
+    function view() {
+        var sHTML = $('#contentarea').data('contentbuilder').html();
+        alert(sHTML);
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,326 @@
+﻿What's New in ver.2.4.8
+- Fix source view dialog position
+- Improve source view script loading performance
+- Minor fixes/adjustments
+
+What's New in ver.2.4.7
+- Bug fixes: enlarge droppable area, slider update.
+
+What's New in ver.2.4.6
+- Improve dropdown categories
+- New onChange param
+- Formatted source code editor
+- Remove some deprecated jQuery shorthands
+- Bug fix: column removed after applying paragraph
+
+What's New in ver.2.4.5
+- Bug fix (error caused by destroy usage)
+
+What's New in ver.2.4.4
+- Same image embed bug fix
+- Image Embed resulting dark image issue fix
+
+What's New in ver.2.4.3
+- Close button for dialogs
+- Bug fixes
+
+What's New in ver.2.4.2
+- Fix CTRL-Z & CTRL-Y (undo & redo) issue
+- Add option to make a block cannot be edited or deleted (using data-mode="readonly-protected"). See readme.txt
+- Other fixes
+
+What's New in ver.2.4.1
+- Bug fixes (Insert Image, Font size, text color)
+
+What's New in ver.2.4
+- Specify custom path for modules using modulePath parameter (see readme)
+- New buttons for table, image, text settings & formatting
+- Enhance open/close dialogs for editing
+- Enhance overall editing interface
+- More font selections
+- Enhance Undo Redo function
+- Use Bootstrap 4 for Bootstrap examples
+- Image Embed resulting dark image issue fix
+- Other fixes
+
+What's New in ver.2.3
+- New "buttons" parameter to configure editor's toolbar buttons (See readme.txt)
+- Updated custom code snippet/block.
+- New slider snippets in "Slider/Slideshow" category. Try example7.html and see readme.txt on how to enable the slider module.
+- Fixes
+
+What's New in ver.2.2
+- New dialog for Google Map embed.
+- Prevent dialog close on code editor & add cancel button.
+
+What's New in Ver.2.1
+- Fixes (including code block error fix)
+
+What's New in Ver.2.0
+- New custom code snippet/block. To enable, please see readme.txt
+- New example7.html (showing a code block example & how to enable it)
+- Updated readme.txt
+
+What's New in Ver.1.9.8
+- Fixes (inlcuding fix for image embed positioning problem)
+
+What's New in Ver.1.9.7
+- Updated readme.txt
+- ContentBuilder UI update (for direct image embed)
+- New "Click to Enlarge" image option, by setting the new "largerImageHandler" parameter (See readme.txt)
+- New example: using Jquery Lightbox plugin to work with "Click to Enlarge" image feature (See readme.txt)
+	- example6-lightbox.php (PHP example)
+	- example6-lightbox.aspx (ASP.NET example)
+- Fix text alignment function (now can be applied when multiple paragraphs are selected)
+- New "Target" option for image link.
+- Updated JQuery & JQuery UI
+
+What's New in Ver.1.9.6
+- Updated snippets' css (content.css & content_bootstrap.css)
+- Fixes
+
+What's New in Ver.1.9.5
+- New: sample email content building. See example-email.html & readme.txt.
+- New customTags parameter. See readme.txt.
+- New absolutePath parameter. See readme.txt.
+- Toolbar popup inconsistent height fix.
+
+What's New in Ver.1.9.4
+- Fixes (enable block background, toolbar fix, alignment fix, delete error fix)
+
+What's New in Ver.1.9.3
+- Edtiting toolbar improvement
+- Color dialog improvement
+- Icon dialog improvement
+- Fixes
+
+What's New in Ver.1.9.2
+- Fix on snippets loading
+- Fix on editable tags
+- Updated snippets' css
+
+What's New in Ver.1.9.1
+- Fixes
+
+What's New in Ver.1.9
+- New Bootstrap examples
+- Fixes
+
+What's New in Ver.1.8.9
+- New title field in link dialog
+- Snippets updated (now includes 298 snippets)
+- No Crop option when embedding image
+- Fixes
+
+What's New in Ver.1.8.8
+- New Snippets
+- New Icons dialog
+- Updated examples
+- Zoom function disabled due to instability
+- Fix incorrect drag helper position while sorting & dragging
+
+What's New in Ver.1.8.7
+- Enhancement on dropzone
+- Fix onFileSelectClick functionality
+
+What's New in Ver.1.8.6
+- Use the latest jQuery UI 1.11.4
+- Fix incorrect drag helper position while sorting & dragging
+- Show drag helper again in Firefox
+
+What's New in Ver.1.8.5
+- Fixes
+
+What's New in Ver.1.8.4
+- New parameters to control "Embed original image" checkbox on Image dialog: (see readme.txt)
+  embedOriginalChecked (default:false) & hideEmbedOriginal (default:false) 
+- Disable zoom function on Edge browser
+- Fixes
+
+What's New in Ver.1.8.3
+- Fix font selection on multiple instance
+- Fix embed image quality!!
+- Fix embed image orientation problem
+- Option to embed image (from local URL) within placeholder or insert original (image from external URL will be embedded as is)
+- Easier drag/drop when content empty
+- New "scrollHelper" parameter to show Scroll up/down helper (default: false)
+
+        $("#contentarea").contentbuilder({
+            scrollHelper: true,   
+            .....
+        });
+
+- New "snippetPageSliding" parameter for different sliding effect for snippets.
+  If set true, when snippets opens, the entire page will also slide. (default: false)
+
+        $("#contentarea").contentbuilder({
+            snippetPageSliding: true,   
+            .....
+        });
+
+- Adjust row controls on small screen
+- New "onImageBrowseClick" and "onImageSettingClick" events for custom actions 
+	- onImageBrowseClick: Triggered when image browse icon is clicked 
+	- onImageSettingClick: Triggered when image settings icon is clicked
+	Image browse icon and image settings icon are displayed when you hover an image.
+
+        $("#contentarea").contentbuilder({
+            onImageBrowseClick: function () { },
+            onImageSettingClick: function () { },    
+            .....
+        });
+
+- New "onImageSelectClick" and "onFileSelectClick" events for custom actions
+	- onImageSelectClick: Triggered when custom image select button is clicked 
+	- onFileSelectClick: Triggered when custom file select button is clicked
+	If the events are used, custom image select button and custom file select button will be displayed on the Image Settings dialog.
+
+        $("#contentarea").contentbuilder({
+            onImageSelectClick: function () { },
+            onFileSelectClick: function () { },    
+            .....
+        });
+- Fix create and destroy instance bug
+
+What's New in Ver.1.8.2
+- Update rangeslider
+- Embedding image on small screen device will create the same (actual) image dimesion as in larger screen (will look good on desktop screen)
+- Toolbar top position is now based on screen height
+- Some important fixes
+
+What's New in Ver.1.8.1
+- New html button on editing toolbar
+- New option to have the editing toolbar always displayed (after cursor is placed on text):
+    $("#contentarea").contentbuilder({
+        toolbarDisplay: 'always',
+        .....
+    });
+- Now it's possible to make a snippet not editable, just add data-mode="readonly" on the snippet's DIV, for example:
+	<div data-thumb="..../01.png">
+		<div class="row clearfix" data-mode="readonly"> 
+			......
+		</div>
+	</div>
+Now you can put assets folder not on its default location. Path adjustment will be needed using snippetPathReplace parameter, for example:
+    $("#contentarea").contentbuilder({
+        snippetPathReplace: ['assets/minimalist-basic/', 'mycustomfolder/assets/minimalist-basic/'],
+        .....
+    });
+- CTRL-A will select parent element (not the entire block) for safe text editing
+- Some important fixes and enhancements
+
+What's New in Ver.1.8
+- Updated documentation in readme file
+- New Snippets Set "minimalist-basic", located at assets/minimalist-basic/snippets.html
+  See example10.php or example10.aspx
+- New snippets CATEGORIES. See example10.php or example10.aspx (please see documentation in the readme file)
+- Default jQuery UI version is back to 1.11.0 (but still compatible with the new jQuery UI 1.11.x)
+- Delete block confirmation dialog
+- Fixes & adjustments
+
+What's New in Ver.1.7.9
+- Supports the latest JQuery UI v1.11.2
+- Limit image zoom-out to not smaller than its placeholder
+- New example9.html (showing how to print content)
+- New example10.php and example10.aspx (showing another approach of saving content using normal form. Also shows how to submit multiple content area)
+- Fixes
+
+What's New in Ver.1.7.8
+- Enter issue (when using IE) fixed
+- Text color bug fixed
+
+What's New in Ver.1.7.7:
+- Change image hover control position for supporting small images
+- Fix outline dissapear when clicking editor buttons (Bold, italic, etc)
+- Fix zoom changed to 0.8 when resizing (if enableZoom=false)
+- Now it's possible to make an image not replaceable. Just add data-fixed="1" to the <img> element (please see readme.txt)
+- Minor fixes & adjustments
+
+What's New in Ver.1.7.6:
+- Updated saveimage.php
+- Few updates to support our "300+ Beutiful Blocks"'s snippets categories dropdown: 
+	http://innovastudio.com/content-builder/never-write-boring-content-again.aspx
+
+What's New in Ver.1.7.5:
+- Fixes: Google font not applied after saving and problem when applying Google font on multi drop area
+- "default" snippets css updated (change the body font to Open Sans)
+
+What's New in Ver.1.7.4:
+- New option: left side editor toolbar, by setting toolbar: 'left' (please see readme.txt)
+- New examples of custom CMS interface: example7.html & example8.html
+- Minor fixes & adjustments
+
+What's New in Ver.1.7.3:
+- Natural editing by default. To make the editing back to "SAFE MODE" please see readme.txt
+- New Heading selection
+- New Font selection
+- New Size selection
+- List function enhancement
+- Color function enhancement
+- New "snippetList" parameter (please see readme.txt)
+- Fixes & other enhancements
+
+What's New in Ver.1.7.2: 
+- New imageEmbed parameter to enable/disable Direct Image Embed (please see readme.txt)
+- New sourceEditor parameter to enable/disable HTML source editing (please see readme.txt)
+- Show progress status during image embed
+- Fixes
+
+What's New in Ver.1.7.1: 
+- New destroy() method to disable/destroy the plugin at runtime (please see readme.txt)
+- New copy button to duplicate content
+- New colors property, to specify array of custom colors (please see readme.txt)
+- New snippetOpen property, to open the snippet panel on first load (please see readme.txt)
+- New onDrop event, to run custom script when a block is dropped (added) to the content (please see readme.txt)
+- Snippet number info on hover
+- Fixes
+
+What's New in Ver.1.7: 
+
+- Multiple instance support. See example6.html
+- Introducing "selectable" property for flexible editing. See readme & example7.html
+- New Unlink button
+- New Color & Background text button
+- Smooth drag and drop
+- Change outline style (when block is clicked). You can customize it on contentbuilder.css: .ui-dragbox-outlined { ... }
+- Now support jQuery no-conflict
+- Fixes
+
+What's New in Ver.1.6: 
+
+- Fix icons conflict: scripts/icons/
+- Reset zoom if zoom feature disabled.
+- Error message on saving image: saveimage.php
+- minor fixes
+
+What's New in Ver.1.5: 
+
+- Option to enable custom image or file select dialog (please see readme.txt)
+- Option to disable zoom feature (please see readme.txt)
+
+What's New in Ver.1.4:
+
+- Zoom feature is now enabled on Firefox
+- Fix controls positioning on hover
+
+What's New in Ver.1.3:
+
+- New 'Edit Link' dialog for video embed (Youtube & Vimeo)
+- New 'snippetTool' property for making snippet tool slide from left or right: 
+  Value: left/right. Default is 'right'. Example:
+  $("#contentarea").contentbuilder({
+        snippetTool: 'left',
+        .....
+        });
+
+What's New in Ver.1.2:
+
+- New image dialog (Image Url, Alt text, Navigate URL).
+- loadHTML() method (for loading HTML content at runtime). See readme.
+- Saved images are now using file names (good for SEO).
+- Show warning if non image is selected.
+- Saved image format is now automatically following the original image embeddedd (no need to set the hiquality parameter).
+  But if hiquality parameter is set to true, all saved image will be in PNG (this results bigger size of image file).
+- Important fixes:
+	- Saving image fix
+

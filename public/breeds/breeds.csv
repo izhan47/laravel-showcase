@@ -1,0 +1,353 @@
+id,Dog Breeds
+1,English Pointer
+2,English Setter
+3,Kerry Blue Terrier
+4,Cairn Terrier
+5,English Cocker Spaniel
+6,Gordon Setter
+7,Airedale Terrier
+8,Australian Terrier
+9,Bedlington Terrier
+10,Border Terrier
+11,Bull Terrier
+12,Fox Terrier (Smooth)
+13,English Toy Terrier (Black &Tan)
+14,Swedish Vallhund
+15,Belgian Shepherd Dog
+16,Old English Sheepdog
+17,Griffon Nivernais
+19,Briquet Griffon Vendeen
+20,Ariegeois
+21,Gascon Saintongeois
+22,Great Gascony Blue
+24,Poitevin
+25,Billy
+28,Artois Hound
+30,Porcelaine
+31,Small Blue Gascony
+32,Blue Gascony Griffon
+33,Grand Basset Griffon Vendeen
+34,Norman Artesien Basset
+35,Blue Gascony Basset
+36,Basset Fauve De Bretagne
+37,Portuguese Water Dog
+38,Welsh Corgi (Cardigan)
+39,Welsh Corgi (Pembroke)
+40,Irish Soft Coated Wheaten Terrier
+41,Yugoslavian Shepherd Dog - Sharplanina
+42,J‹ãMthund
+43,Basenji
+44,Berger De Beauce
+45,Bernese Mountain Dog
+46,Appenzell Cattle Dog
+47,Entlebuch Cattle Dog
+48,Karelian Bear Dog
+49,Finnish Spitz
+50,Newfoundland
+51,Finnish Hound
+52,Polish Hound
+53,Komondor
+54,Kuvasz
+55,Puli
+56,Pumi
+57,Hungarian Short-Haired Pointer (Vizsla)
+58,Great Swiss Mountain Dog
+59,Swiss Hound
+60,Small Swiss Hound
+61,St. Bernard
+62,Coarse-Haired Styrian Hound
+63,Austrian Black And Tan Hound
+64,Austrian  Pinscher
+65,Maltese
+66,Fawn Brittany Griffon
+67,Petit Basset Griffon Vendeen
+68,Tyrolean Hound
+70,Lakeland Terrier
+71,Manchester Terrier
+72,Norwich Terrier
+73,Scottish Terrier
+74,Sealyham Terrier
+75,Skye Terrier
+76,Staffordshire Bull Terrier
+77,Continental Toy Spaniel
+78,Welsh Terrier
+80,Griffon Bruxellois
+81,Griffon Belge
+82,Petit Braban‹àOn
+83,Schipperke
+84,Bloodhound
+85,West Highland White Terrier
+86,Yorkshire Terrier
+87,Catalan Sheepdog
+88,Shetland Sheepdog
+89,Ibizan Podenco
+90,Burgos Pointing Dog
+91,Spanish Mastiff
+92,Pyrenean Mastiff
+93,Portuguese Sheepdog
+94,Portuguese Warren Hound-Portuguese Podengo
+95,Brittany Spaniel
+96,Rafeiro Of Alentejo
+97,German Spitz
+98,German Wire- Haired Pointing Dog
+99,Weimaraner
+100,Westphalian Dachsbracke
+101,French Bulldog
+102,Kleiner M‹Ïnsterl‹ãNder
+103,German Hunting Terrier
+104,German Spaniel
+105,French Water Dog
+106,Blue Picardy Spaniel
+107,Wire-Haired Pointing Griffon Korthals
+108,Picardy Spaniel
+109,Clumber Spaniel
+110,Curly Coated Retriever
+111,Golden Retriever
+113,Briard
+114,Pont-Audemer Spaniel
+115,Saint Germain Pointer
+116,Dogue De Bordeaux
+117,Deutsch Langhaar
+118,Large Munsterlander
+119,German Short- Haired Pointing Dog
+120,Irish Red Setter
+121,Flat Coated Retriever
+122,Labrador Retriever
+123,Field Spaniel
+124,Irish Water Spaniel
+125,English Springer Spaniel
+126,Welsh Springer Spaniel
+127,Sussex Spaniel
+128,King Charles Spaniel
+129,Sm‹ÉLandsst‹_Vare
+130,Drever
+131,Schillerst‹_Vare
+132,Hamiltonst‹_Vare
+133,French Pointing Dog - Gascogne Type
+134,French Pointing Dog - Pyrenean Type
+135,Swedish Lapphund
+136,Cavalier King Charles Spaniel
+137,Pyrenean Mountain Dog
+138,Pyrenean Sheepdog - Smooth Faced
+139,Irish Terrier
+140,Boston Terrier
+141,Long-Haired Pyrenean Sheepdog
+142,Slovakian Chuvach
+143,Dobermann
+144,Boxer
+145,Leonberger
+146,Rhodesian Ridgeback
+147,Rottweiler
+148,Dachshund
+149,Bulldog
+150,Serbian Hound
+151,Istrian Short-Haired Hound
+152,Istrian Wire-Haired Hound
+153,Dalmatian
+154,Posavatz Hound
+155,Bosnian Broken-Haired Hound - Called Barak
+156,Collie Rough
+157,Bullmastiff
+158,Greyhound
+159,English Foxhound
+160,Irish Wolfhound
+161,Beagle
+162,Whippet
+163,Basset Hound
+164,Deerhound
+165,Italian Spinone
+166,German Shepherd Dog
+167,American Cocker Spaniel
+168,Dandie Dinmont Terrier
+169,Fox Terrier (Wire)
+170,Castro Laboreiro Dog
+171,Bouvier Des Ardennes
+172,Poodle
+173,Estrela Mountain Dog
+175,French Spaniel
+176,Picardy Sheepdog
+177,Ariege Pointing Dog
+179,Bourbonnais Pointing Dog
+180,Auvergne Pointer
+181,Giant Schnauzer
+182,Schnauzer
+183,Miniature Schnauzer
+184,German Pinscher
+185,Miniature Pinscher
+186,Affenpinscher
+187,Portuguese Pointing Dog
+188,Sloughi
+189,Finnish Lapponian Dog
+190,Hovawart
+191,Bouvier Des Flandres
+192,Kromfohrl‹ãNder
+193,Borzoi - Russian Hunting Sighthound
+194,Bergamasco Shepherd Dog
+195,Italian Volpino
+196,Bolognese
+197,Neapolitan Mastiff
+198,Italian Rough-Haired Segugio
+199,Cirneco Dell'Etna
+200,Italian Sighthound
+201,Maremma And The Abruzzes Sheepdog
+202,Italian Pointing Dog
+203,Norwegian Hound
+204,Spanish Hound
+205,Chow Chow
+206,Japanese Chin
+207,Pekingese
+208,Shih Tzu
+209,Tibetan Terrier
+211,Canadian Eskimo Dog
+212,Samoyed
+213,Hanoverian Scent Hound
+214,Hellenic Hound
+215,Bichon Frise
+216,Pudelpointer
+217,Bavarian Mountain Scent Hound
+218,Chihuahua
+219,French Tricolour Hound
+220,French White & Black Hound
+221,Frisian Water Dog
+222,Stabijhoun
+223,Dutch Shepherd Dog
+224,Drentsche Partridge Dog
+225,Fila Brasileiro
+226,Landseer (European Continental Type)
+227,Lhasa Apso
+228,Afghan Hound
+229,Serbian Tricolour Hound
+230,Tibetan Mastiff
+231,Tibetan Spaniel
+232,Deutsch Stichelhaar
+233,Little Lion Dog
+234,Xoloitzcuintle
+235,Great Dane
+236,Australian Silky Terrier
+237,Norwegian Buhund
+238,Mudi
+239,Hungarian Wire-Haired Pointer
+240,Hungarian Greyhound
+241,Hungarian Hound - Transylvanian Scent Hound
+242,Norwegian Elkhound Grey
+243,Alaskan Malamute
+244,Slovakian Hound
+245,Bohemian Wire-Haired Pointing Griffon
+246,Cesky Terrier
+247,Atlas Mountain Dog (Aidi)
+248,Pharaoh Hound
+249,Majorca Mastiff
+250,Havanese
+251,Polish Lowland Sheepdog
+252,Tatra Shepherd Dog
+253,Pug
+254,Alpine Dachsbracke
+255,Akita
+257,Shiba
+259,Japanese Terrier
+260,Tosa
+261,Hokkaido
+262,Japanese Spitz
+263,Chesapeake Bay Retriever
+264,Mastiff
+265,Norwegian Lundehund
+266,Hygen Hound
+267,Halden Hound
+268,Norwegian Elkhound Black
+269,Saluki
+270,Siberian Husky
+271,Bearded Collie
+272,Norfolk Terrier
+273,Canaan Dog
+274,Greenland Dog
+276,Norrbottenspitz
+277,Croatian Shepherd Dog
+278,Karst Shepherd Dog
+279,Montenegrin Mountain Hound
+281,Old Danish Pointing Dog
+282,Grand Griffon Vendeen
+283,Coton De Tulear
+284,Lapponian Herder
+285,Spanish Greyhound
+286,American Staffordshire Terrier
+287,Australian Cattle Dog
+288,Chinese Crested Dog
+289,Icelandic Sheepdog
+290,Beagle Harrier
+291,Eurasian
+292,Dogo Argentino
+293,Australian Kelpie
+294,Otterhound
+295,Harrier
+296,Collie Smooth
+297,Border Collie
+298,Romagna Water Dog
+299,German Hound
+300,Black And Tan Coonhound
+301,American Water Spaniel
+302,Irish Glen Of Imaal Terrier
+303,American Foxhound
+304,Russian-European Laika
+305,East Siberian Laika
+306,West Siberian Laika
+307,Azawakh
+308,Dutch Smoushond
+309,Shar Pei
+310,Peruvian Hairless Dog
+311,Saarloos Wolfhond
+312,Nova Scotia Duck Tolling Retriever
+313,Dutch Schapendoes
+314,Nederlandse Kooikerhondje
+315,Broholmer
+316,French White And Orange Hound
+317,Kai
+318,Kishu
+319,Shikoku
+320,Wirehaired Slovakian Pointer
+321,Majorca Shepherd Dog
+322,Great Anglo-French Tricolour Hound
+323,Great Anglo-French White And Black Hound
+324,Great Anglo-French White & Orange Hound
+325,Medium-Sized Anglo-French Hound
+326,South Russian Shepherd Dog
+327,Russian Black Terrier
+328,Caucasian Shepherd Dog
+329,Canarian Warren Hound
+330,Irish Red And White Setter
+331,Kangal Shepherd Dog
+332,Czechoslovakian Wolfdog
+333,Polish Greyhound
+334,Korea Jindo Dog
+335,Central Asia Shepherd Dog
+336,Spanish Water Dog
+337,Italian Short-Haired Segugio
+338,Thai Ridgeback Dog
+339,Parson Russell Terrier
+340,Saint Miguel Cattle Dog
+341,Brazilian Terrier
+342,Australian Shepherd
+343,Italian Cane Corso
+344,American Akita
+345,Jack Russell Terrier
+346,Presa Canario
+347,White Swiss Shepherd Dog
+348,Taiwan Dog
+349,Romanian Mioritic Shepherd Dog
+350,Romanian Carpathian Shepherd Dog
+351,Australian Stumpy Tail Cattle Dog
+352,Russian Toy
+353,Cimarr‹ÒN Uruguayo
+354,Polish Hunting Dog
+355,Bosnian And Herzegovinian - Croatian Shepherd Dog
+356,Danish-Swedish Farmdog
+357,Romanian Bucovina Shepherd
+358,Thai Bangkaew Dog
+359,Miniature Bull Terrier
+360,Lancashire Heeler
+361,Segugio Maremmano
+362,Kintamani-Bali Dog
+363,Prague Ratter
+364,Bohemian Shepherd Dog
+365,Yakutian Laika
+366,Estonian Hound
+367,Miniature American Shepherd

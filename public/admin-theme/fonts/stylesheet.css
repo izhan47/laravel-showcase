@@ -1,0 +1,244 @@
+@font-face {
+    font-family: 'George Rounded';
+    src: url('GeorgeRoundedRegular.woff2') format('woff2'),
+        url('GeorgeRoundedRegular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'George Rounded';
+    src: url('GeorgeRoundedLightItalic.woff2') format('woff2'),
+        url('GeorgeRoundedLightItalic.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'George Rounded';
+    src: url('GeorgeRoundedSemiboldItalic.woff2') format('woff2'),
+        url('GeorgeRoundedSemiboldItalic.woff') format('woff');
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'George Rounded';
+    src: url('GeorgeRoundedLight.woff2') format('woff2'),
+        url('GeorgeRoundedLight.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'George Rounded';
+    src: url('GeorgeRoundedBold.woff2') format('woff2'),
+        url('GeorgeRoundedBold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'George Rounded';
+    src: url('GeorgeRoundedBoldItalic.woff2') format('woff2'),
+        url('GeorgeRoundedBoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'George Rounded';
+    src: url('GeorgeRoundedSemibold.woff2') format('woff2'),
+        url('GeorgeRoundedSemibold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'George Rounded';
+    src: url('GeorgeRoundedItalic.woff2') format('woff2'),
+        url('GeorgeRoundedItalic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+/* Nunito */
+
+@font-face {
+    font-family: 'Nunito Sans';
+    src: url('NunitoSans-ExtraBoldItalic.woff2') format('woff2'),
+        url('NunitoSans-ExtraBoldItalic.woff') format('woff');
+    font-weight: 800;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Nunito Sans';
+    src: url('NunitoSans-Bold.woff2') format('woff2'),
+        url('NunitoSans-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Nunito Sans';
+    src: url('NunitoSans-ExtraLightItalic.woff2') format('woff2'),
+        url('NunitoSans-ExtraLightItalic.woff') format('woff');
+    font-weight: 200;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Nunito Sans';
+    src: url('NunitoSans-Regular.woff2') format('woff2'),
+        url('NunitoSans-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Nunito Sans';
+    src: url('NunitoSans-Black.woff2') format('woff2'),
+        url('NunitoSans-Black.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Nunito Sans';
+    src: url('NunitoSans-LightItalic.woff2') format('woff2'),
+        url('NunitoSans-LightItalic.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Nunito Sans';
+    src: url('NunitoSans-BlackItalic.woff2') format('woff2'),
+        url('NunitoSans-BlackItalic.woff') format('woff');
+    font-weight: 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Nunito Sans';
+    src: url('NunitoSans-Italic.woff2') format('woff2'),
+        url('NunitoSans-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Nunito Sans';
+    src: url('NunitoSans-SemiBoldItalic.woff2') format('woff2'),
+        url('NunitoSans-SemiBoldItalic.woff') format('woff');
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Nunito Sans';
+    src: url('NunitoSans-ExtraLight.woff2') format('woff2'),
+        url('NunitoSans-ExtraLight.woff') format('woff');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Nunito Sans';
+    src: url('NunitoSans-BoldItalic.woff2') format('woff2'),
+        url('NunitoSans-BoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Nunito Sans';
+    src: url('NunitoSans-SemiBold.woff2') format('woff2'),
+        url('NunitoSans-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Nunito Sans';
+    src: url('NunitoSans-Light.woff2') format('woff2'),
+        url('NunitoSans-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Nunito Sans';
+    src: url('NunitoSans-ExtraBold.woff2') format('woff2'),
+        url('NunitoSans-ExtraBold.woff') format('woff');
+    font-weight: 800;
+    font-style: normal;
+}
+
+/* Visby Round CF */
+
+@font-face {
+    font-family: 'Visby Round CF Demi';
+    src: url('VisbyRoundCF-DemiBold.woff2') format('woff2'),
+        url('VisbyRoundCF-DemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Visby Round CF Extra';
+    src: url('VisbyRoundCF-ExtraBold.woff2') format('woff2'),
+        url('VisbyRoundCF-ExtraBold.woff') format('woff');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Visby Round CF Extra';
+    src: url('VisbyRoundCF-ExtraLight.woff2') format('woff2'),
+        url('VisbyRoundCF-ExtraLight.woff') format('woff');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Visby Round CF';
+    src: url('VisbyRoundCF-Regular.woff2') format('woff2'),
+        url('VisbyRoundCF-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Visby Round CF';
+    src: url('VisbyRoundCF-Light.woff2') format('woff2'),
+        url('VisbyRoundCF-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Visby Round CF';
+    src: url('VisbyRoundCF-Heavy.woff2') format('woff2'),
+        url('VisbyRoundCF-Heavy.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Visby Round CF';
+    src: url('VisbyRoundCF-Bold.woff2') format('woff2'),
+        url('VisbyRoundCF-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Visby Round CF';
+    src: url('VisbyRoundCF-Medium.woff2') format('woff2'),
+        url('VisbyRoundCF-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+

@@ -1,0 +1,610 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!--<base href="../../">-->
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <style>
+        html { height:100%; }
+        body { margin:3px 25px 20px;height:100%;overflow:hidden;font-family:Sans-Serif;font-size:17px;line-height:1.7; }
+        body.dark {color:rgba(255,255,255,0.6);border:none;}
+        #imageList {display:inline-block;box-sizing:border-box;width:100%;margin: 0;overflow-y:auto;overflow-x:hidden;height:200px;padding:10px;line-height:1.5;border:rgba(127, 127, 127, 0.32) 1px solid;}
+        #imageList div {position:relative;display:inline-block;margin:10px;cursor:pointer;}
+        #imageList div i {position:absolute;top:0;right:0;cursor:pointer;background: rgba(255, 255, 255, 0.18); color: #f41818;width:28px;height:28px;text-align: center;line-height: 28px;font-size:24px;}
+        .dark #imageList div i {background:rgba(34, 34, 34, 0.18);color: #c7c7c7;}        
+        #imageList div img {height:100px;opacity: 0.9;}
+        .inptext {width:90%;font-size:17px;letter-spacing:1px;border:none;padding:10px;border:rgba(127, 127, 127, 0.32) 1px solid;}
+        .dark .inptext {background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);border:none;}  
+        textarea.inptext {height:30%;}  
+        .dark textarea.inptext {background: rgb(57, 57, 57);}  
+        #divCaption label {margin:5px 0 5px;display: block;} 
+        textarea:focus, input:focus, select:focus {outline:none;}
+        #divCaption {position: absolute;width:400px;height:100%;top:3px;right:-400px;padding:20px;box-sizing:border-box;background:#eee;z-index:1000}
+        .dark #divCaption {background:#2a2a2a;}
+        img.selected {outline:#595858 1px solid}
+        .dark img.selected {outline:#9e9132 2px solid}        
+        select {background: #fff; border-color:#dadada; height: 40px;font-size: 15px;}
+        .dark select {background: #c8c8c8;border-color:rgba(127, 127, 127, 0.32);}
+        .info {font-size: 14px;margin-bottom: 20px;text-align: left;font-style:italic;opacity: 0.8;}
+        
+        /*http://codepen.io/vcmg/pen/JdKeVG */
+        .dot {
+          height: 7px;
+          width: 7px;
+          border-radius: 50%;
+          background-color: #ff6700;
+          display: inline-block;
+          margin: 5px 2px 0;
+          -webkit-animation: jump 1.5s linear infinite;
+        }
+        @-webkit-keyframes jump {
+          0%, 100% {transform: translateY(0px);}
+          20% {transform: translateY(-10px);}
+          40% {transform: translateY(0px);}
+        }
+        .dot:nth-of-type(2) {
+          -webkit-animation-delay: 0.2s;
+        }
+        .dot:nth-of-type(3) {
+          -webkit-animation-delay: 0.4s;
+        }
+        .loading {display:none}
+    </style>
+</head>
+<body>
+
+    <div id="imageList"></div>
+    <div class="info">Drag image to change the position. Click image to edit the details.</div>
+
+    <form id="slideform" name="slideform2" method="post" action="" target="slideframe" enctype="multipart/form-data">
+        <input id="fileImage" name="fileImage" type="file" style="font-size:17px;width:250px;" />
+        <input id="hidCustomVal" name="hidCustomVal" type="hidden" />
+        <div class="loading">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </form>
+    <iframe id="slideframe" name="slideframe" style="width:1px;height:1px;border:none;visibility:hidden;position:absolute"></iframe>
+   
+    <br />
+
+    <label>
+        <input id="chkAuto" type="checkbox" checked="checked" /> Autoplay
+    </label>
+
+    <label>
+        <input id="chkArrow" type="checkbox" checked="checked" /> Arrow Navigation
+    </label>
+    
+    <label>
+        <input id="chkDots" type="checkbox" /> Dots Navigation
+    </label>
+
+    <label>
+        <input id="chkFade" type="checkbox" checked="checked" /> Fade
+    </label><br /><br />
+
+    <label id="divHeight" for="txtHeight" style="display:none">Height: <input id="txtHeight" class="inptext" type="text" style="width:50px;right:-400px;" value="100%" /> px</label>
+    
+    <div id="divCaption">        
+        <label id="lblCaption" for="txtCaption">
+        Caption (HTML allowed)
+        </label>
+        <textarea id="txtCaption" class="inptext"></textarea>
+        <label id="lbkLink" for="txtLink">Link:</label>
+        <input id="txtLink" class="inptext" type="text" style="width:90%;" value="" />
+
+        <table>
+        <tr>
+            <td valign="top">
+                <label id="lblPlacement" for="selPlacement">Placement:</label>
+                <select id="selPlacement">
+                    <option value=""></option>
+                    <option value="top left">Top Left</option>
+                    <option value="top center">Top Center</option>
+                    <option value="top right">Top Right</option>
+                    <option value="middle left">Middle Left</option>
+                    <option value="middle center">Middle Center</option>
+                    <option value="middle right">Middle Right</option>
+                    <option value="bottom left">Bottom Left</option>
+                    <option value="bottom center">Bottom Center</option>
+                    <option value="bottom right">Bottom Right</option>
+                </select>
+            </td>
+            <td>&nbsp;</td>
+            <td valign="top">
+                <label id="lblAlign" for="selAlign">Align:</label>
+                <select id="selAlign">
+                    <option value=""></option>
+                    <option value="left">Left</option>
+                    <option value="center">Center</option>
+                    <option value="right">Right</option>
+                </select>
+            </td>
+            <td>&nbsp;</td>
+            <td valign="top">
+                <label id="lblWidth" for="txtWidth">Max Width:</label>
+                <input id="txtWidth" class="inptext" type="text" style="width:55px;" value="" /> px
+            </td>
+        </tr>
+        </table>
+    </div>
+  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+
+            applyTheme();
+
+            //Passing custom value (defined by customval param when initiating ContentBox.js or ContentBuilder.js). Can be used to pass userid in a CMS app to save file on user's folder.
+            var customval = getCustomVal();
+            jQuery('#hidCustomVal').val(customval);
+
+            //Show or hide Slider Height setting. Height is needed if slider is embedded on content. For embedding in a box, height is set 100% automatically.
+            if (isModuleInBox()) {
+                $('#divHeight').css('display', 'none');
+            } else {
+                $('#divHeight').css('display', 'inline-block');
+            }
+
+            //Get current Settings
+
+            /*
+            [
+            {
+            auto: false, 
+            arrow: true, 
+            dots: true, 
+            fade: false, 
+            height: '300px',
+            images: [{src: 'test1.jpg',
+            caption: 'Lorem ipsum',
+            position: 'bottom left'
+            },{src: 'test2.jpg',
+            caption: 'Lorem ipsum',
+            position: 'bottom left'
+            }]
+            }
+            ]
+            */
+            var settings = getSettings();
+            if (settings != 'undefined') {
+                try {
+                    var json = $.parseJSON(settings);
+                    $(json).each(function (i, val) {
+                        $.each(val, function (k, v) {
+                            if (k == 'auto') jQuery("#chkAuto").prop("checked", v);
+                            if (k == 'arrow') jQuery("#chkArrow").prop("checked", v);
+                            if (k == 'dots') jQuery("#chkDots").prop("checked", v);
+                            if (k == 'fade') jQuery("#chkFade").prop("checked", v);
+                            if (k == 'height') jQuery("#txtHeight").val(v);
+                            if (k == 'images') {
+                                $.each(v, function (m, n) {
+                                    jQuery('#imageList').append('<div><img src="' + n.src + '" data-caption="' + (n.caption + '' == 'undefined' ? '' : n.caption) + '" data-width="' + n.width + '" data-link="' + (n.link + '' == 'undefined' ? '' : n.link) + '" data-align="' + (n.align + '' == 'undefined' ? '' : n.align) + '" data-position="' + n.position + '" /><i class="ion-ios-close-empty"></i></div>');
+                                    constructList();
+                                });
+                            }
+                        });
+                    });
+                } catch (e) { }
+            }
+
+            //Upload image
+            var handler = getModuleConfig('moduleSaveImageHandler');
+            jQuery('#fileImage').bind('change', function (e) {
+                jQuery('.loading').css('display','inline-block');
+                jQuery('#slideform').attr('action', handler);
+                jQuery('#slideform').submit();
+            });
+
+            //If there is no settings, so read directly from the html (dom).
+            var $activeModule = parent.jQuery("[data-module-active]");
+            if (jQuery("#imageList").children().length == 0) {
+                $activeModule.find('div').each(function () {
+                    if (jQuery(this).css('background-image').indexOf('url(') != -1) {
+                        var bgurl = jQuery(this).css('background-image');
+                        bgurl = /^url\((['"]?)(.*)\1\)$/.exec(bgurl);
+                        bgurl = bgurl ? bgurl[2] : "";
+                        jQuery('#imageList').append('<div><img src="' + bgurl + '" /><i class="ion-ios-close-empty"></i></div>')
+                        constructList();
+                    }
+                });
+            }
+
+            //Apply events
+            jQuery('#chkAuto').bind('click', function (e) {
+                constructList();
+            });
+            jQuery('#chkArrow').bind('click', function (e) {
+                constructList();
+            });
+            jQuery('#chkDots').bind('click', function (e) {
+                constructList();
+            });
+            jQuery('#chkFade').bind('click', function (e) {
+                constructList();
+            });
+            jQuery('#txtHeight').bind('blur', function (e) {
+                constructList();
+            });
+
+            applyBehaviour();
+
+            //Make image list sortable
+            jQuery("#imageList").sortable({
+                stop: function () {
+                    constructList();
+                },
+                delay: 200
+            });
+
+            jQuery(document).unbind('mousedown');
+            jQuery(document).bind('mousedown', function (event) {
+                if (jQuery(event.target).parents('#divCaption').length > 0 || jQuery(event.target).attr("id") == 'divCaption' || jQuery(event.target).prop("tagName").toLowerCase() == 'img') {
+
+                } else {
+
+                    if (parseInt(jQuery('#divCaption').css('right')) == 0) {//Close                        
+                        jQuery('#divCaption').animate({
+                            right: '-=400px'
+                        }, 200);
+                    }
+
+                }
+            });
+
+        });
+
+        //Function called each time an image has been uploaded.r
+        function sliderImageSaved(s) {
+            jQuery('#imageList').append('<div><img src="' + s + '" /><i class="ion-ios-close-empty"></i></div>');
+            jQuery('.loading').css('display', 'none');
+            jQuery('#fileImage').val('');
+            constructList();
+            applyBehaviour();
+        }
+
+        function applyBehaviour(){
+            jQuery("#imageList img").unbind('click');
+            jQuery("#imageList img").click(function () {
+                jQuery("#imageList img").removeClass('selected');
+                jQuery(this).addClass('selected');
+
+                if (parseInt(jQuery('#divCaption').css('right')) < 0) {//Open                        
+                    jQuery('#divCaption').animate({
+                        right: '+=400px'
+                    }, 200);
+                }
+
+                if (jQuery('#divCaption').find('#imgSelected').length == 0) {
+                    jQuery('#divCaption').prepend('<img id="imgSelected" src="' + jQuery(this).attr('src') + '" style="height:50px;opacity:0.75;"/>');
+                } else {
+                    jQuery('#imgSelected').attr('src', jQuery(this).attr('src'));
+                }
+
+                var s = decodeURIComponent(jQuery(this).attr('data-caption'));
+                if (s == 'undefined') s = '';
+                jQuery('#txtCaption').val(s);
+
+                var s2 = jQuery(this).attr('data-link')+'';
+                if (s2 == 'undefined') s2 = '';
+                jQuery('#txtLink').val(s2);
+
+                var s3 = jQuery(this).attr('data-position') + '';
+                if (s3 == 'undefined') s3 = '';
+                jQuery('#selPlacement').val(s3);
+
+                var s4 = jQuery(this).attr('data-width') + '';
+                if (s4 == 'undefined') s4 = '';
+                jQuery('#txtWidth').val(s4);
+
+                var s5 = jQuery(this).attr('data-align') + '';
+                if (s5 == 'undefined') s5 = '';
+                jQuery('#selAlign').val(s5);
+
+                constructList();
+            });
+
+            jQuery("#imageList i").unbind('click');
+            jQuery("#imageList i").click(function () {//delete image handling
+
+                jQuery(this).parent().remove();
+
+                constructList();
+
+            });
+
+            jQuery("#txtCaption").unbind('keyup');
+            jQuery('#txtCaption').on('keyup', function () {
+                var s = encodeURIComponent(jQuery('#txtCaption').val());
+                jQuery('#imageList').find('.selected').attr('data-caption', s);
+            });
+
+            jQuery("#txtCaption").unbind('blur');
+            jQuery('#txtCaption').on('blur', function () {
+                constructList();
+            });
+
+            jQuery("#txtLink").unbind('keyup');
+            jQuery('#txtLink').on('keyup', function () {
+                var s = jQuery('#txtLink').val();
+                jQuery('#imageList').find('.selected').attr('data-link', s);
+            });
+
+            jQuery("#txtLink").unbind('blur');
+            jQuery('#txtLink').on('blur', function () {
+                constructList();
+            });
+
+            jQuery("#txtWidth").unbind('keyup');
+            jQuery('#txtWidth').on('keyup', function () {
+                var s = jQuery('#txtWidth').val();
+                jQuery('#imageList').find('.selected').attr('data-width', s);
+            });
+
+            jQuery("#txtWidth").unbind('blur');
+            jQuery('#txtWidth').on('blur', function () {
+                constructList();
+            });
+
+            jQuery("#selPlacement").unbind('change');
+            jQuery('#selPlacement').on('change', function () {
+                var optionSelected = $("option:selected", this);
+                var valueSelected = this.value;
+                jQuery('#imageList').find('.selected').attr('data-position', valueSelected);
+            });
+
+            jQuery("#selPlacement").unbind('blur');
+            jQuery('#selPlacement').on('blur', function () {
+                constructList();
+            });
+
+            jQuery("#selAlign").unbind('change');
+            jQuery('#selAlign').on('change', function () {
+                var optionSelected = $("option:selected", this);
+                var valueSelected = this.value;
+                jQuery('#imageList').find('.selected').attr('data-align', valueSelected);
+            });
+
+            jQuery("#selAlign").unbind('blur');
+            jQuery('#selAlign').on('blur', function () {
+                constructList();
+            });
+        }
+
+        //Generate html code, based on the image list and configuration
+        function constructList() {
+
+            var html = '';
+            if (isModuleInBox()) {
+                //Slider in Box
+                html = '<div id="{id}" class="slider-on-box" style="width:100%;height:100%;display:none;">';
+            } else {
+                //Slider on Content
+                html = '<div id="{id}" class="slider-on-content" style="width:100%;height:' + jQuery("#txtHeight").val() + 'px;display:none;">';
+            }
+
+            var imglist = '';
+            jQuery('#imageList img').each(function () {
+                var imgSrc = jQuery(this).attr('src');
+                var encodedCaption = jQuery(this).attr('data-caption') + '';
+                var link = jQuery(this).attr('data-link') + '';
+                var position = jQuery(this).attr('data-position') + '';
+                var captionWidth = jQuery(this).attr('data-width') + '';
+                var captionAlign = jQuery(this).attr('data-align') + '';
+
+                if (encodedCaption == 'undefined') encodedCaption = '';
+                if (link == 'undefined') link = '';
+                if (position == 'undefined') link = '';
+                if (captionWidth == 'undefined') captionWidth = '';
+                if (captionAlign == 'undefined') captionAlign = '';
+
+                var sV = '';
+                if (position.indexOf('top') != -1) {
+                    sV = 'vertical-align:top;';
+                }
+                if (position.indexOf('middle') != -1) {
+                    sV = 'vertical-align:middle;';
+                }
+                if (position.indexOf('bottom') != -1) {
+                    sV = 'vertical-align:bottom;';
+                }
+
+                var sH = '';
+                var sW = '';
+                var sA = '';
+                if (captionWidth != '') sW = 'max-width:' + captionWidth + 'px;';
+                if (captionAlign != '') sA = 'text-align:' + captionAlign + ';';
+                if (position.indexOf('left') != -1) {
+                    sH = 'margin-left:0px;margin-right:auto;' + sW + sA;
+                }
+                else if (position.indexOf('center') != -1) {
+                    sH = 'margin-left:auto;margin-right:auto;' + sW + sA;
+                }
+                else if (position.indexOf('right') != -1) {
+                    sH = 'margin-left:auto;margin-right:0px;' + sW + sA;
+                }
+                else {
+                    sH = sW + sA;
+                }
+
+                var sliderContent = '';
+                if (encodedCaption != '') {
+                    if (link != '') {
+                        sliderContent = '<a href="' + link + '" title="" class="is-box-centered is-content-bottom slider-content" style="' + sV + '"><div class="is-container" style="' + sH + '">' + decodeURIComponent(encodedCaption) + '</div></a>';
+                    } else {
+                        sliderContent = '<div class="is-box-centered is-content-bottom slider-content" style="' + sV + '"><div class="is-container" style="' + sH + '">' + decodeURIComponent(encodedCaption) + '</div></div>';
+                    }
+                }
+
+                html += '<div class="is-boxes slider-image" style="background-image: url(\'' + imgSrc + '\');">' +
+                    sliderContent +
+                    '</div>';
+
+                //sSlideContent = "<a href=""" & sLink2 & """ style=""display: table-cell; vertical-align:" & sVAlign2 & ";text-align:" & sHAlign2 & ";color:#fff;padding:20px 40px;" & IIf(sImagesPerSlide = "1", "padding-bottom:60px;", "padding-bottom:20px;") & "letter-spacing:1px;font-size:1.2em;text-decoration:none;text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);"">" & sCaption2 & "</a>"
+                if (imglist == '') {
+                    imglist += '{"src": "' + imgSrc + '", "caption": "' + encodedCaption + '", "link": "' + link + '", "width": "' + captionWidth + '", "align": "' + captionAlign + '", "position": "' + position + '"}';
+                } else {
+                    imglist += ',{"src": "' + imgSrc + '", "caption": "' + encodedCaption + '", "link": "' + link + '", "width": "' + captionWidth + '", "align": "' + captionAlign + '", "position": "' + position + '"}';
+                }
+            });
+            html += '</div>';
+          
+            html += '<scr' + 'ipt>\n' +
+            'var docReady=function(fn){' +
+                'var stateCheck=setInterval(function (){' +
+                    'if(document.readyState!=="complete")return;' +
+                    'clearInterval(stateCheck);' +
+                    'try{fn()}catch(e){}' +
+                '},1);' +
+            '};\n' +
+            'docReady(function() {\n' +
+                'jQuery("#{id}").css("display","block");\n' +
+                'jQuery("#{id}").slick({\n' +
+                    'dots: ' + jQuery("#chkDots").prop("checked") + ',' +
+                    'arrows: ' + jQuery("#chkArrow").prop("checked") + ',' +
+                    'infinite: true,' +
+                    'speed: 500,' +
+                    'cssEase: "linear",' +
+                    'slidesToShow: 1,' +
+                    'autoplay: ' + jQuery("#chkAuto").prop("checked") + ',' +
+                    'autoplaySpeed: 3000,' +
+                    'fade: ' + jQuery("#chkFade").prop("checked") + ',' +
+                    'adaptiveHeight: true,' +
+                    'responsive: [{breakpoint: 480,' +
+                        'settings: {arrows: false,slidesToShow: 1}' +
+                    '}]\n' +
+                '});\n' +
+            '});\n' +
+            '</scr' + 'ipt>';
+
+            html = html.replace(/{id}/g, makeid());
+            setHtml(html);
+
+            /*
+            [
+                {
+                auto: false, 
+                arrow: true, 
+                dots: true, 
+                fade: false, 
+                height: '300px',
+                images: [
+                    {
+                    src: 'test1.jpg',
+                    caption: 'Lorem ipsum',
+                    position: 'bottom left'
+                    },
+                    {
+                    src: 'test2.jpg',
+                    caption: 'Lorem ipsum',
+                    position: 'bottom left'
+                    }
+                ]
+            ]
+            */
+          
+            var settings = '[{"auto":' + jQuery("#chkAuto").prop("checked") + ',"arrow":' + jQuery("#chkArrow").prop("checked") + ',"dots":' + jQuery("#chkDots").prop("checked") + ',"fade":' + jQuery("#chkFade").prop("checked") + ',"height":"' + jQuery("#txtHeight").val() + '","images":[' + imglist + ']}]';
+            setSettings(settings);
+        }
+
+        /*! jQuery UI Touch Punch 0.2.3 | Copyright 2011–2014, Dave Furfero | Dual licensed under the MIT or GPL Version 2 licenses. */
+        eval(function (p, a, c, k, e, r) { e = function (c) { return (c < a ? '' : e(parseInt(c / a))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36)) }; if (!''.replace(/^/, String)) { while (c--) r[e(c)] = k[c] || e(c); k = [function (e) { return r[e] } ]; e = function () { return '\\w+' }; c = 1 }; while (c--) if (k[c]) p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]); return p } ('(7(4){4.w.8=\'H\'G p;c(!4.w.8){f}d 6=4.U.D.L,g=6.g,h=6.h,a;7 5(2,r){c(2.k.F.J>1){f}2.B();d 8=2.k.q[0],l=p.N(\'O\');l.S(r,i,i,V,1,8.W,8.X,8.Y,8.A,b,b,b,b,0,C);2.z.E(l)}6.m=7(2){d 3=e;c(a||!3.I(2.k.q[0])){f}a=i;3.j=b;5(2,\'K\');5(2,\'s\');5(2,\'M\')};6.n=7(2){c(!a){f}e.j=i;5(2,\'s\')};6.o=7(2){c(!a){f}5(2,\'P\');5(2,\'Q\');c(!e.j){5(2,\'R\')}a=b};6.g=7(){d 3=e;3.u.T({v:4.9(3,\'m\'),x:4.9(3,\'n\'),y:4.9(3,\'o\')});g.t(3)};6.h=7(){d 3=e;3.u.Z({v:4.9(3,\'m\'),x:4.9(3,\'n\'),y:4.9(3,\'o\')});h.t(3)}})(4);', 62, 62, '||event|self|jQuery|simulateMouseEvent|mouseProto|function|touch|proxy|touchHandled|false|if|var|this|return|_mouseInit|_mouseDestroy|true|_touchMoved|originalEvent|simulatedEvent|_touchStart|_touchMove|_touchEnd|document|changedTouches|simulatedType|mousemove|call|element|touchstart|support|touchmove|touchend|target|clientY|preventDefault|null|mouse|dispatchEvent|touches|in|ontouchend|_mouseCapture|length|mouseover|prototype|mousedown|createEvent|MouseEvents|mouseup|mouseout|click|initMouseEvent|bind|ui|window|screenX|screenY|clientX|unbind'.split('|'), 0, {}));
+
+        /* 
+        COMMON METHODS FOR MODULE.
+        */
+        function applyTheme() {
+            if (parent.jQuery('.is-wrapper').length > 0) {
+                //From ContentBox
+                $('body').addClass("dark");
+            } else {
+                //From ContentBuilder             
+            }
+        }
+        function isModuleInBox() {
+            var $activeModule = parent.jQuery("[data-module-active]"); //get active module
+            if ($activeModule.hasClass('is-overlay-content')) {
+                //Module in Box
+                return true;
+            } else {
+                //Module on Content
+                return false;
+            }
+        }
+        function getCustomVal() {
+            var customval;
+            if (parent.jQuery('.is-wrapper').length > 0) {
+                customval = parent.jQuery('.is-wrapper').data('contentbox').settings.customval;
+            } else {
+                var $activeModule = parent.jQuery("[data-module-active]"); //get active module
+                customval = $activeModule.parents(".ui-draggable").parent().data('contentbuilder').settings.customval
+            }
+            return customval;
+        }
+        function getModuleConfig(key) {
+            var config; //Use existing handler to save/upload image.
+            if (parent.jQuery('.is-wrapper').length > 0) {
+                config = parent.jQuery('.is-wrapper').data('contentbox').settings.moduleConfig;
+            } else {
+                var $activeModule = parent.jQuery("[data-module-active]"); //get active module
+                config = $activeModule.parents(".ui-draggable").parent().data('contentbuilder').settings.moduleConfig
+            }
+            var result = '';
+            $(config).each(function (i, val) {
+                result = eval('val.' + key);
+            });
+            return result;
+        }
+        function getHtml() {
+            var $activeModule = parent.jQuery("[data-module-active]");
+            return decodeURIComponent($activeModule.attr("data-html"));
+        }
+
+        function getSettings() {
+            var $activeModule = parent.jQuery("[data-module-active]");
+            return decodeURIComponent($activeModule.attr('data-settings'));
+        }
+
+        function setHtml(html) {
+            if (isModuleInBox()) {
+                //Slider in Box
+                parent.jQuery('#hidModuleCode').val(html);
+            } else {
+                //Slider on Content
+                parent.jQuery('#hidContentModuleCode').val(html);
+            }
+        }
+
+        function setSettings(settings) {
+            if (isModuleInBox()) {
+                //Slider in Box
+                parent.jQuery('#hidModuleSettings').val(settings);
+            } else {
+                //Slider on Content
+                parent.jQuery('#hidContentModuleSettings').val(settings);
+            }
+        }
+
+        function makeid() {//http://stackoverflow.com/questions/1349404/generate-a-string-of-5-random-characters-in-javascript
+            var text = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            for (var i = 0; i < 2; i++)
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+            var text2 = "";
+            var possible2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            for (var i = 0; i < 5; i++)
+                text2 += possible2.charAt(Math.floor(Math.random() * possible2.length));
+
+            return text + text2;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+// Fonts
+// @import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+body{
+    font-family: $font-family-circular-std;
+    background: $body-bg;
+    height: 100%;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    flex-direction: column;
+    overflow-x: hidden;
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+ul {
+    margin: 0;
+    padding: 0;
+    line-height: normal;
+    list-style-type: none;
+}
+a{
+    text-decoration: none !important;
+    list-style-type: none !important;
+    transition: all 0.3s ease-in-out;
+    &:hover{
+        opacity: 0.7;
+    }
+}
+[type="reset"],
+[type="submit"],
+button,
+html [type="button"] {
+    -webkit-appearance: inherit;
+}
+
+img {
+    width: 100%;
+}
+.container{
+    @include media-breakpoint-up-xl{
+        width: 1250px;
+        max-width: 100%;
+    }
+}
+// common css files //
+.vendi-project-title-main{
+    font-size: 30px;
+    font-weight: 400;
+    color: $theme-font-color;
+    line-height: 45px;
+    @include size991{
+        font-size: 24px;
+        line-height: 35px;
+    }
+    @include size767{
+        font-size: 18px;
+        line-height: 30px;
+    }
+}
+.vendi-page-title-main{
+    font-size: 45px;
+    font-weight: 400;
+    color: $theme-font-color;
+    line-height: 45px;
+    @include size991{
+        font-size: 36px;
+        line-height: 35px;
+    }
+    @include size767{
+        font-size: 27px;
+        line-height: 30px;
+    }
+}
+// common css files //

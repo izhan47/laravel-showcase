@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="51px" height="51px" viewBox="0 0 51 51" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>heart-icon</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Watch-and-Learn-2" transform="translate(-900.000000, -1109.000000)">
+            <g id="heart-icon" transform="translate(900.000000, 1109.000000)">
+                <circle id="Oval" stroke="#FF6A6A" stroke-width="2" fill="#FF6A6A" cx="25.5" cy="25.5" r="24.5"></circle>
+                <g id="heart" transform="translate(17.000000, 18.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                    <path d="M13.1896552,0 C11.4527546,0 9.85087218,0.911851396 9,2.38487619 C8.14912782,0.911851396 6.54724544,0 4.81034483,0 C2.15377491,0 0,2.39696343 0,4.98113208 C0,11.4716981 9,16 9,16 C9,16 18,11.4716981 18,4.98113208 C18,2.39696343 15.8462251,0 13.1896552,0 Z" id="Path"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Images</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content=""> 
+    <style>
+        #files img {cursor: pointer; margin:20px; height:150px}
+    </style> 
+</head>
+<body>
+
+<div id="files">
+    <img src="https://www.captus-rnd.com/gwenael/content_builder/uploads/red.jpg" />
+    <img src="https://www.captus-rnd.com/gwenael/content_builder/uploads/book.jpg" />
+    <img src="https://www.captus-rnd.com/gwenael/content_builder/uploads/flower.jpg" />
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script>
+    jQuery(document).ready(function ($) {
+
+        //Optional: specify custom height
+        window.frameElement.style.height = '500px';
+
+        $("img").click(function () {
+
+            selectAsset($(this).attr('src'));
+
+        });
+
+    });
+
+    /* 
+    USE THIS FUNCTION TO SELECT CUSTOM ASSET WITH CUSTOM VALUE TO RETURN 
+    An asset can be a file, an image or a page in your own CMS
+    */
+    function selectAsset(assetValue) {
+        //Get selected URL
+        var inp = parent.top.$('#active-input').val();
+        parent.top.$('#' + inp).val(assetValue);
+
+        //Close dialog
+        if (window.frameElement.id == 'ifrFileBrowse') parent.top.$("#md-fileselect").data('simplemodal').hide();
+        if (window.frameElement.id == 'ifrImageBrowse') parent.top.$("#md-imageselect").data('simplemodal').hide();
+    }
+</script>
+</body>
+</html>

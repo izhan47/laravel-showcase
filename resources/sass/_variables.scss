@@ -1,0 +1,59 @@
+// Body
+$body-bg: #ffffff;
+
+// Typography
+$font-family-circular-std:'Circular Std';
+$font-family-cormorant:'Cormorant Garamond';
+
+// $font-family-sans-serif: 'Nunito', sans-serif;
+// $font-size-base: 0.9rem;
+// $line-height-base: 1.6;
+
+// Colors
+$theme-color-main: #7EADD6;
+$theme-font-color: #272A4A;
+
+
+$theme-color: #6161FF;
+$theme-color-02: #8A288F;
+
+@mixin media-breakpoint-up-xl {
+    @media screen and (min-width: 1250px) {
+        @content;
+    }
+}
+@mixin size1199 {
+    @media (max-width: 1199px) {
+        @content;
+    }
+}
+
+@mixin size991 {
+    @media (max-width: 991px) {
+        @content;
+    }
+}
+
+@mixin size767 {
+    @media (max-width: 767px) {
+        @content;
+    }
+}
+
+@mixin size575 {
+    @media (max-width: 575px) {
+        @content;
+    }
+}
+@mixin size420 {
+    @media (max-width: 420px) {
+        @content;
+    }
+}
+
+@mixin size320 {
+    @media (max-width: 320px) {
+        @content;
+    }
+}
+

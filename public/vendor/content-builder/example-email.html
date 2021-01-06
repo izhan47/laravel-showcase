@@ -1,0 +1,204 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">    
+    <!--<link href="assets/frameworks/foundation-emails/css/foundation-emails.css" rel="stylesheet" type="text/css" />-->
+    <link href="assets/frameworks/foundation-emails/css/app.css" rel="stylesheet" type="text/css" />
+    <link href="assets/emailsnippets/content.css" rel="stylesheet" type="text/css" />
+    <link href="contentbuilder/contentbuilder.css" rel="stylesheet" type="text/css" />
+    <style>       
+        body {margin:30px 0 57px} /* give space 70px on the bottom for panel */
+        #panelCms {width:100%;height:57px;border-top: #eee 1px solid;background:rgba(255,255,255,0.95);position:fixed;left:0;bottom:0;padding:10px;box-sizing:border-box;text-align:center;white-space:nowrap;z-index:10001;}
+        #panelCms button {border-radius:4px;padding: 10px 15px;text-transform:uppercase;font-size: 11px;letter-spacing: 1px;line-height: 1;}
+        .ui-draggable { margin-bottom: 1px; } /* small adjustment for ContentBuilder.js */
+    </style>
+</head>
+<body>
+
+<table class="body" data-made-with-foundation="">
+<tr>
+<td class="float-center" align="center" valign="top">
+<center data-parsed="">
+    <table align="center" class="container float-center">
+    <tbody>
+    <tr>
+    <td id="contentarea" class="is-container">
+
+        <!-- This is just a sample existing content (content can be loaded from a database) -->
+        <div>
+		    <table align="center" class="container float-center">
+                <tbody>
+              	    <tr>
+                	    <td class="wrapper-inner">
+                  		    <table align="center" class="container">
+                    		    <tbody>
+                      		    <tr>
+                        		    <td>
+                          			    <table class="row collapse">
+                            			    <tbody>
+                              			    <tr>
+                                			    <th class="small-6 large-6 columns first">
+                                  				    <table>
+                                    				    <tbody>
+                                    				    <tr>
+                                      					    <th><img src="assets/emailsnippets/image.png" style="width: 200px; height: 60px;"></th>
+                                    				    </tr>
+                                  					    </tbody>
+                                  				    </table>
+                                			    </th>
+                                			    <th class="small-6 large-6 columns last">
+                                  				    <table>
+                                    				    <tbody>
+                                    				    <tr>
+                                      					    <th><p class="text-right"></p>                                     				
+                                      				    </th></tr>
+                                    			    </tbody></table>
+                                    		    </th>
+                                    	    </tr>
+                                  		    </tbody>
+                                  	    </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                	    </td>
+            	    </tr>
+                </tbody>
+            </table>
+	    </div>
+	    <div>
+		    <table align="center" class="container float-center">
+			    <tbody>
+				    <tr>
+					    <td>		
+						    <table class="row">
+							    <tbody>
+							    <tr>
+								    <th class="small-12 large-12 columns first last">
+									    <table>
+										    <tbody>
+										    <tr>
+											    <th><h1 style="font-size:40px;font-family:Open Sans;font-weight:bold;line-height:1.3">LOREM IPSUM IS SIMPLY DUMMY TEXT</h1></th>
+										    </tr>
+										    </tbody>
+									    </table>
+								    </th>
+                        	    </tr>
+                    		    </tbody>
+                		    </table>   		                     
+					    </td>
+				    </tr>
+			    </tbody>
+		    </table>
+	    </div>
+	    <div>
+		    <table align="center" class="container float-center">
+			    <tbody>
+				    <tr>
+					    <td>              
+                    	    <table class="row">
+                      		    <tbody>
+                        	    <tr>
+                          		    <th class="small-12 large-12 columns first last">
+                            		    <table>
+                              			    <tbody>
+                              			    <tr>
+                                			    <th><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></th>
+                           	 			    </tr>
+                        				    </tbody>
+                        			    </table>
+                    			    </th>
+                			    </tr>
+            				    </tbody>
+                            </table>    
+					    </td>
+                    </tr>
+                </tbody>
+            </table>
+	    </div>
+        <!-- /sample content -->
+
+    </td>
+    </tr>
+    </tbody>
+    </table>
+</center>
+</td>
+</tr>
+</table>
+
+
+<!-- CUSTOM PANEL (can be used for "save" button or your own custom buttons) -->
+<div id="panelCms">
+    <button onclick="view()" class="btn btn-primary"> HTML </button>
+    <button onclick="save()" class="btn btn-primary"> Save </button>
+</div>
+
+<script src="contentbuilder/jquery.min.js" type="text/javascript"></script>
+<script src="contentbuilder/jquery-ui.min.js" type="text/javascript"></script>
+<script src="contentbuilder/contentbuilder.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        if (localStorage.getItem('myemail') == '') {
+            localStorage.removeItem('myemail');
+        }
+        //Load saved Content
+        if (localStorage.getItem('myemail') != null) {
+            $("#contentarea").html(localStorage.getItem('myemail'));
+        }
+
+        $("#contentarea").contentbuilder({
+            snippetFile: 'assets/emailsnippets/snippets.html',
+            absolutePath:true,
+            snippetOpen: true,
+            toolbar: 'left',   
+            customTags: [["First Name", "{%first_name%}"],
+                ["Last Name", "{%last_name%}"],
+                ["Email", "{%email%}"]],         
+            snippetCategories: [
+                [0,"Default"],
+                [-1, "All"],
+                [1, "Logo"],
+                [2,"Title"],
+                [3,"Title, Subtitle"],
+                [4,"Info, Title"],
+                [5,"Info, Title, Subtitle"],
+                [6,"Heading, Paragraph"],
+                [7,"Paragraph"],
+                [8, "Buttons"],
+                [9, "Callouts"],
+                [10,"Images + Caption"],
+                [11,"Images + Long Caption"],
+                [12, "Images"],
+                [13, "List"],
+                [14,"Call to Action"],
+                [15, "Pricing"],
+                [16, "Quotes"],
+                [17, "Profile"],
+                [18, "Contact Info"],
+                [19, "Footer"],
+                [20,"Separator"]
+                ]
+        });
+
+    });
+
+    function save() {
+        var sContent = $('#contentarea').data('contentbuilder').html(); //Get content
+
+        localStorage.setItem('myemail', sContent);
+        alert('Saved Successfully');
+    }
+
+    function view() {
+        /* This is how to get the HTML content (ex. for saving to a database) */
+        var sHTML = $('#contentarea').data('contentbuilder').viewHtml();
+    }
+</script>
+
+</body>
+</html>
