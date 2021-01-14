@@ -64,7 +64,7 @@ Route::middleware(['adminAuth'])->group(function () {
 	Route::resource('/pet-pros/{pet_pro_id}/gallery', 'PetProGalleriesController');
 
 	Route::get('/pet-pros/get-cities/{state_id}', 'PetProsController@getCities');
-	Route::get('/pet-pros/get-states', 'PetProsController@getStates');
+	Route::get('/pet-pros/get-states/{country_id}', 'PetProsController@getStates');
 	Route::get('/pet-pros/get-geocode-data', 'PetProsController@getGeocodeData');
 	Route::get('/pet-pros/datatable', 'PetProsController@getDatatable');
 	Route::resource('/pet-pros', 'PetProsController');

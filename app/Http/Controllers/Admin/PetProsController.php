@@ -64,18 +64,19 @@ class PetProsController extends Controller
     }
     
     public function create()
-    {
-        $states = State::where('country_id', 231)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
+    {   
+        $countries = Country::pluck('name', 'id')->toArray();
+        $states = [ ];
         $cities = [ ];
 
         $categories = PetProCategory::orderBy('name', 'asc')->get()->pluck("name", "id")->toArray();
-        return view("$this->moduleView.create", compact('categories', 'states', 'cities'));
+        return view("$this->moduleView.create", compact('categories', 'countries','states', 'cities'));
     }
  
     public function store(PetProRequest $request)
-    {
-        $pet_pro_input = $request->only(['store_name', 'website_url', 'email',  'phone_number', 'address_line_1', 'address_line_2', 'city_id', 'state_id', 'postal_code', 'description']);
-
+    {   
+      
+        $pet_pro_input = $request->only(['store_name', 'website_url', 'email',  'phone_number', 'address_line_1', 'address_line_2', 'postal_code', 'description']);
         $time_input = $request->only(['monday_open', 'monday_close', 'tuesday_open', 'tuesday_close', 'wednesday_open', 'wednesday_close', 'thursday_open', 'thursday_close', 'friday_open', 'friday_close', 'saturday_open', 'saturday_close', 'sunday_open', 'sunday_close']);     
         $inputCategories = $request['category_id'];
 
@@ -87,13 +88,26 @@ class PetProsController extends Controller
             }
 
             $isSaved = $this->model->create($pet_pro_input);
-            $city =  City::where('id',$isSaved->city_id)->first();
-            if($city){
-                $this->model->where('id', $id)->update([
-                    "latitude" => $city->city_latitude,
-                    "longitude" => $city->city_longitude,                           
-                ]);
+            $pet_pro = $this->model->where('id', $isSaved->id)->first();
+            if($request->country_id && $request->state_id && $request->city_id){
+                foreach ($request->country_id as $index => $row) {
+                    $city_latitude = null;
+                    $city_longitude = null;
+                    $city =  City::where('id',$request->city_id[$index])->first();
+                    if($city){
+                        $city_latitude = $city->city_latitude;
+                        $city_longitude = $city->city_longitude;
+}
+                    $pet_pro->countries()->attach($row, ['state_id' => $request->state_id[$index], 'city_id' => $request->city_id[$index], 'latitude' => $city_latitude,'longitude' => $city_longitude]);
+                }
             }
+            // $city =  City::where('id',$isSaved->city_id)->first();
+            // if($city){
+            //     $this->model->where('id', $id)->update([
+            //         "latitude" => $city->city_latitude,
+            //         "longitude" => $city->city_longitude,                           
+            //     ]);
+            // }
             if ($isSaved) {
 				if(count($inputCategories)) {  
 					$currentTime = Carbon::now();   
@@ -501,14 +515,14 @@ class PetProsController extends Controller
         return WagEnabledHelpers::apiJsonResponse($cities, $code, $message);
     }
 
-    public function getStates(Request $request)
+    public function getStates(Request $request, $country_id)
     {
         $code = config("wagenabled.status_codes.normal_error");
         $message = "";
         $states = [];
 
         try {
-            $states = State::select(["id", "name"])->where('country_id', 231)->orderBy('name', 'asc')->get();           
+            $states = State::select(["id", "name"])->where('country_id', $country_id)->orderBy('name', 'asc')->get();           
             $code = config("wagenabled.status_codes.success");
 
         }

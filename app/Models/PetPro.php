@@ -48,6 +48,34 @@ class PetPro extends Model
     {
         return $this->belongsTo('App\Models\Country');
     }
+    
+    public function countries()
+    {
+        return $this->belongsToMany(
+            'App\Models\Country',
+            'pet_country_state_city',
+            'pet_pro_id',
+            'country_id');
+    }
+
+    public function states()
+    {
+        return $this->belongsToMany(
+            'App\Models\State',
+            'pet_country_state_city',
+            'pet_pro_id',
+            'state_id');
+    }
+
+    public function cities()
+    {
+        return $this->belongsToMany(
+            'App\Models\City',
+            'pet_country_state_city',
+            'pet_pro_id',
+            'city_id');
+    }
+    
 
     public function state()
     {

@@ -101,10 +101,11 @@ class PetProController extends Controller
             }*/
             if(!( empty($input["longitude"]) || empty($input["latitude"]) ) ) {
                 $is_seach_by_location = true;
-                $pet_pros = $pet_pros->selectRaw('pet_pros.*,  ( 6367 * acos( cos( radians( ? ) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians( ? ) ) + sin( radians( ? ) ) * sin( radians( latitude ) ) ) ) AS distance', [$input["latitude"], $input["longitude"], $input["latitude"]]);
+                //$pet_pros = $pet_pros->selectRaw('pet_pros.*,  ( 6367 * acos( cos( radians( ? ) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians( ? ) ) + sin( radians( ? ) ) * sin( radians( latitude ) ) ) ) AS distance', [$input["latitude"], $input["longitude"], $input["latitude"]]);
+                $pet_pros_with_lat_long =  DB::table('pet_country_state_city')->selectRaw('pet_country_state_city.*,  ( 6367 * acos( cos( radians( ? ) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians( ? ) ) + sin( radians( ? ) ) * sin( radians( latitude ) ) ) ) AS distance', [$input["latitude"], $input["longitude"], $input["latitude"]]);
             }
         // }
-
+        
         $totalRecords = $pet_pros->count();
 
         $this->responseData = [
@@ -112,10 +113,6 @@ class PetProController extends Controller
 		];
 
         if($totalRecords > 0) {
-
-            if( $is_seach_by_location ) {
-                $pet_pros =  $pet_pros->orderBy(\DB::raw('-`distance`'), 'desc')->havingRaw('distance <= ?',[25]); //->orHavingRaw('distance is null')
-            }
 
 			$petProArr = clone $pet_pros;
 			$totalRecords = count($petProArr->get());
@@ -140,10 +137,14 @@ class PetProController extends Controller
                         break;
                 }
             //}
-
-            $pet_pro_list = $pet_pros->skip($skip)
+            if( $is_seach_by_location ) {
+                $pet_pro_list = $pet_pros->get();
+            }else{
+                $pet_pro_list = $pet_pros->skip($skip)
                                     ->take($perPage)
                                     ->get();
+            }
+                                   
 
             $this->responseData["pet_pro_list"] = $pet_pro_list;
 
@@ -157,16 +158,37 @@ class PetProController extends Controller
                                 ->get();
 			}
 		}
+        if( $is_seach_by_location ) {
+            $pet_pros_with_lat_long =  $pet_pros_with_lat_long->orderBy(\DB::raw('-`distance`'), 'desc')->havingRaw('distance <= ?',[25]);//->orHavingRaw('distance is null')
+            $this->responseData["pet_pro_list"] = $this->addMatchOne($pet_pros_with_lat_long->get(), $this->responseData["pet_pro_list"]);
+            $totalPages = ceil(count($this->responseData["pet_pro_list"]) / $perPage);
 
-		$totalPages = ceil($totalRecords / $perPage);
-
-		$this->responseData["total_page"] = $totalPages;
+            $this->responseData["total_page"] = $totalPages;
+            $this->responseData["total_records"] = count($this->responseData["pet_pro_list"]);
+            $skiparray = 0;
+            $limitarray = $perPage;
+            if($page>1){
+               $skiparray = ($perPage*$page)-$perPage;
+                $limitarray =  ($perPage*$page)-1;
+            }
+            $this->responseData["pet_pro_list"] =array_slice( $this->responseData["pet_pro_list"], $skiparray,  $limitarray); 
+            $this->message = "";
+            $this->code = $this->statusCodes['success'];
+    
+            return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
+        }
+        else{
+           
+        $totalPages = ceil($totalRecords / $perPage);
+        $this->responseData["total_page"] = $totalPages;
         $this->responseData["total_records"] = $totalRecords;
 
         $this->message = "";
         $this->code = $this->statusCodes['success'];
 
         return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
+        }
+
     }
 
     public function getMapList(Request $request )
@@ -482,6 +504,20 @@ class PetProController extends Controller
 
         return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
 
+    }
+
+    public function addMatchOne($petProsLatLongArr, $petProsArr)
+    {   $petProsLatestArray = [];
+        foreach ($petProsArr as $key1=>$match) {
+           foreach ($petProsLatLongArr as $key => $value) {
+             
+             if($match->id == $value->pet_pro_id){
+                $petProsLatestArray[] = $value;
+             }
+           }
+        }
+
+        return json_decode(json_encode($petProsLatestArray));
     }
 
 }
