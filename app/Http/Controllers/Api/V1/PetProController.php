@@ -512,7 +512,7 @@ class PetProController extends Controller
            foreach ($petProsLatLongArr as $key => $value) {
              
              if($match->id == $value->pet_pro_id){
-                $petProsLatestArray[] = $value;
+                $petProsLatestArray[] = $match;
              }
            }
         }
