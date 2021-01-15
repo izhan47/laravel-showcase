@@ -520,4 +520,21 @@ class PetProController extends Controller
         return json_decode(json_encode($petProsLatestArray));
     }
 
+    public function addLocationAnotherTable()
+    {
+        $pet_pros = PetPro::all();
+        foreach ($pet_pros as $key => $value) {
+            if($value->state_id && $value->city_id){
+                DB::table('pet_country_state_city')->insert([
+                    'pet_pro_id' => $value->id,
+                    'country_id' => 231,
+                    'state_id' => $value->state_id,
+                    'city_id' =>  $value->city_id,
+                    'latitude' => $value->latitude,
+                    'longitude' => $value->longitude,
+                ]);
+            }
+        }
+    }
+
 }
