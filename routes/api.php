@@ -40,7 +40,9 @@ $api->version('v1', ['prefix' => 'api', 'namespace' => '\App\Http\Controllers\Ap
         $api->post('get-list/{page?}', ['as' => 'get-list', 'uses' => 'PetProController@getList']);
         $api->post('get-map-list', ['as' => 'get-map-list', 'uses' => 'PetProController@getMapList']);
         $api->post('get-reviews/{slug}/{lastId?}', ['as' => 'get-reviews', 'uses' => 'PetProController@getReviewList']);
-        $api->post('get-details/{slug}', ['as' => 'get-details', 'uses' => 'PetProController@getDetails']);        
+        $api->post('get-details/{slug}', ['as' => 'get-details', 'uses' => 'PetProController@getDetails']);
+        $api->get('shiftLocation', ['as' => 'shiftLocation', 'uses' => 'PetProController@addLocationAnotherTable']);
+        
     });
 
     $api->group(['prefix' => 'watch-and-learn'], function ($api) { 

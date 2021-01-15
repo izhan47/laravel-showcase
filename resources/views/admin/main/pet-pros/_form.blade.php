@@ -82,7 +82,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-12">
                     <div class="form-group">
                         <label>Postal Code</label>
                         {{ Form::text('postal_code', null, ['id' => 'postal_code', 'class'=>"form-control"]) }}
@@ -91,25 +91,71 @@
                         @endif
                     </div>
                 </div>
+                <div class="row d-none" id="locationDivClone">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label>State</label>
-                        {{ Form::select('state_id', [ "" => "Select"] + $states, null, ['id'=> 'state_id', 'class' => 'form-control']) }}
-                        @if($errors->has('state_id'))
-                            <p class="text-danger">{{ $errors->first('state_id') }}</p>
+                        <label class=" ">Country</label>
+                        {{ Form::select('country_id[0]', [ "" => "Select"] + $countries, null, ['id'=> 'country_id_', 'class' => 'form-control country-input d-none']) }}
+                        @if($errors->has('country'))
+                            <p class="text-danger">{{ $errors->first('country') }}</p>
                         @endif
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="form-group">
-                        <label>City</label>
-                        {{ Form::select('city_id', [ "" => "Select"] + $cities, null, ['id'=> 'city_id', 'class' => 'form-control']) }}
+                    <div class="form-group ">
+                        <label class=" ">State</label>
+                        {{ Form::select('state_id[0]', [ "" => "Select"] + $states, null, ['id'=> 'state_id_', 'class' => 'form-control state-input d-none']) }}
+                        @if($errors->has('state'))
+                            <p class="text-danger">{{ $errors->first('state') }}</p>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label class=" ">City</label>
+                        {{ Form::select('city_id[0]', [ "" => "Select"] + $cities, null, ['id'=> 'city_id_', 'class' => 'form-control city-input d-none']) }}
                         @if($errors->has('city_id'))
                             <p class="text-danger">{{ $errors->first('city_id') }}</p>
                         @endif
                     </div>
                 </div>
+                </div>
+                <div id="locationDiv">
+
+                <div class="row" >
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class=" ">Country</label>
+                        {{ Form::select('country_id[0]', [ "" => "Select"] + $countries, null, ['id'=> 'country_id_0', 'class' => 'form-control country-input']) }}
+                        @if($errors->has('country'))
+                            <p class="text-danger">{{ $errors->first('country') }}</p>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label class=" ">State</label>
+                        {{ Form::select('state_id[0]', [ "" => "Select"] + $states, null, ['id'=> 'state_id_0', 'class' => 'form-control state-input ']) }}
+                        @if($errors->has('state'))
+                            <p class="text-danger">{{ $errors->first('state') }}</p>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label class=" ">City</label>
+                        {{ Form::select('city_id[0]', [ "" => "Select"] + $cities, null, ['id'=> 'city_id_0', 'class' => 'form-control city-input']) }}
+                        @if($errors->has('city_id'))
+                            <p class="text-danger">{{ $errors->first('city_id') }}</p>
+                        @endif
+                    </div>
+                </div>
+                </div>
                 
+                </div>
+                <button class="wag-admin-btns-main " type="button" id="add-location">Add Location</button>
+                <br/>
+                <br/>
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Description</label>
@@ -539,13 +585,6 @@
 			donetext: 'Done'
 		});
 
-		$('#state_id').select2({
-			tags: false,
-		});
-
-		$('#city_id').select2({
-			tags: false,
-		});
 
 		$('#category_id').select2({
 			tags: false,
@@ -565,7 +604,7 @@
                         if( data.data ) {                       
                             selectedStateId = data.data.state_id;
                             selectedCityId = data.data.city_id;
-                            getStateList();                                            
+                            getStateList(null);                                            
                         }
                     },
                     error:function (error) {
@@ -574,27 +613,35 @@
                 });
             }
         });
+        $("#country_id_0").change(function () {            
+            if( $(this).val() ) {
+                console.log($(this).val())
+                getStateList($(this).val());
+            }
+        });
 
-        $("#state_id").change(function () {            
+        $("#state_id_0").change(function () {            
             if( $(this).val() ) {
                 getCityList($(this).val());
             }
         });
 
-        function getStateList() {
-            $('#state_id').empty().trigger("change");
+        
+
+        function getStateList(country_id) {
+            $('#state_id_0').empty().trigger("change");
             var newStateOption = new Option('Loading..', '', false, false);
-            $('#state_id').append(newStateOption).trigger('change');
+            $('#state_id_0').append(newStateOption).trigger('change');
             $.ajax({
-                url:  "{{ url('admin/pet-pros/get-states') }}",
+                url:  "{{ url('admin/pet-pros/get-states') }}/"+country_id,
                 type: "get",
                 data: {},
                 success: function(data){
-                    $('#state_id').empty().trigger("change");
+                    $('#state_id_0').empty().trigger("change");
                     var newStateOption = new Option('Select', '', false, false);
-                    $('#state_id').append(newStateOption).trigger('change');
+                    $('#state_id_0').append(newStateOption).trigger('change');
                     for (var j = 0; j < data.data.length; j++) {
-                        $("<option/>").attr("value", data.data[j].id).text(data.data[j].name).appendTo($("#state_id"));
+                        $("<option/>").attr("value", data.data[j].id).text(data.data[j].name).appendTo($("#state_id_0"));
                     }
                     if( selectedStateId ) {
                         //$('#state_id').val(selectedStateId).trigger('change');
@@ -605,19 +652,19 @@
         }
 
         function getCityList(state_id) {
-            $('#city_id').empty().trigger("change");
+            $('#city_id_0').empty().trigger("change");
             var newOption = new Option('Loading..', '', false, false);
-            $('#city_id').append(newOption).trigger('change');            
+            $('#city_id_0').append(newOption).trigger('change');            
             $.ajax({
                 url:  "{{ url('admin/pet-pros/get-cities') }}/"+state_id,
                 type: "get",
                 data: {},
                 success: function(data){
-                    $('#city_id').empty().trigger("change");
+                    $('#city_id_0').empty().trigger("change");
                     var newOption = new Option('Select', '', false, false);
-                    $('#city_id').append(newOption).trigger('change');
+                    $('#city_id_0').append(newOption).trigger('change');
                     for (var i = 0; i < data.data.length; i++) {
-                        $("<option/>").attr("value", data.data[i].id).text(data.data[i].name).appendTo($("#city_id"));
+                        $("<option/>").attr("value", data.data[i].id).text(data.data[i].name).appendTo($("#city_id_0"));
                     }
                     if( selectedCityId ) {                                         
                         //$('#city_id').val($.trim(parseInt(selectedCityId))).trigger('change');
@@ -886,9 +933,69 @@
 <script src="{{ asset('plugins/croppie/croppie.js') }}"></script>
 
 <script type="text/javascript">
+
     $(document).ready(function () {
         var rowID = 1;
+        var rowIDLocation = 1;
+        $("#add-location").click(function () {
+            var cloneDiv = $( "#locationDivClone" ).clone().removeClass('d-none').removeAttr('id');
+            cloneDiv.find('.country-input ').attr('name', 'country_id['+rowIDLocation+']').removeClass('d-none');
+            cloneDiv.find('.state-input ').attr('name', 'state_id['+rowIDLocation+']').removeClass('d-none');
+            cloneDiv.find('.city-input').attr('name', 'city_id['+rowIDLocation+']').removeClass('d-none');
+            cloneDiv.find('.country-input ').attr('id', 'country_id_'+rowIDLocation);
+            cloneDiv.find('.state-input ').attr('id', 'state_id_'+rowIDLocation);
+            cloneDiv.find('.city-input').attr('id', 'city_id_'+rowIDLocation);
+            var row_id = rowIDLocation;
+            
+            cloneDiv.find('.country-input').change( function() { 
+                
+                $("#state_id_"+row_id).empty().trigger("change");
+                var newStateOption = new Option('Loading..', '', false, false);
+                $("#state_id_"+row_id).append(newStateOption).trigger('change');
+                $.ajax({
+                    url:  "{{ url('admin/pet-pros/get-states') }}/"+$(this).val(),
+                    type: "get",
+                    data: {},
+                    success: function(data){
+                      
+                        $("#state_id_"+row_id).empty().trigger("change");
+                        var newStateOption = new Option('Select', '', false, false);
+                        $("#state_id_"+row_id).append(newStateOption).trigger('change');
+                        if(data){
+                        for (var j = 0; j < data.data.length; j++) {
+                            $("<option/>").attr("value", data.data[j].id).text(data.data[j].name).appendTo($("#state_id_"+row_id));
+                        }
+                    }
+                      
+                    }
+                });
+            });
 
+            cloneDiv.find('.state-input').change( function() { 
+                $("#city_id_"+row_id).empty().trigger("change");
+                var newStateOption = new Option('Loading..', '', false, false);
+                $("#city_"+row_id).append(newStateOption).trigger('change');
+                $.ajax({
+                    url:  "{{ url('admin/pet-pros/get-cities') }}/"+$(this).val(),
+                    type: "get",
+                    data: {},
+                    success: function(data){
+                      
+                        $("#city_id_"+row_id).empty().trigger("change");
+                        var newStateOption = new Option('Select', '', false, false);
+                        $("#city_id_"+row_id).append(newStateOption).trigger('change');
+                        if(data){
+                        for (var j = 0; j < data.data.length; j++) {
+                            $("<option/>").attr("value", data.data[j].id).text(data.data[j].name).appendTo($("#city_id_"+row_id));
+                        }
+                    }
+                      
+                    }
+                });
+            });
+            rowIDLocation++;
+            cloneDiv.appendTo( "#locationDiv" );
+        });
        /*
         var cloneDiv = $( "#clon-add-gallery-image-div" ).clone().removeClass('d-none').removeAttr('id');
         cloneDiv.find('.upload-image-input ').attr('name', 'row['+rowID+'][image]');
@@ -1041,7 +1148,7 @@
         });
 
 
-
+        
 
     });
 </script>
