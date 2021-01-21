@@ -78,6 +78,7 @@ $api->version('v1', ['prefix' => 'api', 'namespace' => '\App\Http\Controllers\Ap
             $api->post('get-saved-product-review/{page?}', ['as' => 'get-saved-product-review', 'uses' => 'UsersController@getSavedProductReview']);
             $api->post('get-user-pet-pro-reviews/{page?}', ['as' => 'get-user-pet-pro-reviews', 'uses' => 'UsersController@getUserPetProReview']);
             $api->post('get-users-pets/{lastId?}', ['as' => 'get-users-pets', 'uses' => 'UsersController@getUsersPet']);
+            $api->post('get-claim-deals', ['as' => 'get-claim-deals', 'uses' => 'UsersController@getclaimDeals']);
         });
 
         $api->group(['prefix' => 'pet-pro'], function ($api) {             
