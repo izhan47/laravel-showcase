@@ -15,6 +15,8 @@ use App\Models\UserLovedPetPro;
 use App\Models\UserPet;
 use App\Models\UserSavedVideo;
 use App\Models\UsersPetBreed;
+use App\Models\PetProDealClaim;
+use App\Models\PetProDeal;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -529,6 +531,23 @@ class UsersController extends Controller
       
         return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
 
+    }
+
+    public function getclaimDeals() {
+
+        $user = Auth::user();
+        if ($user->count() == 0) {
+            return WagEnabledHelpers::apiUserNotFoundResponse();
+        }
+        $isClaimed = PetProDealClaim::select('pet_pro_deal_id')->where('user_id', $user->id)->get();
+        $deal_ids = [];
+        foreach ($isClaimed as $key => $value) {
+            $deal_ids[] = $value->pet_pro_deal_id;
+        }
+        $this->responseData['claimedDeals'] = PetProDeal::whereIn('id',$deal_ids)->get();
+        $this->message = "";
+        $this->code = $this->statusCodes['success']; 
+        return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
     }
 
 }
