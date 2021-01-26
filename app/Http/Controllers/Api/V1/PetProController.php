@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Validator;
 use Math;
 use App\Models\PetProSelectedCategory;
+use App\Models\PetProSelectedBusinessNature;
 use DB;
 
 class PetProController extends Controller
@@ -62,6 +63,7 @@ class PetProController extends Controller
         $is_seach_by_location = false;
 
         $category_id = $request->get('category_id', "");
+        $business_id = $request->get('business_id', "");
         $search = $request->get('search', "");
         $sort_by = $request->get('sort_by', "");
 
@@ -75,6 +77,10 @@ class PetProController extends Controller
         if( $category_id ) {
             $selectedCategoryPetProIds = PetProSelectedCategory::where('category_id', $category_id)->pluck('pet_pro_id')->toArray();
             $pet_pros = $pet_pros->whereIn('id', $selectedCategoryPetProIds);
+        }
+        if( $business_id ) {
+            $selectedBusinessPetProIds = PetProSelectedBusinessNature::where('business_id', $business_id)->pluck('pet_pro_id')->toArray();
+            $pet_pros = $pet_pros->whereIn('id', $selectedBusinessPetProIds);
         }
 
         if( $search ) {

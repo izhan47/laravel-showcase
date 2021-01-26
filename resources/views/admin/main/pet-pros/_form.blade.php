@@ -167,6 +167,15 @@
                 </div>
                 <div class="col-md-12">
                     <div class="form-group wag-categories-box-main">
+                        <label>Nature of the Business *</label>
+                        {{ Form::select('business_id[]', $businessNatures, ( isset($selectedBusiness) && count($selectedBusiness))?$selectedBusiness:null, ['id'=> 'business_id', 'class' => 'form-control', 'multiple' => 'multiple']) }}
+                        @if($errors->has('business_id'))
+                            <p class="text-danger">{{ $errors->first('business_id') }}</p>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group wag-categories-box-main">
                         <label>Categories *</label>
                         {{ Form::select('category_id[]', $categories, ( isset($selectedCategories) && count($selectedCategories))?$selectedCategories:null, ['id'=> 'category_id', 'class' => 'form-control', 'multiple' => 'multiple']) }}
                         @if($errors->has('category_id'))
@@ -590,6 +599,10 @@
 			tags: false,
 			placeholder: 'Select categories'
 		});
+        $('#business_id').select2({
+			tags: false,
+			placeholder: 'Select Business Nature'
+		});
 
         $("#postal_code").change(function(){
             var data = $(this).val();   
@@ -716,6 +729,9 @@
                     maxlength: 255
                 },
                 'category_id[]': {
+                    required: true
+                },
+                'business_id[]': {
                     required: true
                 },
                 /*state_id: {
@@ -858,7 +874,7 @@
 
             },
 			errorPlacement: function(error, element) {
-				if (element.attr("id") == "city_id" || element.attr("id") == "state_id" || element.attr("id") == "category_id" ){
+				if (element.attr("id") == "city_id" || element.attr("id") == "state_id" || element.attr("id") == "category_id" || element.attr("id") == "business_id"){
 					error.appendTo(element.closest('.form-group'));
 				}
 				else {

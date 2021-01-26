@@ -51,7 +51,9 @@ Route::middleware(['adminAuth'])->group(function () {
 	Route::resource('/watch-and-learn-medias', 'WatchAndLearnMediaController');
 
 	Route::get('/pet-pro-categories/datatable', 'PetProCategoriesController@getDatatable');
+	Route::get('/pet-pro-business/datatable', 'PetProBusinessController@getDatatable');
 	Route::resource('/pet-pro-categories', 'PetProCategoriesController');
+	Route::resource('/pet-pro-business', 'PetProBusinessController');
 
 	Route::post('/pet-pros/{pet_pro_id}/deals/change-deal-status/{id}', 'PetProDealsController@changeStatus');
 	Route::get('/pet-pros/{pet_pro_id}/deals/datatable/', 'PetProDealsController@getDatatable');
