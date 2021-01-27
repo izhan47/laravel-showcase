@@ -261,6 +261,7 @@ class PetProsController extends Controller
     {   
         
         $inputCategories = $request->get("category_id", []);
+        $inputBusinessNatures = $request->get("business_id", []);
         $city =  City::where('id',$request->get("city_id"))->first();
         
         
@@ -306,8 +307,22 @@ class PetProsController extends Controller
 
 							$insertedCategories[] = $categoryId;
                         }                        
+                    }
+                    
+                    if(count($inputBusinessNatures)) {
+                        foreach ($inputBusinessNatures as $businessId) {
+                            $insertArray = [
+								"pet_pro_id" => $result->id,
+								"business_id" => $businessId
+                            ];
+                            
+                            $res = $result->business()->updateOrCreate($insertArray, $insertArray);
+
+							$insertedBusiness[] = $businessId;
+                        }                        
 					}
                     $result->categories()->whereNotIn("category_id", $insertedCategories)->delete();
+                    $result->business()->whereNotIn("business_id", $insertedBusiness)->delete();
                     
                     if($city){
                         $this->model->where('id', $id)->update([

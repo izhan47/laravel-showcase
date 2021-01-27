@@ -37,6 +37,7 @@ $api->version('v1', ['prefix' => 'api', 'namespace' => '\App\Http\Controllers\Ap
     $api->group(['prefix' => 'pet-pro'], function ($api) { 
         $api->post('get-care-from-best', ['as' => 'get-care-from-best', 'uses' => 'PetProController@careFromBestList']);
         $api->post('get-category-list', ['as' => 'get-category-list', 'uses' => 'PetProController@getCategoryList']);
+        $api->post('get-business-nature-list', ['as' => 'get-business-nature-list', 'uses' => 'PetProController@getBusinessNatureList']);
         $api->post('get-list/{page?}', ['as' => 'get-list', 'uses' => 'PetProController@getList']);
         $api->post('get-map-list', ['as' => 'get-map-list', 'uses' => 'PetProController@getMapList']);
         $api->post('get-reviews/{slug}/{lastId?}', ['as' => 'get-reviews', 'uses' => 'PetProController@getReviewList']);

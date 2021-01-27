@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\WagEnabledHelpers;
 use App\Models\PetPro;
 use App\Models\PetProCategory;
+use App\Models\BusinessNature;
 use App\Models\PetProDeal;
 use App\Models\PetProDealClaim;
 use App\Models\PetProReview;
@@ -505,6 +506,26 @@ class PetProController extends Controller
         }
 
         $this->responseData["category_list"] = $category_list;
+        $this->message = "";
+        $this->code = $this->statusCodes['success'];
+
+        return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
+
+    }
+
+    public function getBusinessNatureList(Request $request) {
+
+        $business_nature_data = BusinessNature::select(['id', 'name'])
+                                            ->orderBy('name')
+                                            ->get();
+
+        $business_nature_list = [];
+        $business_nature_list[] = ["value" => '', "label"=> 'All'];
+        foreach ($business_nature_data as $business) {
+            $business_nature_list[] = [ "value" => $business->id, "label"=> $business->name];
+        }
+
+        $this->responseData["business_nature_list"] = $business_nature_list;
         $this->message = "";
         $this->code = $this->statusCodes['success'];
 
