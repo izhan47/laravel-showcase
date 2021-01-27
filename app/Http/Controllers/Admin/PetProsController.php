@@ -10,6 +10,7 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\PetPro;
 use App\Models\PetProCategory;
+use App\Models\BusinessNature;
 use App\Models\PetProGallery;
 use App\Models\PetProServicesOffered;
 use App\Models\PetProTimetable;
@@ -70,7 +71,8 @@ class PetProsController extends Controller
         $cities = [ ];
 
         $categories = PetProCategory::orderBy('name', 'asc')->get()->pluck("name", "id")->toArray();
-        return view("$this->moduleView.create", compact('categories', 'countries','states', 'cities'));
+        $businessNatures = BusinessNature::orderBy('name', 'asc')->get()->pluck("name", "id")->toArray();
+        return view("$this->moduleView.create", compact('categories', 'countries','states', 'cities','businessNatures'));
     }
  
     public function store(PetProRequest $request)
@@ -79,6 +81,7 @@ class PetProsController extends Controller
         $pet_pro_input = $request->only(['store_name', 'website_url', 'email',  'phone_number', 'address_line_1', 'address_line_2', 'postal_code', 'description']);
         $time_input = $request->only(['monday_open', 'monday_close', 'tuesday_open', 'tuesday_close', 'wednesday_open', 'wednesday_close', 'thursday_open', 'thursday_close', 'friday_open', 'friday_close', 'saturday_open', 'saturday_close', 'sunday_open', 'sunday_close']);     
         $inputCategories = $request['category_id'];
+        $inputBusinessNatures = $request['business_id'];
 
         try {   
             if( $request->get('is_featured_pet_pro') ) {
@@ -121,6 +124,20 @@ class PetProsController extends Controller
 						];						
 					}
 					$isSaved->categories()->insert($insertArray);
+                }
+                
+                if(count($inputBusinessNatures)) {  
+					$currentTime = Carbon::now();   
+					$insertArray = [];             
+                    foreach ($inputBusinessNatures as $businessId) {
+                        $insertArray[] = [
+							"pet_pro_id" => $isSaved->id,
+							"business_id" => $businessId,
+                            "created_at" => $currentTime,
+                            "updated_at" => $currentTime,
+						];						
+					}
+					$isSaved->business()->insert($insertArray);
 				}
                 if($isSaved->address_line_1 ||$isSaved->address_line_2 || $isSaved->city_id || $isSaved->state_id || $isSaved->postal_code  ) {
                     $addressLatLong = GoogleMapHelper::getLatLongFromAddress($isSaved);               
@@ -225,14 +242,17 @@ class PetProsController extends Controller
         if ($result) {
 			$selectedCategories = $result->categories()->pluck("category_id", "category_id")->all();
             $categories = PetProCategory::orderBy('name', 'asc')->get()->pluck("name", "id")->toArray();
+            $countries = Country::pluck('name', 'id')->toArray();
+            $selectedBusiness = $result->business()->pluck("business_id", "business_id")->all();
+            $businessNatures = BusinessNature::orderBy('name', 'asc')->get()->pluck("name", "id")->toArray();
             $states = State::where('country_id', 231)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
-            if( $result->city_id ) {
+            if( $result->city_id ) { 
                 $cities = City::where('state_id', $result->state_id)->where('is_valid', '=', 1)->pluck('name', 'id')->toArray();
             } else {
                 $cities = [];
             }
 
-            return view("$this->moduleView.edit", compact("result","categories", "states", "cities", "selectedCategories"));
+            return view("$this->moduleView.edit", compact("result","categories", "states", "cities", "selectedCategories",'countries','businessNatures','selectedBusiness'));
         }
         return redirect($this->moduleRoute)->with("error", "Sorry, Pet pro not found");
     }
@@ -241,6 +261,7 @@ class PetProsController extends Controller
     {   
         
         $inputCategories = $request->get("category_id", []);
+        $inputBusinessNatures = $request->get("business_id", []);
         $city =  City::where('id',$request->get("city_id"))->first();
         
         
@@ -286,8 +307,22 @@ class PetProsController extends Controller
 
 							$insertedCategories[] = $categoryId;
                         }                        
+                    }
+                    
+                    if(count($inputBusinessNatures)) {
+                        foreach ($inputBusinessNatures as $businessId) {
+                            $insertArray = [
+								"pet_pro_id" => $result->id,
+								"business_id" => $businessId
+                            ];
+                            
+                            $res = $result->business()->updateOrCreate($insertArray, $insertArray);
+
+							$insertedBusiness[] = $businessId;
+                        }                        
 					}
                     $result->categories()->whereNotIn("category_id", $insertedCategories)->delete();
+                    $result->business()->whereNotIn("business_id", $insertedBusiness)->delete();
                     
                     if($city){
                         $this->model->where('id', $id)->update([

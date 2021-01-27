@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\WagEnabledHelpers;
 use App\Models\PetPro;
 use App\Models\PetProCategory;
+use App\Models\BusinessNature;
 use App\Models\PetProDeal;
 use App\Models\PetProDealClaim;
 use App\Models\PetProReview;
@@ -15,6 +16,7 @@ use Illuminate\Http\Request;
 use Validator;
 use Math;
 use App\Models\PetProSelectedCategory;
+use App\Models\PetProSelectedBusinessNature;
 use DB;
 
 class PetProController extends Controller
@@ -62,6 +64,7 @@ class PetProController extends Controller
         $is_seach_by_location = false;
 
         $category_id = $request->get('category_id', "");
+        $business_id = $request->get('business_id', "");
         $search = $request->get('search', "");
         $sort_by = $request->get('sort_by', "");
 
@@ -75,6 +78,10 @@ class PetProController extends Controller
         if( $category_id ) {
             $selectedCategoryPetProIds = PetProSelectedCategory::where('category_id', $category_id)->pluck('pet_pro_id')->toArray();
             $pet_pros = $pet_pros->whereIn('id', $selectedCategoryPetProIds);
+        }
+        if( $business_id ) {
+            $selectedBusinessPetProIds = PetProSelectedBusinessNature::where('business_id', $business_id)->pluck('pet_pro_id')->toArray();
+            $pet_pros = $pet_pros->whereIn('id', $selectedBusinessPetProIds);
         }
 
         if( $search ) {
@@ -499,6 +506,26 @@ class PetProController extends Controller
         }
 
         $this->responseData["category_list"] = $category_list;
+        $this->message = "";
+        $this->code = $this->statusCodes['success'];
+
+        return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
+
+    }
+
+    public function getBusinessNatureList(Request $request) {
+
+        $business_nature_data = BusinessNature::select(['id', 'name'])
+                                            ->orderBy('name')
+                                            ->get();
+
+        $business_nature_list = [];
+        $business_nature_list[] = ["value" => '', "label"=> 'All'];
+        foreach ($business_nature_data as $business) {
+            $business_nature_list[] = [ "value" => $business->id, "label"=> $business->name];
+        }
+
+        $this->responseData["business_nature_list"] = $business_nature_list;
         $this->message = "";
         $this->code = $this->statusCodes['success'];
 
