@@ -79,9 +79,21 @@ class PetProController extends Controller
             $selectedCategoryPetProIds = PetProSelectedCategory::where('category_id', $category_id)->pluck('pet_pro_id')->toArray();
             $pet_pros = $pet_pros->whereIn('id', $selectedCategoryPetProIds);
         }
-        if( $business_id ) {
-            $selectedBusinessPetProIds = PetProSelectedBusinessNature::where('business_id', $business_id)->pluck('pet_pro_id')->toArray();
-            $pet_pros = $pet_pros->whereIn('id', $selectedBusinessPetProIds);
+        $business_id = json_decode($business_id);
+        if($business_id != null && count($business_id) ) {
+            $allvalue = false;
+            $businessIdArray = [];
+            foreach ($business_id as $key => $value) {
+                if($value->value != ""){
+                    $businessIdArray[] = $value->value;
+                }else{
+                    $allvalue = true;
+                }
+            }
+            if(!$allvalue){
+               $selectedBusinessPetProIds = PetProSelectedBusinessNature::whereIn('business_id', $businessIdArray)->pluck('pet_pro_id')->toArray();
+               $pet_pros = $pet_pros->whereIn('id', $selectedBusinessPetProIds);
+            }
         }
 
         if( $search ) {
