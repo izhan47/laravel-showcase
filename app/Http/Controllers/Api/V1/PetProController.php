@@ -74,11 +74,24 @@ class PetProController extends Controller
 
                                 ])
                             ->with('coverImage', 'city', 'state');
-
-        if( $category_id ) {
-            $selectedCategoryPetProIds = PetProSelectedCategory::where('category_id', $category_id)->pluck('pet_pro_id')->toArray();
-            $pet_pros = $pet_pros->whereIn('id', $selectedCategoryPetProIds);
+                            
+        $category_id = json_decode($category_id);
+        if($category_id != null && count($category_id) ) {
+            $allCatValue = false;
+            $categoryIdArray = [];
+            foreach ($category_id as $key => $value) {
+                if($value->value != ""){
+                    $categoryIdArray[] = $value->value;
+                }else{
+                    $allCatValue = true;
+                }
+            }
+            if(!$allCatValue){
+               $selectedCategoryPetProIds = PetProSelectedCategory::whereIn('category_id', $categoryIdArray)->pluck('pet_pro_id')->toArray();
+               $pet_pros = $pet_pros->whereIn('id', $selectedCategoryPetProIds);
+            }
         }
+ 
         $business_id = json_decode($business_id);
         if($business_id != null && count($business_id) ) {
             $allvalue = false;

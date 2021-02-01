@@ -41,9 +41,20 @@ class ProductReviewController extends Controller
                                     }, 
 
                                 ])->ProductReviewCategory()->withCount('users')->Where('status', 'published');  
-
-        if( $category_id ) {
-            $watch_and_learn = $watch_and_learn->where( 'category_id', $category_id );
+        $category_id = json_decode($category_id);
+        if($category_id != null && count($category_id) ) {
+            $allCatValue = false;
+            $categoryIdArray = [];
+            foreach ($category_id as $key => $value) {
+                if($value->value != ""){
+                    $categoryIdArray[] = $value->value;
+                }else{
+                    $allCatValue = true;
+                }
+            }
+            if(!$allCatValue){
+                $watch_and_learn = $watch_and_learn->whereIn( 'category_id', $categoryIdArray );
+            }
         }
 
         if( $search ) {
