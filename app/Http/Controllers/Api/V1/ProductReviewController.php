@@ -114,8 +114,7 @@ class ProductReviewController extends Controller
                                             ->orderBy('name')
                                             ->get();
 
-        $category_list = [];            
-        $category_list[] = ["value" => '', "label"=> 'All'];            
+        $category_list = [];     
         foreach ($category_data as $category) {
             $category_list[] = [ "value" => $category->id, "label"=> $category->name];
         }
