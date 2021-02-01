@@ -525,7 +525,6 @@ class PetProController extends Controller
                                             ->get();
 
         $category_list = [];
-        $category_list[] = ["value" => '', "label"=> 'All'];
         foreach ($category_data as $category) {
             $category_list[] = [ "value" => $category->id, "label"=> $category->name];
         }
@@ -545,7 +544,6 @@ class PetProController extends Controller
                                             ->get();
 
         $business_nature_list = [];
-        $business_nature_list[] = ["value" => '', "label"=> 'All'];
         foreach ($business_nature_data as $business) {
             $business_nature_list[] = [ "value" => $business->id, "label"=> $business->name];
         }
