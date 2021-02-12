@@ -12,6 +12,7 @@ use App\Models\WatchAndLearnComment;
 use App\Models\WatchAndLearnDeal;
 use App\Models\WatchAndLearnDealClaim;
 use Auth;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Validator;
@@ -31,16 +32,11 @@ class ProductReviewController extends Controller
     {         
         $perPage = config("wagenabled.per_page_watch_and_learn_results", 6);        
         $skip = ($page > 1) ? ($perPage * ($page - 1)) : 0;   
-
+        $parent_product_review_id = config("wagenabled.product_review_category_id");
         $category_id = $request->get('category_id', "");   
         $search = $request->get('search', "");   
-        $sort_by = $request->get('sort_by', "");   
-
-        $watch_and_learn = WatchAndLearn::with('category')->withCount(['deals' => function($query){
-                                        $query->active();
-                                    }, 
-
-                                ])->ProductReviewCategory()->withCount('users')->Where('status', 'published');  
+        $sort_by = $request->get('sort_by', "");
+        $allCatValue  = true ;
         $category_id = json_decode($category_id);
         if($category_id != null && count($category_id) ) {
             $allCatValue = false;
@@ -52,10 +48,34 @@ class ProductReviewController extends Controller
                     $allCatValue = true;
                 }
             }
-            if(!$allCatValue){
-                $watch_and_learn = $watch_and_learn->whereIn( 'category_id', $categoryIdArray );
-            }
+           
         }
+        if(!$allCatValue){
+            $watch_and_learn = WatchAndLearn::with('categories.category')->whereHas('categories',function($q) use($categoryIdArray, $parent_product_review_id){
+                $q->whereIn('selected_category_id',$categoryIdArray);
+                $q->whereHas('category',function($q) use($parent_product_review_id){
+                    $q->where('parent_id', $parent_product_review_id);
+                });
+            })->withCount(['deals' => function($query){
+                $query->active();
+            }, 
+
+        ])->withCount('users')->Where('status', 'published'); 
+           
+        }else{
+            $watch_and_learn = WatchAndLearn::with('categories.category')->whereHas('categories',function($q) use( $parent_product_review_id){
+                $q->whereHas('category',function($q) use($parent_product_review_id){
+                    $q->where('parent_id', $parent_product_review_id);
+                });
+            })->withCount(['deals' => function($query){
+                $query->active();
+            }, 
+
+        ])->withCount('users')->Where('status', 'published');  
+        }
+        
+       
+ 
 
         if( $search ) {
             $watch_and_learn = $watch_and_learn->where( function($query) use( $search ){ 
@@ -159,6 +179,19 @@ class ProductReviewController extends Controller
             }
         }
         return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
+    }
+
+    public function addCategoryAnotherTable()
+    {
+        $product_reviews = WatchAndLearn::all();
+        foreach ($product_reviews as $key => $value) {
+            if($value->category_id){
+                DB::table('watch_and_learn_selected_categories')->insert([
+                    'watch_and_learn_id' => $value->id,
+                    'selected_category_id' => $value->category_id,
+                ]);
+            }
+        }
     }
 
 }

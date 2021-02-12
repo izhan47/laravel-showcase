@@ -49,12 +49,28 @@ class ProductReviewController extends Controller
     {
         $blogMode = $request->get('blogMode');
 		$category_id = $request->get('category_id');
-
-        $result = $this->model->with('category', 'author')->ProductReviewCategory()->select("*")->where('status', $blogMode)->orderBy('id', 'desc');
-
-		if($category_id != ""){
-            $result = $result->where('category_id','=',$category_id);
-		}
+        $parent_product_review_id = config("wagenabled.product_review_category_id");
+        if($category_id != ""){
+        
+        $result = $this->model->with('categories.category', 'author')->whereHas('categories',function($q) use($category_id,$parent_product_review_id){
+            $q->where('selected_category_id',$category_id);
+            $q->whereHas('category',function($q) use($parent_product_review_id){
+                $q->where('parent_id', $parent_product_review_id);
+            });
+            
+            
+        })->select("*")->where('status', $blogMode)->orderBy('id', 'desc');
+    }else{
+        $result = $this->model->with('categories.category', 'author')->whereHas('categories',function($q) use($category_id,$parent_product_review_id){
+            $q->whereHas('category',function($q) use($parent_product_review_id){
+                $q->where('parent_id', $parent_product_review_id);
+            });
+            
+        })->select("*")->where('status', $blogMode)->orderBy('id', 'desc');
+    }
+		
+            
+		
 
         return Datatables::of($result)
         ->addColumn('formated_author', function ($result) {
@@ -63,6 +79,30 @@ class ProductReviewController extends Controller
             }
             return '-';            
         })
+        ->addColumn('formated_category', function ($result) {
+             $categoryString = "-";
+            if(count($result->categories)){
+            foreach ($result->categories as $key => $category) {
+                if($key == 0){
+                    if($category){
+                        $categoryString = $category->category->name;
+                    }
+                }else{
+                    if($categoryString == "-" && $category){
+                        $categoryString = $category->name;
+                    }else{
+
+                        $categoryString = $categoryString.", ".$category->name;
+                    }
+                    
+                }
+            }
+        }
+        return $categoryString;         
+        })
+
+
+       
         ->addIndexColumn()
         ->make(true);        
     }
@@ -77,6 +117,8 @@ class ProductReviewController extends Controller
     public function store(WatchAndLearnRequest $request)
     {
         $input = $request->except(['_token', 'image','cropped_image', 'blogMode']);
+        $input['category_id'] = null;
+        $inputCategories = $request['category_id'];
         try {   
             if ($request->file('image', false)) {        
                 $imageStore = WagEnabledHelpers::saveUploadedImage($request->file('image'), config("wagenabled.path.doc.watch_and_learn_thumbnail_path"), "", $isCreateThumb="1", $height=250, $width=380, $request->get('cropped_image'));            
@@ -87,6 +129,19 @@ class ProductReviewController extends Controller
 
             $isSaved = $this->model->create($input);
             if ($isSaved) {
+                if(count($inputCategories)) {  
+					$currentTime = Carbon::now();   
+					$insertArray = [];             
+                    foreach ($inputCategories as $categoryId) {
+                        $insertArray[] = [
+							"watch_and_learn_id" => $isSaved->id,
+							"selected_category_id" => $categoryId,
+                            "created_at" => $currentTime,
+                            "updated_at" => $currentTime,
+						];						
+					}
+					$isSaved->categories()->insert($insertArray);
+                }
                 if( $request->get('blogMode') == 'draft' ) {
                     return redirect($this->moduleRoute)->with("success", "Product Review created");
                 }
@@ -117,10 +172,11 @@ class ProductReviewController extends Controller
     public function edit($id)
     {
         $result = $this->model->find($id);
+        $selectedCategories = $result->categories()->pluck("selected_category_id")->all();
         $categories = WatchAndLearnCategory::ProductReviewCategory()->orderBy('name', 'asc')->get()->pluck("name", "id")->toArray();
         $authors = WatchAndLearnAuthor::orderBy('name', 'asc')->get()->pluck("name", "id")->toArray();
         if ($result) {
-            return view("$this->moduleView.edit", compact("result","categories", 'authors'));
+            return view("$this->moduleView.edit", compact("result","categories", 'authors', 'selectedCategories'));
         }
         return redirect($this->moduleRoute)->with("error", "Sorry, Product Review not found");
     }    
@@ -128,6 +184,9 @@ class ProductReviewController extends Controller
     public function update(WatchAndLearnRequest $request, $id)
     {               
         $input = $request->except(['_token', 'image','cropped_image', 'video', 'blogMode']);      
+        $input['category_id'] = null;
+        $inputCategories = $request['category_id'];
+        
         try {
             $result = $this->model->find($id);            
             if ($result) {   
@@ -145,7 +204,20 @@ class ProductReviewController extends Controller
                 $isSaved = $result->update($input);  
 
                 if ($isSaved) {                                    
-
+                    if(count($inputCategories)) {  
+                        $result->categories()->delete();
+                        $currentTime = Carbon::now();   
+                        $insertArray = [];             
+                        foreach ($inputCategories as $categoryId) {
+                            $insertArray[] = [
+                                "watch_and_learn_id" => $id,
+                                "selected_category_id" => $categoryId,
+                                "created_at" => $currentTime,
+                                "updated_at" => $currentTime,
+                            ];						
+                        }
+                        $result->categories()->insert($insertArray);
+                    }
                     if( $request->get('blogMode') == 'draft' ) {                        
                         return redirect($this->moduleRoute);
                     } 
@@ -188,7 +260,7 @@ class ProductReviewController extends Controller
                 $status = $data->update($input);
 
                 if ($status) {
-                    $result = $this->model->find($id);                    
+                    $result = $this->model->with('categories.category')->find($id);        
                     $back_url_path = $this->moduleRoute.'/'.$id.'/edit/buildwithcontentbuilder';
                     if ($result) {
                         return view("$this->moduleView.show", compact("result", 'back_url_path'));
@@ -327,6 +399,10 @@ class ProductReviewController extends Controller
             $this->code = $this->statusCodes['success'];    
             $this->message = "";   
 
+        }
+        else{
+            $this->code = $this->statusCodes['success'];
+            $this->message = "";
         }
 
         return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);       

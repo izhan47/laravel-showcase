@@ -30,6 +30,10 @@ class WatchAndLearnCategory extends Model
     {
         return $this->hasMany('App\Models\WatchAndLearn', 'category_id', 'id');
     }
+    public function watchAndLearns()
+    {
+        return $this->hasMany('App\Models\WatchAndLearnSelectedCategory', 'selected_category_id', 'id');
+    }
 
     public function scopeProductReviewCategory($query)
     {

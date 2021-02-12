@@ -96,6 +96,11 @@ class WatchAndLearn extends Model
         return $this->belongsTo('App\Models\WatchAndLearnCategory', 'category_id', 'id')->withTrashed();
     }
 
+    public function categories()
+    {
+        return $this->hasMany('App\Models\WatchAndLearnSelectedCategory','watch_and_learn_id', 'id');
+    }
+
     public function author()
     {
         return $this->belongsTo('App\Models\WatchAndLearnAuthor', 'author_id', 'id')->withTrashed();
