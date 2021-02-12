@@ -45,7 +45,11 @@
                         <div class="wagdt-watch-details-block-main">
                             <div class="">
                                 <h1 class="wagdt-inner-page-title">{{ $result->title }} <img src="/images/heart-icon.svg" alt="Save"  class=""saveIcon" /></h1>
-                                <h6 class="watch-andlearn-details">{{ $result->category->name }}</h6>
+                                 <h6 class="watch-andlearn-details">
+								 	@foreach ($result->categories as $category)
+    									<p>{{ $category->category->name }},</p>
+									@endforeach
+									</h6>
                                 <ul class="wagdt-social-icons">
                                     <span class="">SHARE</span>
                                     <li><a target="_blank" href="" class="wagdt-social"><img src="/images/facebook.svg" alt=""/></a></li>

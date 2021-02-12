@@ -729,7 +729,7 @@
                     maxlength: 255
                 },
                 'category_id[]': {
-                    required: true
+                    required: true 
                 },
                 'business_id[]': {
                     required: true

@@ -33,7 +33,7 @@
     <div class="col-md-6">
         <div class="form-group">
             <label>Categories</label>
-            {{ Form::select('category_id', [ "" => "Select"] + $categories, null, ['id'=> 'category_id', 'class' => 'form-control']) }}
+            {{ Form::select('category_id[]',$categories, ( isset($selectedCategories) && count($selectedCategories))?$selectedCategories:null,  ['id'=> 'category_id', 'class' => 'form-control','multiple' => 'multiple']) }}
             @if($errors->has('category_id'))
                 <p class="text-danger">{{ $errors->first('category_id') }}</p>
             @endif
@@ -127,7 +127,10 @@
         $('form').on('keyup change paste', 'input, select, textarea', function(){
             isContentUpdated = true;
         });        
-
+        $('#category_id').select2({
+			tags: false,
+			placeholder: 'Select categories'
+		});
         $("#form_validate").validate({
             errorElement: 'p',
             errorClass: 'text-danger',
@@ -135,7 +138,7 @@
                 return $.trim( value );
             },
             rules: {
-                category_id: {
+                'category_id[]': {
                     required: true
                 },
                 title: {

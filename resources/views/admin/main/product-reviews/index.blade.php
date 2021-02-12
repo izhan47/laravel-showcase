@@ -134,7 +134,7 @@ $(document).ready(function(){
             },
             columns: [
                 { data: 'title', name: 'title',className:'user-name-details'},
-                { data: 'category.name', name: 'category.name', width: 200},
+                { data: 'formated_category', name: 'category.name', width: 200},
                 { data: 'formated_author', name: 'author.name', width: 200},
                 { data: 'formated_created_at', name: 'created_at', width: 110},
                 {

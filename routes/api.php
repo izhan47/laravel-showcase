@@ -57,6 +57,7 @@ $api->version('v1', ['prefix' => 'api', 'namespace' => '\App\Http\Controllers\Ap
     $api->group(['prefix' => 'product-reviews'], function ($api) { 
         $api->post('get-list/{page?}', ['as' => 'get-list', 'uses' => 'ProductReviewController@getList']);
         $api->post('get-category-list', ['as' => 'get-category-list', 'uses' => 'ProductReviewController@getCategoryList']);
+        $api->get('shiftData', ['as' => 'shiftData', 'uses' => 'ProductReviewController@addCategoryAnotherTable']);
     });
 
     /*After Login*/

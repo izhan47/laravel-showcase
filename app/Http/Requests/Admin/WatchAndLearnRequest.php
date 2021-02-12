@@ -25,7 +25,7 @@ class WatchAndLearnRequest extends FormRequest
     public function rules()
     {
          $result = [
-            'category_id' => 'required | integer',                    
+            'category_id' => 'required',                    
             'title' => 'required | max:255',                    
             'author_id' => 'nullable | integer',                    
             'description' => 'nullable',                    
