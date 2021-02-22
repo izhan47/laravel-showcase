@@ -91,10 +91,11 @@ Route::middleware(['adminAuth'])->group(function () {
     Route::resource('/product-reviews/{watch_and_learn_id}/deals', 'ProductReviewDealsController');
 
 // Pet Pro Approve or reject
-    Route::get('/pet-pros/approve/{id}', 'PetProsRequestController@approvePetPro');
-    Route::get('/pet-pros/reject/{id}', 'PetProsRequestController@rejectPetPro');
+    Route::get('/pet-pros-request/approve/{id}', 'PetProsRequestController@approvePetPro');
+    Route::get('/pet-pros-request/reject/{id}', 'PetProsRequestController@rejectPetPro');
 
-    Route::get('/pet-pros/datatable', 'PetProsRequestController@getPetProsRequestDatatable');
+    Route::get('/pet-pros-request/datatable', 'PetProsRequestController@getPetProsRequestDatatable');
     Route::get('/pet-pros-request', 'PetProsRequestController@getAllPetProsRequestDatatable');
+    Route::delete('/pet-pros-request/destroy/{id}', 'PetProsRequestController@destroy');
 
 });

@@ -101,7 +101,7 @@ $(document).ready(function(){
     //delete Record
     jQuery(document).on('click', '.deleteRecord', function(event) {
         var id = $(this).attr('val');
-        var deleteUrl = "{!!  $module_route  !!}/" + id;
+        var deleteUrl = "{!!  $module_route  !!}/destroy/" + id;
         var isDelete = deleteRecordByAjax(deleteUrl, "{{$singular_module_name}}", oTable);
     });
 

@@ -17,7 +17,7 @@ class PetProsRequestController extends Controller
         ini_set('memory_limit', -1);
         $this->moduleName = "Pet Pros";
         $this->singularModuleName = "Pet Pro";
-        $this->moduleRoute = url('admin/pet-pros');
+        $this->moduleRoute = url('admin/pet-pros-request');
         $this->moduleView = "admin.main.pet-pro-request";
         $this->model = $model;
 
@@ -34,7 +34,7 @@ class PetProsRequestController extends Controller
     {
         $data = $this->model->find($id);
         if ($data) {
-            $data->status = "accepted";
+            $data->status = "approved";
             $data->update();
             // return WagEnabledHelpers::apiJsonResponse([], config("wagenabled.status_codes.success"), "Pet Pros is approved.");
             return redirect($this->moduleRoute)->with("success", "Pet pro approved");
@@ -66,7 +66,7 @@ class PetProsRequestController extends Controller
     }
     public function getPetProsRequestDatatable(Request $request)
     {
-        $result = $this->model->where('status','pending')->orderBy('id', 'desc');
+        $result = $this->model->where('status',null)->orWhere('status', 'pending')->orderBy('id', 'desc')->get();
         return Datatables::of($result)
             ->editColumn('message', function ($result) {
                 if ($result->message) {
@@ -78,5 +78,24 @@ class PetProsRequestController extends Controller
             })
             ->addIndexColumn()
             ->make(true);
+    }
+    public function destroy($id)
+    {
+        $result = array();
+        $data = $this->model->find($id);
+        if ($data) {
+            $res = $data->delete();
+            if ($res) {
+                $result['message'] = "Pet pro deleted.";
+                $result['code'] = 200;
+            } else {
+                $result['message'] = "Error while deleting pet pro";
+                $result['code'] = 400;
+            }
+        } else {
+            $result['message'] = "Pet pro not Found!";
+            $result['code'] = 400;
+        }
+        return response()->json($result, $result['code']);
     }
 }

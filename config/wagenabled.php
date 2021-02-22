@@ -73,10 +73,4 @@ return [
     "send_comment_notification_to_email" => env("COMMENT_NOTIFICATION_TO_MAIL", 'ks@hyperspaceventures.com'),
     "product_review_category_id" => 26,
 
-
-    "pet_pro_status" => [
-        "approved" => "approved",
-        "reject" => "reject",
-        "pending" => "pending",
-    ],
 ];

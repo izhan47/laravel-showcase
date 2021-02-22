@@ -19,7 +19,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Yajra\Datatables\Datatables;
-
+use Log;
 class PetProsController extends Controller
 {
     public function __construct(PetPro $model)
@@ -40,14 +40,15 @@ class PetProsController extends Controller
 
     public function index()
     {
+        // $result = $this->model->where('status', 'approved')->with('categories', 'city', 'state')->orderBy('id', 'desc')->get();
+        // dd($result);
         view()->share('isIndexPage', true);
         return view("$this->moduleView.index");
     }
 
     public function getDatatable(Request $request)
     {
-        $result = $this->model->with('categories', 'city', 'state')->select("*")->orderBy('id', 'desc');
-
+        $result = $this->model->where('status', 'approved')->with('categories', 'city', 'state')->orderBy('id', 'desc')->get();
         return Datatables::of($result)
             ->addColumn('city_state', function ($result) {
                 $str = "";
@@ -638,5 +639,5 @@ class PetProsController extends Controller
 
         return WagEnabledHelpers::apiJsonResponse($responseData, $code, $message);
     }
-   
+
 }
