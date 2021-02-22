@@ -25,11 +25,12 @@
         <table class="table project-datatable" >
             <thead>
                 <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Business Name</th>
-                    <th>Contact Email</th>
-                    <th>Message</th>
+                    <th>Store Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Description</th>
+                    <th>Status</th>
                     <th>Date</th>
                     <th>Action</th>
                 </tr>
@@ -69,12 +70,14 @@ $(document).ready(function(){
                 }
             },
             columns: [
-                { data: 'first_name', name: 'first_name',className:'user-name-details'},
-                { data: 'last_name', name: 'last_name',className:'user-name-details'},
-                { data: 'business_name', name: 'business_name',className:'user-name-details'},
-                { data: 'contact_email', name: 'contact_email'},
-                { data: 'message', name: 'message'},
+                { data: 'store_name', name: 'store_name'},
+                { data: 'email', name: 'email'},
+                { data: 'phone_number', name: 'phone_number'},
+                { data: 'address_line_1', name: 'address_line_1'},
+                { data: 'description', name: 'description'},
+                { data: 'status', name: 'status'},
                 { data: 'formated_created_at', name: 'created_at'},
+                
                 {
                     data:  null,
                     orderable: false,
@@ -85,7 +88,8 @@ $(document).ready(function(){
                     className: 'text-right',
                     render:function(o){
                         var btnStr = "";
-                        btnStr += "<a href='{!!  $module_route  !!}/"+  o.id +"' title='Show'><i class='fa fa-file-icon'></i></a>";
+                        btnStr += "<a href='{!!  $module_route  !!}/approve/"+  o.id +"' title='approve'><i class='fa fa-check'></i></a>";
+                        btnStr += "<a href='{!!  $module_route  !!}/reject/"+  o.id +"' title='reject'><i class='fa fa-close'></i></a>";
                         btnStr += " <a href='javascript:void(0);' class='deleteRecord' val='" + o.id + "' title='Delete' ><i class='fa fa-trash-icon text-danger'></i></a>";
                         return btnStr;
                     }

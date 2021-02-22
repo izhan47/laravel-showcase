@@ -50,6 +50,12 @@
                     <span class="align-middle">Pet Pros</span>
                 </a>
             </li>
+            
+            <li class="sidebar-item {{ setActiveMenu('admin/pet-pros-request') }}">
+                <a class="sidebar-link" href="{{ url('admin/pet-pros-request') }}">
+                    <span class="align-middle">Pet Pros Request</span>
+                </a>
+            </li>
 
             <li class="sidebar-item {{ setActiveMenu('admin/product-review-categories') }}">
                 <a class="sidebar-link" href="{{ url('admin/product-review-categories') }}">

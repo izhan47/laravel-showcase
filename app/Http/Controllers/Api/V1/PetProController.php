@@ -715,8 +715,9 @@ class PetProController extends Controller
                         }
                     }
                 }
+                $status = config("wagenabled.pet_pro_status.pending");
                 $petPro = PetPro::find($id);
-                $petPro->status = "pending";
+                $petPro->status = $status;
                 $petPro->update();
                 return WagEnabledHelpers::apiJsonResponse($petPro, config("wagenabled.status_codes.success"), 'Pet pro created');
             }
@@ -928,7 +929,10 @@ class PetProController extends Controller
                             }
                         }
                     }
+                    $status = config("wagenabled.pet_pro_status.pending");
                     $petPro = PetPro::find($id);
+                    $petPro->status = $status;
+                    $petPro->update();
                     return WagEnabledHelpers::apiJsonResponse($petPro, config("wagenabled.status_codes.success"), 'Pet pro updated');
                 }
             }
