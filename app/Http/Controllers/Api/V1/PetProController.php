@@ -602,7 +602,7 @@ class PetProController extends Controller
 
     public function newPetPros(UserPetProRequest $request)
     {
-
+        // dd();
         $pet_pro_input = $request->only(['store_name', 'website_url', 'email', 'phone_number', 'address_line_1', 'address_line_2', 'postal_code', 'description']);
         $pet_pro_input['user_id'] = Auth::user()->id;
         $pet_pro_input['user_type'] = 'User';
@@ -616,7 +616,6 @@ class PetProController extends Controller
                 $pet_pro_input['featured_title'] = $request->get('featured_title');
                 $pet_pro_input['featured_description'] = $request->get('featured_description');
             }
-
             $isSaved = PetPro::create($pet_pro_input);
             $pet_pro = PetPro::where('id', $isSaved->id)->first();
             if ($request->country_id && $request->state_id && $request->city_id) {
@@ -631,6 +630,7 @@ class PetProController extends Controller
                     $pet_pro->countries()->attach($row, ['state_id' => $request->state_id[$index], 'city_id' => $request->city_id[$index], 'latitude' => $city_latitude, 'longitude' => $city_longitude]);
                 }
             }
+
             if ($isSaved) {
                 if (isset($inputCategories) && count($inputCategories)) {
                     $currentTime = Carbon::now();
@@ -715,9 +715,8 @@ class PetProController extends Controller
                         }
                     }
                 }
-                $status = config("wagenabled.pet_pro_status.pending");
-                $petPro = PetPro::find($id);
-                $petPro->status = $status;
+                $petPro = PetPro::find($isSaved->id);
+                $petPro->status = 'pending';
                 $petPro->update();
                 return WagEnabledHelpers::apiJsonResponse($petPro, config("wagenabled.status_codes.success"), 'Pet pro created');
             }
@@ -929,9 +928,8 @@ class PetProController extends Controller
                             }
                         }
                     }
-                    $status = config("wagenabled.pet_pro_status.pending");
                     $petPro = PetPro::find($id);
-                    $petPro->status = $status;
+                    $petPro->status = 'pending';
                     $petPro->update();
                     return WagEnabledHelpers::apiJsonResponse($petPro, config("wagenabled.status_codes.success"), 'Pet pro updated');
                 }
