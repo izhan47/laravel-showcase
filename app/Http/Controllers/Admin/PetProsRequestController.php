@@ -32,10 +32,16 @@ class PetProsRequestController extends Controller
     //////////////
     public function approvePetPro($id)
     {
-        $data = $this->model->find($id);
-        if ($data) {
-            $data->status = "approved";
-            $data->update();
+        $petpros = $this->model->find($id);
+        $data = [];
+        if ($petpros) {
+            $data = json_decode($petpros->new_detail);
+
+            $petpros->update((array)$data);
+
+            $petpros->new_detail = null;
+            $petpros->status = "approved";
+            $petpros->update();
             // return WagEnabledHelpers::apiJsonResponse([], config("wagenabled.status_codes.success"), "Pet Pros is approved.");
             return redirect($this->moduleRoute)->with("success", "Pet pro approved");
         } else {
@@ -66,7 +72,7 @@ class PetProsRequestController extends Controller
     }
     public function getPetProsRequestDatatable(Request $request)
     {
-        $result = $this->model->where('status',null)->orWhere('status', 'pending')->orderBy('id', 'desc')->get();
+        $result = $this->model->where('status',null)->orWhere('status','pending')->orWhere('status','approved')->where('new_detail','!=',null)->orderBy('id', 'desc')->get();
         return Datatables::of($result)
             ->editColumn('message', function ($result) {
                 if ($result->message) {

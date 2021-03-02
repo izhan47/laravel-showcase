@@ -616,6 +616,7 @@ class PetProController extends Controller
                 $pet_pro_input['featured_title'] = $request->get('featured_title');
                 $pet_pro_input['featured_description'] = $request->get('featured_description');
             }
+            $pet_pro_input['new_detail'] = json_encode($pet_pro_input);
             $isSaved = PetPro::create($pet_pro_input);
             $pet_pro = PetPro::where('id', $isSaved->id)->first();
             if ($request->country_id && $request->state_id && $request->city_id) {
@@ -757,7 +758,12 @@ class PetProController extends Controller
                     $pet_pro_input['featured_title'] = null;
                     $pet_pro_input['featured_description'] = null;
                 }
-                $isSaved = $result->update($pet_pro_input);
+
+                $isSaved = $pet_pro_input;
+                $pet_pro_input = json_encode($pet_pro_input);
+                $result->update([
+                    'new_detail' => $pet_pro_input,
+                ]);
                 if ($isSaved) {
                     $currentTime = Carbon::now();
                     if (count($inputCategories)) {
@@ -929,8 +935,6 @@ class PetProController extends Controller
                         }
                     }
                     $petPro = PetPro::find($id);
-                    $petPro->status = 'pending';
-                    $petPro->update();
                     return WagEnabledHelpers::apiJsonResponse($petPro, config("wagenabled.status_codes.success"), 'Pet pro updated');
                 }
             }
