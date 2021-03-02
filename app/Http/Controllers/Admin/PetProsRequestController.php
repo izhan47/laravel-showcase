@@ -104,4 +104,12 @@ class PetProsRequestController extends Controller
         }
         return response()->json($result, $result['code']);
     }
+    public function show($id)
+    {        
+        $result = $this->model->find($id);
+        if ($result) {
+            return view("$this->moduleView.show", compact("result"));
+        }
+        return redirect($this->moduleRoute)->with("error", "Sorry, Admin user not found");
+    }
 }

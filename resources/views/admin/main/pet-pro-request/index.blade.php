@@ -90,7 +90,7 @@ $(document).ready(function(){
                         var btnStr = "";
                         btnStr += "<a href='{!!  $module_route  !!}/approve/"+  o.id +"' title='approve'><i class='fa fa-check'></i></a>";
                         btnStr += "<a href='{!!  $module_route  !!}/reject/"+  o.id +"' title='reject'><i class='fa fa-close'></i></a>";
-                        btnStr += " <a href='javascript:void(0);' class='deleteRecord' val='" + o.id + "' title='Delete' ><i class='fa fa-trash-icon text-danger'></i></a>";
+                        btnStr += "<a href='{!!  $module_route  !!}-detail/"+  o.id +"' title='Show'><i class='fa fa-file-icon'></i></a>";
                         return btnStr;
                     }
                 }

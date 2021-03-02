@@ -96,6 +96,7 @@ Route::middleware(['adminAuth'])->group(function () {
 
     Route::get('/pet-pros-request/datatable', 'PetProsRequestController@getPetProsRequestDatatable');
     Route::get('/pet-pros-request', 'PetProsRequestController@getAllPetProsRequestDatatable');
+    Route::get('/pet-pros-request-detail/{id}', 'PetProsRequestController@show');
     Route::delete('/pet-pros-request/destroy/{id}', 'PetProsRequestController@destroy');
 
 });
