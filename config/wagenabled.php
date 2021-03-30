@@ -71,6 +71,6 @@ return [
     "no_of_users_pet_display" => 3,
     "send_contact_to_email" => env("CONTACT_TO_MAIL", 'ks@hyperspaceventures.com'),
     "send_comment_notification_to_email" => env("COMMENT_NOTIFICATION_TO_MAIL", 'ks@hyperspaceventures.com'),
-    "product_review_category_id" => 26
+    "product_review_category_id" => 26,
 
 ];
