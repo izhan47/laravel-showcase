@@ -30,7 +30,7 @@ class NewsletterController extends Controller
         $validator = Validator::make($request->all(), [              
             'email' => 'required|email|unique:newsletters',
             'first_name' => 'required | max: 255', 
-            'zipcode' => 'required | max: 20',           
+            'zipcode' => ' max: 20',           
         ], $customMessages);
         
         
