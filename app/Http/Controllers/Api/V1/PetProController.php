@@ -602,7 +602,6 @@ class PetProController extends Controller
 
     public function newPetPros(UserPetProRequest $request)
     {
-        // dd();
         $pet_pro_input = $request->only(['store_name', 'website_url', 'email', 'phone_number', 'address_line_1', 'address_line_2', 'postal_code', 'description']);
         $pet_pro_input['user_id'] = Auth::user()->id;
         $pet_pro_input['user_type'] = 'User';
