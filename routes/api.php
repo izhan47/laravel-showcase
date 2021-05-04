@@ -62,8 +62,8 @@ $api->version('v1', ['prefix' => 'api', 'namespace' => '\App\Http\Controllers\Ap
     $api->group(['middleware' => ['jwtAuth']], function ($api) {
 
         $api->post('get-country-list', ['as' => 'get-country-list', 'uses' => 'UsersController@getCountryList']);
-        $api->get('get-cities/{state_id}', 'UsersController@getCities');
         $api->get('get-states/{country_id}', 'UsersController@getStates');
+        $api->get('get-cities/{state_id}', 'UsersController@getCities');
 
         $api->group(['prefix' => 'profile'], function ($api) {
             $api->post('get-details', ['as' => 'get-details', 'uses' => 'UsersController@getProfileDetails']);
