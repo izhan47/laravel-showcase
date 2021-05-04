@@ -12,6 +12,7 @@ use App\Models\PetProDeal;
 use App\Models\PetProDealClaim;
 use App\Models\PetProReview;
 use App\Models\PetProSelectedCategory;
+use App\Models\State;
 use App\Models\User;
 use App\Models\UserLovedPetPro;
 use App\Models\UserPet;
