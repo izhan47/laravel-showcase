@@ -530,7 +530,7 @@ class UsersController extends Controller
         return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
     }
 
-    public function getStates(Request $request, $country_id)
+    public function getStates($country_id)
     {
         $code = config("wagenabled.status_codes.normal_error");
         $message = "";
@@ -544,7 +544,7 @@ class UsersController extends Controller
         return WagEnabledHelpers::apiJsonResponse($states, $code, $message);
     }
 
-    public function getCities(Request $request, $state_id)
+    public function getCities($state_id)
     {
         $code = config("wagenabled.status_codes.normal_error");
         $message = "";
