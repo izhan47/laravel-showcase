@@ -87,6 +87,8 @@ $api->version('v1', ['prefix' => 'api', 'namespace' => '\App\Http\Controllers\Ap
             //By Umar
             $api->post('new-pet-pro', ['as' => 'new-pet-pro', 'uses' => 'PetProController@newPetPros']);
             $api->post('complete-pet-pro/{id}', ['as' => 'complete-pet-pro', 'uses' => 'PetProController@completePetPros']);
+            $api->post('get-user-pet-pro-list/{page?}', ['as' => 'get-list', 'uses' => 'PetProController@getUserPetProList']);
+
             /////////
 
             $api->post('like-dislike/{slug}', ['as' => 'like-dislike', 'uses' => 'PetProController@likeDislikePetPro']);
