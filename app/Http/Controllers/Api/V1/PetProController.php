@@ -788,12 +788,10 @@ class PetProController extends Controller
                             $insertedBusiness[] = $businessId;
                         }
                     }
-                    if(isset($insertedCategories))
-                    {
+                    if (isset($insertedCategories)) {
                         $result->categories()->whereNotIn("category_id", $insertedCategories)->delete();
                     }
-                    if(isset($insertedBusiness))
-                    {
+                    if (isset($insertedBusiness)) {
                         $result->business()->whereNotIn("business_id", $insertedBusiness)->delete();
                     }
 
@@ -941,6 +939,173 @@ class PetProController extends Controller
             return WagEnabledHelpers::apiJsonResponse([], config("wagenabled.status_codes.normal_error"), 'Sorry, Something went wrong please try again');
         } catch (\Exception $e) {
             return WagEnabledHelpers::apiJsonResponse([], config("wagenabled.status_codes.server_side"), $e->getMessage());
+        }
+    }
+
+    public function getUserPetProList(Request $request, $page = 1)
+    {
+        $user = auth()->user()->id;
+        $input = $request->only(['latitude', 'longitude']);
+        $perPage = config("wagenabled.per_page_pet_pro_results", 6);
+        $skip = ($page > 1) ? ($perPage * ($page - 1)) : 0;
+
+        $is_seach_by_location = false;
+
+        $category_id = $request->get('category_id', "");
+        // $userId = $request->get('userId');
+        $business_id = $request->get('business_id', "");
+        $search = $request->get('search', "");
+        $sort_by = $request->get('sort_by', "");
+
+        $pet_pros = PetPro::withCount(['deals' => function ($query) {
+            $query->active();
+        },
+        ])
+            ->with('coverImage', 'city', 'state');
+
+        $pet_pros = $pet_pros->where('user_id', $user);
+        $category_id = json_decode($category_id);
+        if ($category_id != null && count($category_id)) {
+            $allCatValue = false;
+            $categoryIdArray = [];
+            foreach ($category_id as $key => $value) {
+                if ($value->value != "") {
+                    $categoryIdArray[] = $value->value;
+                } else {
+                    $allCatValue = true;
+                }
+            }
+            if (!$allCatValue) {
+                $selectedCategoryPetProIds = PetProSelectedCategory::whereIn('category_id', $categoryIdArray)->pluck('pet_pro_id')->toArray();
+                $pet_pros = $pet_pros->whereIn('id', $selectedCategoryPetProIds);
+            }
+        }
+
+        $business_id = json_decode($business_id);
+        if ($business_id != null && count($business_id)) {
+            $allvalue = false;
+            $businessIdArray = [];
+            foreach ($business_id as $key => $value) {
+                if ($value->value != "") {
+                    $businessIdArray[] = $value->value;
+                } else {
+                    $allvalue = true;
+                }
+            }
+            if (!$allvalue) {
+                $selectedBusinessPetProIds = PetProSelectedBusinessNature::whereIn('business_id', $businessIdArray)->pluck('pet_pro_id')->toArray();
+                $pet_pros = $pet_pros->whereIn('id', $selectedBusinessPetProIds);
+            }
+        }
+
+        if ($search) {
+            // $pet_pros = $pet_pros->Where('store_name', 'like', '%'.$search.'%' );
+            $pet_pros = $pet_pros->where(function ($query) use ($search) {
+                $query
+                    ->where('store_name', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', '%' . $search . '%')
+                    ->orWhereHas('servicesOffered', function ($q) use ($search) {
+                        $q->where('pet_pro_services_offered.service', 'like', '%' . $search . '%'); // '=' is optional
+                    });
+            });
+        }
+        // if( $sort_by == 'nearest' ) {
+
+        /*if( empty($input["longitude"]) || empty($input["latitude"]) ) {
+        $user = Auth::user();
+        if ($user) {
+        if($user->city) {
+        $input["longitude"] = $user->city->city_latitude;
+        $input["latitude"] = $user->city->city_longitude;
+        }
+        }
+        }*/
+        if (!(empty($input["longitude"]) || empty($input["latitude"]))) {
+            $is_seach_by_location = true;
+            //$pet_pros = $pet_pros->selectRaw('pet_pros.*,  ( 6367 * acos( cos( radians( ? ) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians( ? ) ) + sin( radians( ? ) ) * sin( radians( latitude ) ) ) ) AS distance', [$input["latitude"], $input["longitude"], $input["latitude"]]);
+            $pet_pros_with_lat_long = DB::table('pet_country_state_city')->selectRaw('pet_country_state_city.*,  ( 6367 * acos( cos( radians( ? ) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians( ? ) ) + sin( radians( ? ) ) * sin( radians( latitude ) ) ) ) AS distance', [$input["latitude"], $input["longitude"], $input["latitude"]]);
+        }
+        // }
+
+        $totalRecords = $pet_pros->count();
+
+        $this->responseData = [
+            "pet_pro_list" => [],
+        ];
+
+        if ($totalRecords > 0) {
+
+            $petProArr = clone $pet_pros;
+            $totalRecords = count($petProArr->get());
+            //if( $sort_by ) {
+            switch ($sort_by) {
+                case 'popular':
+                    $pet_pros = $pet_pros->orderBy("avg_rating", "DESC")
+                        ->orderBy("id", "DESC");
+                    break;
+
+                case 'deal_offered':
+                    $pet_pros = $pet_pros->orderBy("deals_count", "DESC")
+                        ->orderBy("id", "DESC");
+                    break;
+
+                case 'latest':
+                    $pet_pros = $pet_pros->orderBy("id", "DESC");
+                    break;
+
+                default:
+                    $pet_pros = $pet_pros->orderBy("id", "DESC");
+                    break;
+            }
+            //}
+            if ($is_seach_by_location) {
+                $pet_pro_list = $pet_pros->get();
+            } else {
+                $pet_pro_list = $pet_pros->skip($skip)
+                    ->take($perPage)
+                    ->get();
+            }
+
+            $this->responseData["pet_pro_list"] = $pet_pro_list;
+
+            foreach ($this->responseData["pet_pro_list"] as $key => $petPro) {
+                $petPro['categories'] = PetProSelectedCategory::leftjoin('pet_pro_categories', 'pet_pro_categories.id', '=', 'pet_pro_selected_categories.category_id')
+                    ->select([
+                        'pet_pro_categories.id',
+                        'pet_pro_categories.name as name',
+                    ])
+                    ->where('pet_pro_selected_categories.pet_pro_id', '=', $petPro->id)
+                    ->get();
+            }
+        }
+        if ($is_seach_by_location) {
+            $pet_pros_with_lat_long = $pet_pros_with_lat_long->orderBy(\DB::raw('-`distance`'), 'desc')->havingRaw('distance <= ?', [25]); //->orHavingRaw('distance is null')
+            $this->responseData["pet_pro_list"] = $this->addMatchOne($pet_pros_with_lat_long->get(), $this->responseData["pet_pro_list"]);
+            $totalPages = ceil(count($this->responseData["pet_pro_list"]) / $perPage);
+
+            $this->responseData["total_page"] = $totalPages;
+            $this->responseData["total_records"] = count($this->responseData["pet_pro_list"]);
+            $skiparray = 0;
+            $limitarray = $perPage;
+            if ($page > 1) {
+                $skiparray = ($perPage * $page) - $perPage;
+                $limitarray = ($perPage * $page) - 1;
+            }
+            $this->responseData["pet_pro_list"] = array_slice($this->responseData["pet_pro_list"], $skiparray, $limitarray);
+            $this->message = "";
+            $this->code = $this->statusCodes['success'];
+
+            return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
+        } else {
+
+            $totalPages = ceil($totalRecords / $perPage);
+            $this->responseData["total_page"] = $totalPages;
+            $this->responseData["total_records"] = $totalRecords;
+
+            $this->message = "";
+            $this->code = $this->statusCodes['success'];
+
+            return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
         }
     }
 }
