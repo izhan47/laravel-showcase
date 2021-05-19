@@ -952,7 +952,6 @@ class PetProController extends Controller
         $is_seach_by_location = false;
 
         $category_id = $request->get('category_id', "");
-        // $userId = $request->get('userId');
         $business_id = $request->get('business_id', "");
         $search = $request->get('search', "");
         $sort_by = $request->get('sort_by', "");
@@ -999,7 +998,6 @@ class PetProController extends Controller
         }
 
         if ($search) {
-            // $pet_pros = $pet_pros->Where('store_name', 'like', '%'.$search.'%' );
             $pet_pros = $pet_pros->where(function ($query) use ($search) {
                 $query
                     ->where('store_name', 'like', '%' . $search . '%')
@@ -1009,23 +1007,10 @@ class PetProController extends Controller
                     });
             });
         }
-        // if( $sort_by == 'nearest' ) {
-
-        /*if( empty($input["longitude"]) || empty($input["latitude"]) ) {
-        $user = Auth::user();
-        if ($user) {
-        if($user->city) {
-        $input["longitude"] = $user->city->city_latitude;
-        $input["latitude"] = $user->city->city_longitude;
-        }
-        }
-        }*/
         if (!(empty($input["longitude"]) || empty($input["latitude"]))) {
             $is_seach_by_location = true;
-            //$pet_pros = $pet_pros->selectRaw('pet_pros.*,  ( 6367 * acos( cos( radians( ? ) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians( ? ) ) + sin( radians( ? ) ) * sin( radians( latitude ) ) ) ) AS distance', [$input["latitude"], $input["longitude"], $input["latitude"]]);
             $pet_pros_with_lat_long = DB::table('pet_country_state_city')->selectRaw('pet_country_state_city.*,  ( 6367 * acos( cos( radians( ? ) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians( ? ) ) + sin( radians( ? ) ) * sin( radians( latitude ) ) ) ) AS distance', [$input["latitude"], $input["longitude"], $input["latitude"]]);
         }
-        // }
 
         $totalRecords = $pet_pros->count();
 
@@ -1037,7 +1022,6 @@ class PetProController extends Controller
 
             $petProArr = clone $pet_pros;
             $totalRecords = count($petProArr->get());
-            //if( $sort_by ) {
             switch ($sort_by) {
                 case 'popular':
                     $pet_pros = $pet_pros->orderBy("avg_rating", "DESC")
@@ -1057,7 +1041,6 @@ class PetProController extends Controller
                     $pet_pros = $pet_pros->orderBy("id", "DESC");
                     break;
             }
-            //}
             if ($is_seach_by_location) {
                 $pet_pro_list = $pet_pros->get();
             } else {
