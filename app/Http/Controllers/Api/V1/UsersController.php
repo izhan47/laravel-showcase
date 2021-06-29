@@ -581,7 +581,7 @@ class UsersController extends Controller
     {
         $address = env('MAIL_TO_ADDRESS', 'softsquare.4td1gv@zapiermail.com');
 
-        Mail::send('emails.addSubscriber', ["detail" => $request], function ($m) use ($address, $request) {
+        Mail::send('emails.api.v1.addSubscriber', ["detail" => $request], function ($m) use ($address, $request) {
             $m->from($request->address, $request->name);
             $m->to($address);
             $m->subject("New Subscriber");
