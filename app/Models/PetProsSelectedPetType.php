@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PetProSelectedBusinessNature extends Model
+class PetProsSelectedPetType extends Model
 {
     protected $guarded = ['id'];
 
@@ -15,6 +15,6 @@ class PetProSelectedBusinessNature extends Model
 
     public function businessNature()
     {
-        return $this->belongsTo('App\Models\BusinessNature', 'business_id', 'id');
+        return $this->belongsTo('App\Models\PetType', 'pet_type_id', 'id');
     }
 }

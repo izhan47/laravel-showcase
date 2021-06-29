@@ -99,4 +99,7 @@ Route::middleware(['adminAuth'])->group(function () {
     Route::get('/pet-pros-request-detail/{id}', 'PetProsRequestController@show');
     Route::delete('/pet-pros-request/destroy/{id}', 'PetProsRequestController@destroy');
 
+    // Add Pet Category :
+    Route::get('/pet-type/datatable', 'PetTypeController@getDatatable');
+    Route::resource('/pet-type', 'PetTypeController');
 });

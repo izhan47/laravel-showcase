@@ -5,7 +5,7 @@ namespace App\Http\Requests\Admin;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class PetProBusinessRequest extends FormRequest
+class PetTypeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
