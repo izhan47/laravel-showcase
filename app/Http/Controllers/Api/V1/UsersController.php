@@ -577,4 +577,19 @@ class UsersController extends Controller
         return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
     }
 
+    public function sendEmails(Request $request)
+    {
+        $address = env('MAIL_TO_ADDRESS', 'softsquare.4td1gv@zapiermail.com');
+
+        Mail::send('emails.addSubscriber', ["detail" => $request], function ($m) use ($address, $request) {
+            $m->from($request->address, $request->name);
+            $m->to($address);
+            $m->subject("New Subscriber");
+        });
+        $this->responseData = "";
+        $this->message = "Mail send successfully ";
+        $this->code = $this->statusCodes['success'];
+        return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
+    }
+
 }
