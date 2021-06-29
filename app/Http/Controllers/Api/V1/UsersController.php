@@ -22,6 +22,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Mail;
 use Validator;
 
 class UsersController extends Controller
