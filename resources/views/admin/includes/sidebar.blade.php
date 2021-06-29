@@ -34,6 +34,11 @@
                     <span class="align-middle">Users</span>
                 </a>
             </li>
+            <li class="sidebar-item {{ setActiveMenu('admin/pet-type') }}">
+                <a class="sidebar-link" href="{{ url('admin/pet-type') }}">
+                    <span class="align-middle">Pet Type</span>
+                </a>
+            </li>
             <li class="sidebar-item {{ setActiveMenu('admin/pet-pro-business') }}">
                 <a class="sidebar-link" href="{{ url('admin/pet-pro-business') }}">
                     <span class="align-middle">Pet Pro Business Nature</span>

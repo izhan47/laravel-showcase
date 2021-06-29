@@ -43,7 +43,10 @@ class PetPro extends Model
     {
         return $this->hasMany('App\Models\PetProSelectedBusinessNature','pet_pro_id', 'id');
     }
-
+    public function petType()
+    {
+        return $this->hasMany('App\Models\PetProsSelectedPetType','pet_pro_id', 'id');
+    }
     public function servicesOffered()
     {
         return $this->hasMany('App\Models\PetProServicesOffered','pet_pro_id', 'id');
