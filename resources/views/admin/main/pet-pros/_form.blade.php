@@ -165,6 +165,17 @@
                         @endif
                     </div>
                 </div>
+            
+                <div class="col-md-12">
+                    <div class="form-group wag-categories-box-main">
+                        <label>Pet Type *</label>
+                        {{ Form::select('pet_type_id[]', $petType, ( isset($selectedPetType) && count($selectedPetType))?$selectedPetType:null, ['id'=> 'pet_type_id', 'class' => 'form-control', 'multiple' => 'multiple']) }}
+                        @if($errors->has('pet_type_id'))
+                            <p class="text-danger">{{ $errors->first('pet_type_id') }}</p>
+                        @endif
+                    </div>
+                </div>
+
                 <div class="col-md-12">
                     <div class="form-group wag-categories-box-main">
                         <label>Nature of the Business *</label>
@@ -174,6 +185,7 @@
                         @endif
                     </div>
                 </div>
+
                 <div class="col-md-12">
                     <div class="form-group wag-categories-box-main">
                         <label>Categories *</label>
@@ -183,6 +195,8 @@
                         @endif
                     </div>
                 </div>
+
+           
             </div>
         </div>
     </div>
@@ -603,6 +617,10 @@
 			tags: false,
 			placeholder: 'Select Business Nature'
 		});
+        $('#pet_type_id').select2({
+			tags: false,
+			placeholder: 'Select Pet Type'
+		});
 
         $("#postal_code").change(function(){
             var data = $(this).val();   
@@ -732,6 +750,9 @@
                     required: true 
                 },
                 'business_id[]': {
+                    required: true
+                },
+                'pet_type_id[]': {
                     required: true
                 },
                 /*state_id: {
@@ -874,7 +895,7 @@
 
             },
 			errorPlacement: function(error, element) {
-				if (element.attr("id") == "city_id" || element.attr("id") == "state_id" || element.attr("id") == "category_id" || element.attr("id") == "business_id"){
+				if (element.attr("id") == "city_id" || element.attr("id") == "state_id" || element.attr("id") == "category_id" || element.attr("id") == "business_id" || element.attr("id") == "pet_type_id" ){
 					error.appendTo(element.closest('.form-group'));
 				}
 				else {

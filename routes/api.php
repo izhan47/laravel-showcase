@@ -58,6 +58,10 @@ $api->version('v1', ['prefix' => 'api', 'namespace' => '\App\Http\Controllers\Ap
         $api->get('shiftData', ['as' => 'shiftData', 'uses' => 'ProductReviewController@addCategoryAnotherTable']);
     });
 
+    $api->group(['prefix' => 'mail'], function ($api) {
+        $api->post('send-mail', ['as' => 'send-mail', 'uses' => 'UsersController@sendEmails']);
+    });
+
     /*After Login*/
     $api->group(['middleware' => ['jwtAuth']], function ($api) {
 

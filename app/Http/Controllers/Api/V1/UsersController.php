@@ -22,6 +22,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Mail;
 use Validator;
 
 class UsersController extends Controller
@@ -573,6 +574,21 @@ class UsersController extends Controller
         }
         $this->responseData['claimedDeals'] = PetProDeal::whereIn('id', $deal_ids)->get();
         $this->message = "";
+        $this->code = $this->statusCodes['success'];
+        return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
+    }
+
+    public function sendEmails(Request $request)
+    {
+        $address = env('MAIL_TO_ADDRESS', 'softsquare.4td1gv@zapiermail.com');
+
+        Mail::send('emails.addSubscriber', ["detail" => $request], function ($m) use ($address, $request) {
+            $m->from($request->email, $request->name);
+            $m->to($address);
+            $m->subject("New Subscriber");
+        });
+        $this->responseData = "";
+        $this->message = "Mail send successfully ";
         $this->code = $this->statusCodes['success'];
         return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
     }
