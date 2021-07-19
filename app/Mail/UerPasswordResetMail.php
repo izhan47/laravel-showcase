@@ -37,7 +37,7 @@ class UerPasswordResetMail extends Mailable
         $subject = 'Wag enabled password reset mail.';
         $name = env('MAIL_FROM_NAME', 'Wag Enabled');
 
-        $url = config("wagenabled.react_server_base_url") . "/reset-password/" . $this->token;
+        $url = config("wagenabled.react_server_base_url") . "/reset-password/?token=" . $this->token;
 
         return $this->view('emails.api.v1.auth.passwordReset')
                    ->from($address, $name)                                   
