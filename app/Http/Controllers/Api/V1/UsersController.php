@@ -10,6 +10,8 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\PetProDeal;
 use App\Models\PetProDealClaim;
+use App\Models\WatchAndLearnDeal;
+use App\Models\WatchAndLearnDealClaim;
 use App\Models\PetProReview;
 use App\Models\PetProSelectedCategory;
 use App\Models\State;
@@ -568,11 +570,19 @@ class UsersController extends Controller
             return WagEnabledHelpers::apiUserNotFoundResponse();
         }
         $isClaimed = PetProDealClaim::select('pet_pro_deal_id')->where('user_id', $user->id)->get();
+        $isClaimedWatchAndLearn = WatchAndLearnDealClaim::select('watch_and_learn_deal_id')->where('user_id', $user->id)->get();
+
         $deal_ids = [];
         foreach ($isClaimed as $key => $value) {
             $deal_ids[] = $value->pet_pro_deal_id;
         }
+
+        $deal_watch_learn_ids = [];
+        foreach ($isClaimedWatchAndLearn as $key => $value) {
+            $deal_watch_learn_ids[] = $value->watch_and_learn_deal_id;
+        }
         $this->responseData['claimedDeals'] = PetProDeal::whereIn('id', $deal_ids)->get();
+        $this->responseData['claimedDealsWatchAndLearn'] = WatchAndLearnDeal::whereIn('id', $deal_watch_learn_ids)->get();
         $this->message = "";
         $this->code = $this->statusCodes['success'];
         return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
