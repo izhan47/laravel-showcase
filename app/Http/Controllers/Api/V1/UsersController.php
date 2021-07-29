@@ -607,7 +607,7 @@ class UsersController extends Controller
     {
         $address = env('MAIL_TO_ADDRESS', 'wagenabled.4td1gv@zapiermail.com');
 
-        Mail::send('emails.ContactForm', ["detail" => $request], function ($m) use ($address, $request) {
+        Mail::send('emails.contactForm', ["detail" => $request], function ($m) use ($address, $request) {
             $m->from($request->email, $request->name);
             $m->to($address);
             $m->subject("Contact Us");
