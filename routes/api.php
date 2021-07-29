@@ -60,6 +60,7 @@ $api->version('v1', ['prefix' => 'api', 'namespace' => '\App\Http\Controllers\Ap
 
     $api->group(['prefix' => 'mail'], function ($api) {
         $api->post('send-mail', ['as' => 'send-mail', 'uses' => 'UsersController@sendEmails']);
+        $api->post('contact-us-form', ['as' => 'contact-us-form', 'uses' => 'UsersController@addContactFormFlowDesk']);
     });
 
     /*After Login*/

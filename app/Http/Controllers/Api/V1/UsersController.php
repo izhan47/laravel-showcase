@@ -592,5 +592,19 @@ class UsersController extends Controller
         $this->code = $this->statusCodes['success'];
         return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
     }
+    
+    public function addContactFormFlowDesk(Request $request)
+    {
+        $address = env('MAIL_TO_ADDRESS', 'wagenabled.4td1gv@zapiermail.com');
 
+        Mail::send('emails.ContactForm', ["detail" => $request], function ($m) use ($address, $request) {
+            $m->from($request->email, $request->name);
+            $m->to($address);
+            $m->subject("Contact Us");
+        });
+        $this->responseData = "";
+        $this->message = "Mail send successfully ";
+        $this->code = $this->statusCodes['success'];
+        return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
+    }
 }
