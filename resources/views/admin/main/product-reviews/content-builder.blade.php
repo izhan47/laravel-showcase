@@ -135,6 +135,9 @@
                                 snippetFile: "/vendor/content-builder/assets/minimalist-basic/snippets-bootstrap.php",
                                 snippetOpen: true,
                                 toolbar: "left",
+                                container: '.container',
+			row: 'row',
+			cols: ['col-md-1', 'col-md-2', 'col-md-3', 'col-md-4', 'col-md-5', 'col-md-6', 'col-md-7', 'col-md-8', 'col-md-9', 'col-md-10', 'col-md-11', 'col-md-12'] 
                                 iconselect: "/vendor/content-builder/assets/ionicons/selecticon.html",
                                 snippetPathReplace: ['assets/minimalist-basic/', 'assets/minimalist-basic/'],
                                 snippetCategories: [
@@ -150,29 +153,29 @@
                                     [7,"Paragraph, Images + Caption"],
                                     [8,"Heading, Paragraph, Images + Caption"],
                                     [33,"Buttons"],
-                                    [34,"Cards"],
+                                    /*[34,"Cards"],*/
                                     [9,"Images + Caption"],
                                     [10,"Images + Long Caption"],
                                     [11,"Images"],
                                     [12,"Single Image"],
-                                    [13,"Call to Action"],
-                                    [14,"List"],
+                                    /*[13,"Call to Action"],
+                                    [14,"List"],*/
                                     [15,"Quotes"],
-                                    [16,"Profile"],
-                                    /*[17,"Map"],*/
+                                    /*[16,"Profile"],
+                                    [17,"Map"],*/
                                     [20,"Video"],
-                                    [18,"Social"],
+                                    /*[18,"Social"],
                                     [21,"Services"],
                                     [22,"Contact Info"],
-                                    /*[23,"Pricing"],*/
+                                    [23,"Pricing"],*/
                                     [24,"Team Profile"],
                                     [25,"Products/Portfolio"],
-                                    [26,"How It Works"],
+                                    /*[26,"How It Works"],
                                     [27,"Partners/Clients"],
                                     [28,"As Featured On"],
                                     [29,"Achievements"],
                                     [32,"Skills"],
-                                    /*[30,"Coming Soon"],
+                                    [30,"Coming Soon"],
                                     [31,"Page Not Found"],*/
                                     [19,"Separator"],
 
