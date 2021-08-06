@@ -73,6 +73,7 @@ class UsersController extends Controller
             'old_password' => 'nullable|min:6',
             'password' => 'required_with:old_password|confirmed|min:6',
             'image' => 'nullable',
+            'address'=>'nullable',
         ]);
 
         if ($validator->fails()) {
@@ -158,6 +159,7 @@ class UsersController extends Controller
             'name' => 'required | max: 255',
             'breed_ids' => 'required',
             'pet_image' => 'required | mimes:jpeg,jpg,png',
+            'adoption_date' => 'required',
         ]);
 
         if ($validator->fails()) {
