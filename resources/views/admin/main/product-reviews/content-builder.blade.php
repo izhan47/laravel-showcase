@@ -68,7 +68,8 @@
                 countdownOpts: false,
                 formsOpts:false,
                 blocksBasicOpts: {
-                    blocks: ['column1', 'column2', 'column3', 'column3-7', 'text', 'link', 'image', 'video']
+                    blocks: ['column1', 'column2', 'column3', 'column3-7', 'text', 'link', 'image', 'video'],
+                    flexGrid:true
                 }
             },
         },
