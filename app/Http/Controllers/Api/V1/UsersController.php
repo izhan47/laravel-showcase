@@ -70,8 +70,6 @@ class UsersController extends Controller
             'zipcode' => 'required',
             'latitude' => 'nullable',
             'longitude' => 'nullable',
-            'old_password' => 'nullable|min:6',
-            'password' => 'required_with:old_password|confirmed|min:6',
             'image' => 'nullable',
             'address'=>'nullable',
         ]);
@@ -92,22 +90,46 @@ class UsersController extends Controller
         $input['state_id'] = $city->state->id;
         $input['country_id'] = $city->state->country->id;
 
-        $old_password = $request->get("old_password", "");
-        $password = $request->get("password", "");
-
-        if ($old_password) {
-            if (!Hash::check($old_password, $user->password)) {
-                $validator->getMessageBag()->add('old_password', 'Please enter correct password.');
-                return WagEnabledHelpers::apiValidationFailResponse($validator);
-            }
-            $input["password"] = Hash::make($password);
-        }
+   
 
         if ($request->file('image', false)) {
             $imageStore = WagEnabledHelpers::saveUploadedImage($request->file('image'), config("wagenabled.path.doc.user_profile_image_path"), $user->profile_image, $isCreateThumb = "1", $height = 250, $width = 380);
             if (isset($imageStore['error_msg']) && $imageStore['error_msg'] == '' && isset($imageStore['name']) && !empty($imageStore['name'])) {
                 $input["profile_image"] = $imageStore['name'];
             }
+        }
+
+        $isSaved = $user->update($input);
+        if ($isSaved) {
+            $this->responseData["user_details"] = $user;
+            $this->code = $this->statusCodes['success'];
+            $this->message = 'Profile Updated successfully';
+        }
+
+        return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $user = Auth::user();
+        if ($user->count() == 0) {
+            return WagEnabledHelpers::apiUserNotFoundResponse();
+        }
+        $validator = Validator::make($request->all(), [
+            'old_password' => 'required|min:6',
+            'password' => 'required_with:old_password|confirmed|min:6',
+        ]);
+        if ($validator->fails()) {
+            return WagEnabledHelpers::apiValidationFailResponse($validator);
+        }
+        $old_password = $request->get("old_password", "");
+        $password = $request->get("password", "");
+        if ($old_password) {
+            if (!Hash::check($old_password, $user->password)) {
+                $validator->getMessageBag()->add('old_password', 'Please enter correct password.');
+                return WagEnabledHelpers::apiValidationFailResponse($validator);
+            }
+            $input["password"] = Hash::make($password);
         }
 
         $isSaved = $user->update($input);

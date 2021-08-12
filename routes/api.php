@@ -72,6 +72,7 @@ $api->version('v1', ['prefix' => 'api', 'namespace' => '\App\Http\Controllers\Ap
 
         $api->group(['prefix' => 'profile'], function ($api) {
             $api->post('get-details', ['as' => 'get-details', 'uses' => 'UsersController@getProfileDetails']);
+            $api->post('update-password', ['as' => 'update-password', 'uses' => 'UsersController@updatePassword']);
             $api->post('update', ['as' => 'update', 'uses' => 'UsersController@updateProfile']);
             $api->post('update-location', ['as' => 'update', 'uses' => 'UsersController@updateLocation']);
             $api->post('add-pets', ['as' => 'add-pets', 'uses' => 'UsersController@storeMyPets']);
