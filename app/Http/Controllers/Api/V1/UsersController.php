@@ -529,7 +529,7 @@ class UsersController extends Controller
             ->get();
 
         $breed_list = [];
-        $breed_list[] = ["value" => '', "label" => 'Mixed'];
+        //$breed_list[] = ["value" => '', "label" => 'Mixed'];
         foreach ($breed_data as $breed) {
             $breed_list[] = ["value" => $breed->id, "label" => $breed->name];
         }
