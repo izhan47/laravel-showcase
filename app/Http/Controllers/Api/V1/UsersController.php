@@ -504,7 +504,7 @@ class UsersController extends Controller
         }
 
         $users_pets = $users_pets->orderBy('id', 'desc')
-            ->take($perPage)
+            //->take($perPage)
             ->get();
 
         if ($users_pets->count() > 0) {
