@@ -80,6 +80,7 @@ $api->version('v1', ['prefix' => 'api', 'namespace' => '\App\Http\Controllers\Ap
             $api->post('update-vet', ['as' => 'update-vet', 'uses' => 'UsersController@updateVetDetails']);
             $api->post('get-breed-list', ['as' => 'get-breed-list', 'uses' => 'UsersController@getBreedList']);
             $api->post('complete', ['as' => 'complete', 'uses' => 'UsersController@completeProfile']);
+            $api->post('logout', ['as' => 'logout', 'uses' => 'LoginController@logout']);
 
             $api->post('get-loved-pet-pros/{lastId?}', ['as' => 'get-loved-pet-pros', 'uses' => 'UsersController@getLovedPetPros']);
             $api->post('get-saved-videos/{page?}', ['as' => 'get-saved-videos', 'uses' => 'UsersController@getSavedVideos']);
