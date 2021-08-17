@@ -60,6 +60,7 @@ $api->version('v1', ['prefix' => 'api', 'namespace' => '\App\Http\Controllers\Ap
 
     $api->group(['prefix' => 'mail'], function ($api) {
         $api->post('send-mail', ['as' => 'send-mail', 'uses' => 'UsersController@sendEmails']);
+        $api->post('contact-us-form', ['as' => 'contact-us-form', 'uses' => 'UsersController@addContactFormFlowDesk']);
     });
 
     /*After Login*/
@@ -71,6 +72,7 @@ $api->version('v1', ['prefix' => 'api', 'namespace' => '\App\Http\Controllers\Ap
 
         $api->group(['prefix' => 'profile'], function ($api) {
             $api->post('get-details', ['as' => 'get-details', 'uses' => 'UsersController@getProfileDetails']);
+            $api->post('update-password', ['as' => 'update-password', 'uses' => 'UsersController@updatePassword']);
             $api->post('update', ['as' => 'update', 'uses' => 'UsersController@updateProfile']);
             $api->post('update-location', ['as' => 'update', 'uses' => 'UsersController@updateLocation']);
             $api->post('add-pets', ['as' => 'add-pets', 'uses' => 'UsersController@storeMyPets']);
@@ -78,6 +80,7 @@ $api->version('v1', ['prefix' => 'api', 'namespace' => '\App\Http\Controllers\Ap
             $api->post('update-vet', ['as' => 'update-vet', 'uses' => 'UsersController@updateVetDetails']);
             $api->post('get-breed-list', ['as' => 'get-breed-list', 'uses' => 'UsersController@getBreedList']);
             $api->post('complete', ['as' => 'complete', 'uses' => 'UsersController@completeProfile']);
+            $api->post('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
 
             $api->post('get-loved-pet-pros/{lastId?}', ['as' => 'get-loved-pet-pros', 'uses' => 'UsersController@getLovedPetPros']);
             $api->post('get-saved-videos/{page?}', ['as' => 'get-saved-videos', 'uses' => 'UsersController@getSavedVideos']);

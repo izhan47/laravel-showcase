@@ -10,6 +10,8 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\PetProDeal;
 use App\Models\PetProDealClaim;
+use App\Models\WatchAndLearnDeal;
+use App\Models\WatchAndLearnDealClaim;
 use App\Models\PetProReview;
 use App\Models\PetProSelectedCategory;
 use App\Models\State;
@@ -68,9 +70,8 @@ class UsersController extends Controller
             'zipcode' => 'required',
             'latitude' => 'nullable',
             'longitude' => 'nullable',
-            'old_password' => 'nullable|min:6',
-            'password' => 'required_with:old_password|confirmed|min:6',
             'image' => 'nullable',
+            'address'=>'nullable',
         ]);
 
         if ($validator->fails()) {
@@ -89,22 +90,46 @@ class UsersController extends Controller
         $input['state_id'] = $city->state->id;
         $input['country_id'] = $city->state->country->id;
 
-        $old_password = $request->get("old_password", "");
-        $password = $request->get("password", "");
-
-        if ($old_password) {
-            if (!Hash::check($old_password, $user->password)) {
-                $validator->getMessageBag()->add('old_password', 'Please enter correct password.');
-                return WagEnabledHelpers::apiValidationFailResponse($validator);
-            }
-            $input["password"] = Hash::make($password);
-        }
+   
 
         if ($request->file('image', false)) {
             $imageStore = WagEnabledHelpers::saveUploadedImage($request->file('image'), config("wagenabled.path.doc.user_profile_image_path"), $user->profile_image, $isCreateThumb = "1", $height = 250, $width = 380);
             if (isset($imageStore['error_msg']) && $imageStore['error_msg'] == '' && isset($imageStore['name']) && !empty($imageStore['name'])) {
                 $input["profile_image"] = $imageStore['name'];
             }
+        }
+
+        $isSaved = $user->update($input);
+        if ($isSaved) {
+            $this->responseData["user_details"] = $user;
+            $this->code = $this->statusCodes['success'];
+            $this->message = 'Profile Updated successfully';
+        }
+
+        return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $user = Auth::user();
+        if ($user->count() == 0) {
+            return WagEnabledHelpers::apiUserNotFoundResponse();
+        }
+        $validator = Validator::make($request->all(), [
+            'old_password' => 'required|min:6',
+            'password' => 'required_with:old_password|confirmed|min:6',
+        ]);
+        if ($validator->fails()) {
+            return WagEnabledHelpers::apiValidationFailResponse($validator);
+        }
+        $old_password = $request->get("old_password", "");
+        $password = $request->get("password", "");
+        if ($old_password) {
+            if (!Hash::check($old_password, $user->password)) {
+                $validator->getMessageBag()->add('old_password', 'Please enter correct password.');
+                return WagEnabledHelpers::apiValidationFailResponse($validator);
+            }
+            $input["password"] = Hash::make($password);
         }
 
         $isSaved = $user->update($input);
@@ -156,6 +181,7 @@ class UsersController extends Controller
             'name' => 'required | max: 255',
             'breed_ids' => 'required',
             'pet_image' => 'required | mimes:jpeg,jpg,png',
+            'adoption_date' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -478,7 +504,7 @@ class UsersController extends Controller
         }
 
         $users_pets = $users_pets->orderBy('id', 'desc')
-            ->take($perPage)
+            //->take($perPage)
             ->get();
 
         if ($users_pets->count() > 0) {
@@ -503,7 +529,7 @@ class UsersController extends Controller
             ->get();
 
         $breed_list = [];
-        $breed_list[] = ["value" => '', "label" => 'Mixed'];
+        //$breed_list[] = ["value" => '', "label" => 'Mixed'];
         foreach ($breed_data as $breed) {
             $breed_list[] = ["value" => $breed->id, "label" => $breed->name];
         }
@@ -568,11 +594,19 @@ class UsersController extends Controller
             return WagEnabledHelpers::apiUserNotFoundResponse();
         }
         $isClaimed = PetProDealClaim::select('pet_pro_deal_id')->where('user_id', $user->id)->get();
+        $isClaimedWatchAndLearn = WatchAndLearnDealClaim::select('watch_and_learn_deal_id')->where('user_id', $user->id)->get();
+
         $deal_ids = [];
         foreach ($isClaimed as $key => $value) {
             $deal_ids[] = $value->pet_pro_deal_id;
         }
+
+        $deal_watch_learn_ids = [];
+        foreach ($isClaimedWatchAndLearn as $key => $value) {
+            $deal_watch_learn_ids[] = $value->watch_and_learn_deal_id;
+        }
         $this->responseData['claimedDeals'] = PetProDeal::whereIn('id', $deal_ids)->get();
+        $this->responseData['claimedDealsWatchAndLearn'] = WatchAndLearnDeal::whereIn('id', $deal_watch_learn_ids)->get();
         $this->message = "";
         $this->code = $this->statusCodes['success'];
         return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
@@ -592,5 +626,19 @@ class UsersController extends Controller
         $this->code = $this->statusCodes['success'];
         return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
     }
+    
+    public function addContactFormFlowDesk(Request $request)
+    {
+        $address = env('MAIL_TO_ADDRESS', 'wagenabled.4td1gv@zapiermail.com');
 
+        Mail::send('emails.contactForm', ["detail" => $request], function ($m) use ($address, $request) {
+            $m->from($request->email, $request->name);
+            $m->to($address);
+            $m->subject("Contact Us");
+        });
+        $this->responseData = "";
+        $this->message = "Mail send successfully ";
+        $this->code = $this->statusCodes['success'];
+        return WagEnabledHelpers::apiJsonResponse($this->responseData, $this->code, $this->message);
+    }
 }

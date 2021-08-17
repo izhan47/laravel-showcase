@@ -1,219 +1,626 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Wag Enabled">
-        <meta name="author" content="Wag Enabled">
-
-        <title>{{ config('app.name', 'Wag Enabled') }} | Content Builder</title>
-
-        <!-- favicon icon -->
-        <link rel="apple-touch-icon" sizes="57x57" href="{{asset('images/favicons/apple-icon-57x57.png')}}">
-        <link rel="apple-touch-icon" sizes="60x60" href="{{asset('images/favicons/apple-icon-60x60.png')}}">
-        <link rel="apple-touch-icon" sizes="72x72" href="{{asset('images/favicons/apple-icon-72x72.png')}}">
-        <link rel="apple-touch-icon" sizes="76x76" href="{{asset('images/favicons/apple-icon-76x76.png')}}">
-        <link rel="apple-touch-icon" sizes="114x114" href="{{asset('images/favicons/apple-icon-114x114.png')}}">
-        <link rel="apple-touch-icon" sizes="120x120" href="{{asset('images/favicons/apple-icon-120x120.png')}}">
-        <link rel="apple-touch-icon" sizes="144x144" href="{{asset('images/favicons/apple-icon-144x144.png')}}">
-        <link rel="apple-touch-icon" sizes="152x152" href="{{asset('images/favicons/apple-icon-152x152.png')}}">
-        <link rel="apple-touch-icon" sizes="180x180" href="{{asset('images/favicons/apple-icon-180x180.png')}}">
-        <link rel="icon" type="image/png" sizes="192x192"  href="{{asset('images/favicons/android-icon-192x192.png')}}">
-        <link rel="icon" type="image/png" sizes="32x32" href="{{asset('images/favicons/favicon-32x32.png')}}">
-        <link rel="icon" type="image/png" sizes="96x96" href="{{asset('images/favicons/favicon-96x96.png')}}">
-        <link rel="icon" type="image/png" sizes="16x16" href="{{asset('images/favicons/favicon-16x16.png')}}">
-        <link rel="manifest" href="{{asset('images/favicons/manifest.json')}}">
-        <meta name="msapplication-TileColor" content="#ffffff">
-        <meta name="msapplication-TileImage" content="{{asset('images/favicons/ms-icon-144x144.png')}}">
-        <meta name="theme-color" content="#ffffff">
-        <link href="{{ asset('admin-theme/fonts/stylesheet.css') }}" rel="stylesheet">
-
-        <!-- end favicon icon -->
-        <link href="{{ asset('vendor/content-builder/contentbuilder/contentbuilder.css')."?version=". env("APP_CSS_VERSION", 1) }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('vendor/content-builder/assets/minimalist-basic/content-bootstrap.css')."?version=". env("APP_CSS_VERSION", 1) }}" rel="stylesheet" type="text/css" />
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-        <!-- <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" /> -->
+    <link rel="stylesheet" href="//unpkg.com/grapesjs/dist/css/grapes.min.css">
+    
+    <!-- plugins -->
+    <script src="//unpkg.com/grapesjs"></script>
+    <script src="https://unpkg.com/grapesjs-preset-webpage"></script>
 
-        <style>
-            body { background-color: #6161FF; }
-            .is-container {  border-radius: 4px; margin: 60px auto 150px; max-width: 1050px; width:100%; padding: 35px; box-sizing:border-box; background-color: #ffffff;box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);}
-            @media all and (max-width: 1080px) {
-                .is-container { /* margin:0 */; }
+    <link href="{{ asset('admin-theme/css/grapes-builder.css') }}" rel="stylesheet">
+
+    <style>
+        body,
+      html {
+        height: 100%;
+        margin: 0;
+      }
+
+      *{
+          box-sizing: border-box;
+      }
+    </style>
+    <title>Editor</title>
+</head>
+<body>
+
+  <form id='description-form' method="POST" action="{{ $module_route.'/'.$watchAndLearn['id'].'/save-description' }}" style="display:none">
+    @csrf
+    <input type="hidden" name="_method" value="PUT">
+    <textarea name="description" id="description"></textarea>
+</form>
+
+    
+    <div id="gjs" style="height:0px; overflow:hidden"></div>
+
+
+  <script>
+    const exist = `{!! $watchAndLearn["description"] !!}`;
+    const editor = grapesjs.init({
+  height: "100%",
+  showOffsets: 1,
+  noticeOnUnload: 0,
+  storageManager: {
+    autoload: 0,
+  },
+  container: "#gjs",
+  fromElement: true,
+  styleManager: {
+    clearProperties: 1,
+  },
+  avoidInlineStyle: 1,
+  commands: {
+    defaults: [
+      {
+        id: "save-html",
+        run(e) {
+          saveHTML(e);
+        },
+      },
+    ],
+  },
+  plugins: ["gjs-preset-webpage"],
+  pluginsOpts: {
+    "gjs-preset-webpage": {
+      navbarOpts: false,
+      countdownOpts: false,
+      formsOpts: false,
+      aviaryOpts: false,
+      blocksBasicOpts: {
+        flexGrid: 1,
+        blocks: [
+          "column1",
+          "column2",
+          "column3",
+          "column3-7",
+          "text",
+          "link",
+          "image",
+          "video",
+        ],
+      },
+      customStyleManager: [
+        {
+          name: "General",
+          buildProps: [
+            "float",
+            "display",
+            "position",
+            "top",
+            "right",
+            "left",
+            "bottom",
+          ],
+          properties: [
+            {
+              name: "Alignment",
+              property: "float",
+              type: "radio",
+              defaults: "none",
+              list: [
+                { value: "none", className: "fa fa-times" },
+                { value: "left", className: "fa fa-align-left" },
+                { value: "right", className: "fa fa-align-right" },
+              ],
+            },
+            { property: "position", type: "select" },
+          ],
+        },
+        {
+          name: "Dimension",
+          open: false,
+          buildProps: [
+            "width",
+            "flex-width",
+            "height",
+            "max-width",
+            "min-height",
+            "margin",
+            "padding",
+          ],
+          properties: [
+            {
+              id: "flex-width",
+              type: "integer",
+              name: "Width",
+              units: ["px", "%"],
+              property: "flex-basis",
+              toRequire: 1,
+            },
+            {
+              property: "margin",
+              properties: [
+                { name: "Top", property: "margin-top" },
+                { name: "Right", property: "margin-right" },
+                { name: "Bottom", property: "margin-bottom" },
+                { name: "Left", property: "margin-left" },
+              ],
+            },
+            {
+              property: "padding",
+              properties: [
+                { name: "Top", property: "padding-top" },
+                { name: "Right", property: "padding-right" },
+                { name: "Bottom", property: "padding-bottom" },
+                { name: "Left", property: "padding-left" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Typography",
+          open: false,
+          buildProps: [
+            "font-family",
+            "font-size",
+            "font-weight",
+            "letter-spacing",
+            "color",
+            "line-height",
+            "text-align",
+            "text-decoration",
+            "text-shadow",
+          ],
+          properties: [
+            { name: "Font", property: "font-family" },
+            { name: "Weight", property: "font-weight" },
+            { name: "Font color", property: "color" },
+            {
+              property: "text-align",
+              type: "radio",
+              defaults: "left",
+              list: [
+                { value: "left", name: "Left", className: "fa fa-align-left" },
+                {
+                  value: "center",
+                  name: "Center",
+                  className: "fa fa-align-center",
+                },
+                {
+                  value: "right",
+                  name: "Right",
+                  className: "fa fa-align-right",
+                },
+                {
+                  value: "justify",
+                  name: "Justify",
+                  className: "fa fa-align-justify",
+                },
+              ],
+            },
+            {
+              property: "text-decoration",
+              type: "radio",
+              defaults: "none",
+              list: [
+                { value: "none", name: "None", className: "fa fa-times" },
+                {
+                  value: "underline",
+                  name: "underline",
+                  className: "fa fa-underline",
+                },
+                {
+                  value: "line-through",
+                  name: "Line-through",
+                  className: "fa fa-strikethrough",
+                },
+              ],
+            },
+            {
+              property: "text-shadow",
+              properties: [
+                { name: "X position", property: "text-shadow-h" },
+                { name: "Y position", property: "text-shadow-v" },
+                { name: "Blur", property: "text-shadow-blur" },
+                { name: "Color", property: "text-shadow-color" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Decorations",
+          open: false,
+          buildProps: [
+            "opacity",
+            "border-radius",
+            "border",
+            "box-shadow",
+            "background-bg",
+          ],
+          properties: [
+            {
+              type: "slider",
+              property: "opacity",
+              defaults: 1,
+              step: 0.01,
+              max: 1,
+              min: 0,
+            },
+            {
+              property: "border-radius",
+              properties: [
+                { name: "Top", property: "border-top-left-radius" },
+                { name: "Right", property: "border-top-right-radius" },
+                { name: "Bottom", property: "border-bottom-left-radius" },
+                { name: "Left", property: "border-bottom-right-radius" },
+              ],
+            },
+            {
+              property: "box-shadow",
+              properties: [
+                { name: "X position", property: "box-shadow-h" },
+                { name: "Y position", property: "box-shadow-v" },
+                { name: "Blur", property: "box-shadow-blur" },
+                { name: "Spread", property: "box-shadow-spread" },
+                { name: "Color", property: "box-shadow-color" },
+                { name: "Shadow type", property: "box-shadow-type" },
+              ],
+            },
+            {
+              id: "background-bg",
+              property: "background",
+              type: "bg",
+            },
+          ],
+        },
+        {
+          name: "Extra",
+          open: false,
+          buildProps: ["transition", "perspective", "transform"],
+          properties: [
+            {
+              property: "transition",
+              properties: [
+                { name: "Property", property: "transition-property" },
+                { name: "Duration", property: "transition-duration" },
+                { name: "Easing", property: "transition-timing-function" },
+              ],
+            },
+            {
+              property: "transform",
+              properties: [
+                { name: "Rotate X", property: "transform-rotate-x" },
+                { name: "Rotate Y", property: "transform-rotate-y" },
+                { name: "Rotate Z", property: "transform-rotate-z" },
+                { name: "Scale X", property: "transform-scale-x" },
+                { name: "Scale Y", property: "transform-scale-y" },
+                { name: "Scale Z", property: "transform-scale-z" },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Flex",
+          open: false,
+          properties: [
+            {
+              name: "Flex Container",
+              property: "display",
+              type: "select",
+              defaults: "block",
+              list: [
+                { value: "block", name: "Disable" },
+                { value: "flex", name: "Enable" },
+              ],
+            },
+            {
+              name: "Flex Parent",
+              property: "label-parent-flex",
+              type: "integer",
+            },
+            {
+              name: "Direction",
+              property: "flex-direction",
+              type: "radio",
+              defaults: "row",
+              list: [
+                {
+                  value: "row",
+                  name: "Row",
+                  className: "icons-flex icon-dir-row",
+                  title: "Row",
+                },
+                {
+                  value: "row-reverse",
+                  name: "Row reverse",
+                  className: "icons-flex icon-dir-row-rev",
+                  title: "Row reverse",
+                },
+                {
+                  value: "column",
+                  name: "Column",
+                  title: "Column",
+                  className: "icons-flex icon-dir-col",
+                },
+                {
+                  value: "column-reverse",
+                  name: "Column reverse",
+                  title: "Column reverse",
+                  className: "icons-flex icon-dir-col-rev",
+                },
+              ],
+            },
+            {
+              name: "Justify",
+              property: "justify-content",
+              type: "radio",
+              defaults: "flex-start",
+              list: [
+                {
+                  value: "flex-start",
+                  className: "icons-flex icon-just-start",
+                  title: "Start",
+                },
+                {
+                  value: "flex-end",
+                  title: "End",
+                  className: "icons-flex icon-just-end",
+                },
+                {
+                  value: "space-between",
+                  title: "Space between",
+                  className: "icons-flex icon-just-sp-bet",
+                },
+                {
+                  value: "space-around",
+                  title: "Space around",
+                  className: "icons-flex icon-just-sp-ar",
+                },
+                {
+                  value: "center",
+                  title: "Center",
+                  className: "icons-flex icon-just-sp-cent",
+                },
+              ],
+            },
+            {
+              name: "Align",
+              property: "align-items",
+              type: "radio",
+              defaults: "center",
+              list: [
+                {
+                  value: "flex-start",
+                  title: "Start",
+                  className: "icons-flex icon-al-start",
+                },
+                {
+                  value: "flex-end",
+                  title: "End",
+                  className: "icons-flex icon-al-end",
+                },
+                {
+                  value: "stretch",
+                  title: "Stretch",
+                  className: "icons-flex icon-al-str",
+                },
+                {
+                  value: "center",
+                  title: "Center",
+                  className: "icons-flex icon-al-center",
+                },
+              ],
+            },
+            {
+              name: "Flex Children",
+              property: "label-parent-flex",
+              type: "integer",
+            },
+            {
+              name: "Order",
+              property: "order",
+              type: "integer",
+              defaults: 0,
+              min: 0,
+            },
+            {
+              name: "Flex",
+              property: "flex",
+              type: "composite",
+              properties: [
+                {
+                  name: "Grow",
+                  property: "flex-grow",
+                  type: "integer",
+                  defaults: 0,
+                  min: 0,
+                },
+                {
+                  name: "Shrink",
+                  property: "flex-shrink",
+                  type: "integer",
+                  defaults: 0,
+                  min: 0,
+                },
+                {
+                  name: "Basis",
+                  property: "flex-basis",
+                  type: "integer",
+                  units: ["px", "%", ""],
+                  unit: "",
+                  defaults: "auto",
+                },
+              ],
+            },
+            {
+              name: "Align",
+              property: "align-self",
+              type: "radio",
+              defaults: "auto",
+              list: [
+                {
+                  value: "auto",
+                  name: "Auto",
+                },
+                {
+                  value: "flex-start",
+                  title: "Start",
+                  className: "icons-flex icon-al-start",
+                },
+                {
+                  value: "flex-end",
+                  title: "End",
+                  className: "icons-flex icon-al-end",
+                },
+                {
+                  value: "stretch",
+                  title: "Stretch",
+                  className: "icons-flex icon-al-str",
+                },
+                {
+                  value: "center",
+                  title: "Center",
+                  className: "icons-flex icon-al-center",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
+});
+
+    if (exist) {
+        let dom2 = exist.split('</style>');
+
+        if (dom2.length > 1) {
+            let html = dom2[1];
+            let style = dom2[0] + '</style>'
+            editor.setComponents(html)
+            editor.setStyle(style)
+        } else {
+            editor.setComponents(exist)
+        }
+    }
+
+    const panelManager = editor.Panels;
+
+    var saveButton = panelManager.addButton("options", {
+        id: "save-panel",
+        command: "save-html",
+        className: "fa fa-save",
+    });
+
+    var vieBTN = panelManager.getButton('options', 'sw-visibility');
+
+    if (vieBTN) {
+        vieBTN.attributes.active = true;
+    }
+    async function saveHTML(e) {
+        try {
+            const loaderDiv = document.createElement('div')
+            loaderDiv.style.position = 'absolute';
+            loaderDiv.style.top = 0;
+            loaderDiv.style.bottom = 0;
+            loaderDiv.style.left = 0;
+            loaderDiv.style.right = 0;
+            loaderDiv.style.display = 'grid';
+            loaderDiv.style.placeItems = 'center';
+            loaderDiv.style.backgroundColor = 'rgba(0,0,0,0.4)';
+            loaderDiv.style.zIndex = 11111111111;
+
+            loaderDiv.innerHTML = `<img src="/vendor/content-builder/assets/loader.gif" style="margin-right: 10px;" /> `;
+            document.body.prepend(loaderDiv)
+
+            let html = e.getHtml();
+            const css = e.getCss();
+            const js = e.getJs();
+
+            const div = document.createElement("div");
+            div.innerHTML = html;
+
+            let images = []
+            const imgTags = div.querySelectorAll("img");
+            for (const key in imgTags) {
+                const img = imgTags[key];
+                if (img.src && img.src.includes("base64")) {
+                    images.push(img)
+                };
             }
 
-            body::-webkit-scrollbar {
-                width: 12px;
-            }
-            body::-webkit-scrollbar-track {
-                background: rgba(255, 255, 255, 0.49);
-                border-radius: 10px;
-                -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-            }
-            body::-webkit-scrollbar-thumb {
-                border-radius: 20px;
-                -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
-            }
+            let fd = new FormData();
+            for (let i = 0; i < images.length; i++) {
+                const src = images[i].src;
 
-            body {margin:0 0 57px} /* give space 70px on the bottom for panel */
-            #panelCms { display: flex; justify-content: center; align-items: center; width:100%;height:57px;/* border-top: #f5f5f5 1px solid; background:#ffffff; */position:fixed;left:0;bottom:0;padding:10px;box-sizing:border-box;text-align:center;white-space:nowrap;z-index:10001;}
-            #panelCms button {background: #8A288F;
-                padding: 8px 15px;
-                height: 45px;
-                min-width: 160px;
-                display: inline-flex;
-                justify-content: center;
-                align-items: center;
-                border-radius: 100px;
-                font-size: 14px;
-                font-weight: 500;
-                color: #fff !important;
-                border: none;
-                cursor: pointer;
-                text-transform: uppercase;}
-            .back-arrow {
-                color: #fff;
-                position: absolute;
-                top: 30px;
-                left: 50px;
-                font-size: 16px;
-            }
-            .back-arrow:hover {
-                color: #fff;
-                text-decoration: none;
+                const block = src.split(";");
+                const contentType = block[0].split(":")[1]; // In this case "image/gif"
+                const realData = block[1].split(",")[1];
+                const blob = b64toBlob(realData, contentType);
+                // upload to server the
+                fd.append(`file[]`, blob)
+
             }
 
-        </style>
+            if (images.length) {
+                jQuery.ajax({
+                    type: "POST",
+                    url: 'http://localhost:8000/admin/watch-and-learn/store-media',
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    data: fd,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        const imagesSrc = response.data;
 
-    </head>
-    <body>
-        <?php $currentPageUrl =env('APP_URL');  ?>
+                        for (let i = 0; i < images.length; i++) {
+                            images[i].src = imagesSrc[i].img_url
+                        }
 
-            <a href="{{ $module_route.'/'.$watchAndLearn['id'].'/edit' }}" class="back-arrow"><i class="icon ion-arrow-left-a"></i> Back</a>
-            <div id="contentarea" class="is-container container content-builder-data">
-                @if(isset($watchAndLearn['description']))
-                    {!! $watchAndLearn['description'] !!}
-                @endif
-
-            </div>
-
-            <!-- CUSTOM PANEL (can be used for "save" button or your own custom buttons) -->
-            <div id="panelCms">
-                <button onclick="save(this)" class="wag-admin-btns-main">Save and preview</button>
-            </div>
-
-        <form id='description-form' method="POST" action="{{ $module_route.'/'.$watchAndLearn['id'].'/save-description' }}" style="display:none">
-            @csrf
-            <input type="hidden" name="_method" value="PUT">
-            <textarea name="description" id="description"></textarea>
-        </form>
-
-        <script type="text/javascript" src="{{ asset('vendor/content-builder/contentbuilder/jquery.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('vendor/content-builder/contentbuilder/jquery-ui.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('vendor/content-builder/contentbuilder/contentbuilder.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('vendor/content-builder/contentbuilder/saveimages.js') }}"></script>
-
-        <link href="{{ asset('plugins/new-croppie/cropper.css') }}" rel="stylesheet">
-        <script src="{{ asset('plugins/new-croppie/cropper.js') }}"></script>
-        <script src="{{ asset('plugins/new-croppie/main.js') }}"></script>
-
-        <script type="text/javascript">
-            var isContentUpdated = false;
-            $(window).bind('beforeunload', function(e){
-                if(isContentUpdated) {
-                    return true;
-                } else {
-                    return undefined;
-                }
-            });
-
-            jQuery(document).ready(() => {
-                var imagePath = "{{ env('APP_URL') }}";
-
-                var builder = $("#contentarea").contentbuilder({
-                                snippetFile: "/vendor/content-builder/assets/minimalist-basic/snippets-bootstrap.php",
-                                snippetOpen: true,
-                                toolbar: "left",
-                                iconselect: "/vendor/content-builder/assets/ionicons/selecticon.html",
-                                snippetPathReplace: ['assets/minimalist-basic/', 'assets/minimalist-basic/'],
-                                snippetCategories: [
-                                    /*[0,"Default"],*/
-                                    /*[-1,"All"],*/
-                                    [36,"Color Background"],
-                                    [1,"Title"],
-                                    /*[2,"Title, Subtitle"],*/
-                                    /*[3,"Info, Title"],
-                                    [4,"Info, Title, Subtitle"],*/
-                                    [5,"Heading, Paragraph"],
-                                    [6,"Paragraph"],
-                                    [7,"Paragraph, Images + Caption"],
-                                    [8,"Heading, Paragraph, Images + Caption"],
-                                    [33,"Buttons"],
-                                    /*[34,"Cards"],*/
-                                    [9,"Images + Caption"],
-                                    [10,"Images + Long Caption"],
-                                    [11,"Images"],
-                                    [12,"Single Image"],
-                                    /*[13,"Call to Action"],
-                                    [14,"List"],*/
-                                    [15,"Quotes"],
-                                    /*[16,"Profile"],
-                                    [17,"Map"],*/
-                                    [20,"Video"],
-                                    /*[18,"Social"],
-                                    [21,"Services"],
-                                    [22,"Contact Info"],
-                                    [23,"Pricing"],*/
-                                    [24,"Team Profile"],
-                                    [25,"Products/Portfolio"],
-                                    /*[26,"How It Works"],
-                                    [27,"Partners/Clients"],
-                                    [28,"As Featured On"],
-                                    [29,"Achievements"],
-                                    [32,"Skills"],
-                                    [30,"Coming Soon"],
-                                    [31,"Page Not Found"],*/
-                                    [19,"Separator"],
-
-                                    [100,"Custom Code"] /* INFO: Category 100 cannot be changed. It is used for Custom Code block */
-                                ],
-                                onChange: function () {
-                                    isContentUpdated = true;
-                                }
-                            });
-
-            });
-
-            function save(ele) {
-                $(ele).prop('disabled', true);
-                $(ele).html(`<img src="/vendor/content-builder/assets/loader.gif" style="margin-right: 10px;" /> Saving...`);
-
-                // Save all images
-                $("#contentarea").saveimages({
-                    handler: "{{ url( 'admin/watch-and-learn/store-media') }}",
-                    _token: "{{ csrf_token() }}",
-                    onComplete: function () {
-
-                        //Get content
-                        var sHTML = $('#contentarea').data('contentbuilder').html();
-                        isContentUpdated = false;
-                        $("#description-form").find("#description").val(sHTML);
-                        $( "#description-form" ).submit();
-
-                        $(ele).prop('disabled', false);
-                        $(ele).html(`Save`);
+                        html = String(div.innerHTML);
+                        const styleTag = `<style>${css}</style>`;
+                        const formatedHtml = styleTag + html;
+                        $("#description-form").find("#description").val(formatedHtml);
+                        $("#description-form").submit();
+                    },
+                    error: function(error) {
+                        console.error(error.responseJSON.message);
                     }
                 });
-                $("#contentarea").data('saveimages').save();
+            } else {
+                html = String(div.innerHTML);
+                const styleTag = `<style>${css}</style>`;
+                const formatedHtml = styleTag + html;
+                $("#description-form").find("#description").val(formatedHtml);
+                $("#description-form").submit();
+            };
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
+    function b64toBlob(b64Data, contentType, sliceSize) {
+        contentType = contentType || "";
+        sliceSize = sliceSize || 512;
+
+        var byteCharacters = atob(b64Data);
+        var byteArrays = [];
+
+        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+            var byteNumbers = new Array(slice.length);
+            for (var i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
             }
 
-            function view() {
-                /* This is how to get the HTML (for saving into a database) */
-                var sHTML = $('#contentarea').data('contentbuilder').viewHtml();
+            var byteArray = new Uint8Array(byteNumbers);
 
-            }
-        </script>
-    </body>
+            byteArrays.push(byteArray);
+        }
+
+        var blob = new Blob(byteArrays, {
+            type: contentType
+        });
+        return blob;
+      }
+    </script>
+  </body>
 </html>
