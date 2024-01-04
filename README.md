@@ -1,87 +1,8 @@
-# Wagenabled
+# Laravel Project
 
-Wagenabled is a website. This Business website.
+This Laravel Project is a business website built with Laravel and React, featuring a variety of modules and functionalities for users, pet professionals, and administrators.
 
-## Notes for Project
-
-### Important Rules for the Projects:
-
-- User platform:
-    - Registration ( Manually, Google)
-    - Login ( Manually, Google)
-    - Forgot Password
-    - Send business request 
-    - Contact Module
-        - send message 
-
-    - Profile module
-        - Update profile
-        - Update vet information
-        - Add, Remove Pets
-        - Listing pets
-        - Listing liked pet pros, dislike pet pros
-        - Listing liked watch and learn 
-        - Listing Saved Product Reviews
-        - Listing reviews of pet pros
-
-    - Pet pro module
-        - Pet pro Listing ( Sort By Latest, popular, deal offered, nearest  / Filter by Category / Filter by location / Search Keyword / Map view )
-        - Details Pet pro 
-            - View pet pro details, gallery
-            - Like Pet pro 
-            - Post review ( Give Rate)
-            - View Deal
-            - Claim Deal
-            - View Event
-
-    - Watch and learn module            
-        - Watch and learn Listing ( Sort By Latest, popular / Filter by Category / Search )
-        - Details Watch and learn 
-            - View Watch and learn details
-            - Like Watch and learn 
-            - Post comment, delete posted comment, reply comment
-            - View author
-            - listing related watch and learn 
-
-    - Product Reviews module            
-        - Product reviews Listing ( Sort By Latest, popular / Filter by Category / Search )
-        - Details product reviews 
-            - View product reviews details
-            - Like product reviews 
-            - Post comment, delete posted comment, reply comment
-            - View author
-            - listing related product reviews 
-
-
-- Admin has capabilities of: 
-    - User's chart and view count of users, pet pros, deals of watch and learn, deal claimed of watch and learn, deals of product reviews, deal claimed of product reviews
-    - Add / Update / Delete Admin User
-    - Listing / View details/ Delete user 
-
-    - Listing / Add/ Update/ Delete Pet pro category
-    - Listing / Add/ Update/ Delete Pet pro
-        - Listing / Add/ Update/ Delete gallery images, make image as cover image
-        - Listing / Add/ Update/ Delete deals
-        - Listing / Add/ Update/ Delete events
-
-    - Listing / Add/ Update/ Delete watch and learn category
-    - Listing / Add/ Update/ Delete / View / Change status / watch and learn  
-        -  Manage watch and learn using content builder custom design
-
-    - Listing / Add/ Update/ Delete product reviews category
-    - Listing / Add/ Update/ Delete / View / Change status / product reviews  
-        -  Manage product reviews using content builder custom design
-
-    - Listing / Add/ Update/ Delete Authors
-    - Listing / Add/ Delete Medias 
-
-    - Listing / Add/ Update/ Delete testimonial
-    - Listing / View / Delete Business Requests
-    - Listing / Delete Business Requests
-    - Listing / View contact
-    - Listing / Delete Newsletters
-
-### Tech Stacks & Version
+## Tech Stacks & Versions
 
 - PHP 7.2.5
 - Laravel 7.0
@@ -91,73 +12,98 @@ Wagenabled is a website. This Business website.
 - JavaScript
 - GitHub
 
-### Technology 
-- Front End: React Js
-- Back End: Laravel 
+## Technology
 
-#### Server:
-- Amazon AWS EC2 (Hosting)
-- AWS Route53 (DNS Management)
+- **Front End:** React Js
+- **Back End:** Laravel
 
-#### External Tools:
-- Facebook Login / Singup
-- Google Login / Singup
+## Server
+
+- **Amazon AWS EC2 (Hosting)**
+- **AWS Route53 (DNS Management)**
+
+## External Tools
+
+- Facebook Login / Signup
+- Google Login / Signup
 - Hubspot
-- Google analytics
+- Google Analytics
 - Google Map
 
 ## Getting Started: Setting Up Local Environment & Prerequisites
 
-#### GitHub Repo Structure:
-1. Master (Connected with Live Server)
-2. Develop (Connected with Dev Server)
-3. Branch from Develop (Task wise branch)
+### GitHub Repo Structure
 
-#### To setup in local get latest code: 
+- **Master:** Connected with Live Server
+- **Develop:** Connected with Dev Server
+- **Branch from Develop:** Task-wise branch
 
-Checkout develop repo in local from git. 
+### To set up locally:
 
-#### Prerequisites:
+1. Clone the develop branch from the GitHub repository.
+2. Install prerequisites: Composer, Node, MySQL, Apache, PHP >= 7.1.3.
 
-- Composer
-- Node
-- MySQL
-- Apache
-- PHP >= 7.1.3
+### Setup Steps
 
-#### Setup Steps:
+```bash
+composer install
+npm install
+```
 
-1. `composer install`
+3. Copy `.env.example` to create a `.env` file and configure the database settings.
+4. Run the development server:
 
-2. ` npm install`
+```bash
+php artisan serve
+```
 
-3. Copy .env.example file to create .env file and setup configuration for database.
+### Making Changes and Working on Tasks
 
-4. `php artisan serve `
+1. Create a branch for a specific task.
+2. Make changes and work on the task.
+3. Create a pull request to the parent repo (Develop/Master).
 
-To make changes and work on tasks: 
-Create branch for particular task and start working on your changes.
+### Deployment Steps
 
-## Deployment steps
+#### Develop/Staging Server Deployment:
 
-- #### Create pull request to parent repo (Develop/Master). 
-    Merge PR to parent repo. 
+```bash
+# Update server with changes on develop branch
+git pull origin develop
+```
 
-- #### Develop/Staging Server Deployment:
+#### Live Server Deployment:
 
-    Command to update server with changes which are on develop branch
+```bash
+# Update server with changes on master branch
+git pull origin master
+```
 
-    `git pull `
-- #### Live server Deployment:
+### Branch Process
 
-    Command to update server with changes which are on master branch
+- Task branch/Child branch -> Develop Branch -> Master Branch
 
-     `git pull `
-- #### Branch Process:
+### Urgent Task on Live Server
 
-    Task branch/Child branch -> Develop Branch -> Master Branch
-- #### If there is any urgent task in live server:
+1. Create a branch from master for the urgent task.
+2. Merge changes to the Master branch and deploy to the live server.
+3. Merge the child branch into the Develop branch.
 
-    Create branch from master and work on that child branch. Merge your changes to Master branch. and deploy to live server.
+## Admin Capabilities
 
-    Merge that child branch -> Develop branch
+- User's chart and view count of users, pet pros, deals of watch and learn, deal claimed of watch and learn, deals of product reviews, deal claimed of product reviews.
+- Add / Update / Delete Admin User.
+- Manage Pet Pro categories, Pet Pros, gallery images, deals, and events.
+- Manage Watch and Learn categories and content.
+- Manage Product Reviews categories and content.
+- Manage Authors, Medias, Testimonials.
+- View and manage Business Requests, Contact, and Newsletters.
+
+## Developer Information
+
+- **Developer Email:** izhan47@gmail.com
+- **Developer Website/Support:** [izhan.me](https://izhan.me)
+
+## Main Gif Path
+
+- **png:** [demo.png](./path/to/demo.png)
