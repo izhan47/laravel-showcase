@@ -106,4 +106,4 @@ git pull origin master
 
 ## Preview
 
-![Main Demp](demp.png)
+![Main Demp](demo.png)
