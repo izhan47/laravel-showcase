@@ -34,8 +34,8 @@ This Laravel Project is a business website built with Laravel and React, featuri
 
 ### GitHub Repo Structure
 
-- **Master:** Connected with Live Server
-- **Develop:** Connected with Dev Server
+- **Master:**  Live Server
+- **Develop:**  Dev Server
 - **Branch from Develop:** Task-wise branch
 
 ### To set up locally:
