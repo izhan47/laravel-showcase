@@ -2,6 +2,10 @@
 
 This Laravel Project is a business website built with Laravel and React, featuring a variety of modules and functionalities for users, pet professionals, and administrators.
 
+## Preview
+
+![Main Demp](demo.png)
+
 ## Tech Stacks & Versions
 
 - PHP 7.2.5
@@ -104,6 +108,4 @@ git pull origin master
 - **Developer Email:** izhan47@gmail.com
 - **Developer Website/Support:** [izhan.me](https://izhan.me)
 
-## Preview
 
-![Main Demp](demo.png)
