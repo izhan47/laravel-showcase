@@ -104,6 +104,6 @@ git pull origin master
 - **Developer Email:** izhan47@gmail.com
 - **Developer Website/Support:** [izhan.me](https://izhan.me)
 
-## Main Gif Path
+## Preview
 
-- **png:** [demo.png](./path/to/demo.png)
+![Main Demp](demp.png)
